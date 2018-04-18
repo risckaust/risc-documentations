@@ -1,0 +1,15 @@
+System Architecture
+=========
+
+
+
+.. code:: python
+
+   print("A literal block directive explicitly marked as python code")
+
+
+
+Introduction
+-------
+
+Cool text
