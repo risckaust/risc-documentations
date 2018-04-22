@@ -13,9 +13,7 @@ Preliminaries
 
 This tutorial assumes you have the following skills:
 
-* ROS Basics or ETHZ Online Course [solutions]
-
-If not, please refer to a [online course](http://www.rsl.ethz.ch/education-students/lectures/ros.html) produced by ETHZ. And refer to [solutions to the exercises](https://github.com/luym11/ros_practise) on my github.
+* `ROS Basics <1-1>`_ or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. And refer to `solutions to exercises <https://github.com/luym11/ros_practise>`_ on github.
 
 * Soldering If not, please refer to [basic skill video](https://www.youtube.com/watch?v=BLfXXRfRIzY).
 
@@ -62,7 +60,7 @@ Assembly process
 
 .. important::
 
-	DON’T install the propellers now.
+	Do not install the propellers now.
 
 
 Note that the “front” direction of the quad needs to be decided. Take a look at the Pixhawk and there’s an arrow and it should be pointed at “front” when mounted. And it should also be the direction between 1 and 3 in above picture. We are using “X” configuration.
@@ -89,26 +87,21 @@ RC flying
 
 * Download ``QGroundControl`` on your PC and open it.
 * Connect Pixhawk with your PC via USB. You should see it connected in the software.
-* Airframe tab
-* Choose proper airframe according to the one you have.
-* Radio tab
-* Click ``Calibrate`` button and follow instructions.
-* Sensors tab
-* Calibrate all the sensors following the instructions. After calibration they will be green.
-* Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press “OK” and move on to the next.
-* Flight Modes tab
-* Modes: Channel 6 (marked as FLAP/GYRO)
-* Mode 1: Position
-* Mode 4: Altitude
-* Mode 6: Manual
-* Kill switch: Channel 5 (GEAR MIX)
-* If you set them right, when you are picking those channels your action will be reported in QGroundControl
-* Power tab
-* Write the parameters of your battery (Number of cells, Full/ Empty voltages)
+* In ``Airframe tab`` choose proper airframe according to the one you have.
+* In ``Radio tab`` click ``Calibrate`` button and follow instructions.
+* In ``Sensors tab`` calibrate all the sensors following the instructions. After calibration they will be green.
+* Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press ``OK`` and move on to the next.
+* in ``Flight Modes tab``
+  * Modes: Channel 6 (marked as FLAP/GYRO)
+  * Mode 1: Position
+  * Mode 4: Altitude
+  * Mode 6: Manual
+  * Kill switch: Channel 5 (GEAR MIX)
+  * If you set them right, when you are picking those channels your action will be reported in QGroundControl
+* In ``Power tab`` write the parameters of your battery (Number of cells, Full/ Empty voltages)
 * Click “Calculate” beside “Voltage divider” and type in measured voltage (can be measured using voltage meter provided in the toolbox), click “Calculate”
 * Click ``Calibrate`` to calibrate ESCs
-* Parameters tab
-* General process is tuning P first then I and D at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned.
+* In ``Parameters tab`` tune the parameters, general process is tuning P first then I and D at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned.
 
 [Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html)
 * You can plug other quads we have to your PC and export the parameters there and load them to your quad directly
@@ -116,7 +109,7 @@ RC flying
 * Unplug the quad from PC
 * Press Safety switch on Pixhawk until it blinks faster
 * Arm (Hold throttle at minimum and rudder to the right for 2 seconds) the quad using RC and check if the motors are spinning in correct directions as the picture by slightly touching them. If not, change any two wires of that motor. Disarm (Opposite of arm)
-* Install propellers \(Note there are CW and CCW propellers as well)
+* Install propellers. Note that there are CW and CCW propellers as well.
 * \(optional\) If still want to connect the quad to QGroundControl, install telemetry
 * Manual kill switch off. Select manual mode.
 * Check battery condition. \(Always keep this in mind\)
