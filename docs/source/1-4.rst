@@ -3,15 +3,18 @@ Software in the Loop Joystick Flight
 
 This tutorial explains the steps required to fly a simulated quadrotor in the Gazebo simulator using a real joystick. The following diagram shows how the system components work together.
 
-![](/assets/sitl_diagram.png)
+.. image:: ../_static/sitl_diagram.png
+   :scale: 50 %
+   :align: center
 
-## Hardware Requirements
+
+Hardware Requirements
 -----
 
 * Desktop linux machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
 * Joystick
 
-## Software Requirements
+Software Requirements
 -----
 
 * **Ubuntu 16.04**
@@ -28,7 +31,7 @@ This tutorial explains the steps required to fly a simulated quadrotor in the Ga
   
   In this tutorial, it is assumed that the reader is familiar with basic linux commands, ROS basics.
 
-## Setup Steps
+Setup Steps
 -----
 
 Please follow this steps carefully to setup the development enviroment which includes the software-in-the-loop simulation. It is assumed that the following steps are done on a clean Ubuntu 16.04 OS image.
@@ -45,7 +48,7 @@ Open a new terminal window \(you can hit ctrl+alt+t to bring up one\). Then, ple
 * [ROS/Gazebo](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#rosgazebo)\(Kinetic\). Skip this if already done.
 * [MAVROS installation](https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation) from source.
 
-**NOTE** in the step where you install the _geographiclib_, if you get an error like _cannot create directories_, try
+**NOTE** in the step where you install the ``_geographiclib_``, if you get an error like ``_cannot create directories_``, try
 
 .. code-block:: bash
 
@@ -65,7 +68,7 @@ Then, build your workspace using ``catkin build``
   cd src
   git clone https://github.com/PX4/Firmware.git
 
-## Testing SITL with Gazebo \(No ROS\)
+Testing SITL with Gazebo \(No ROS\)
 -----
 
 In this step, we will validate that the PX4 SITL app and gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal
@@ -87,7 +90,7 @@ To takeoff/land the quadcopter, execute the following commands in the terminal
 
 If the previous actions succeed the the installation is OK. Next, we will run ROS and a MAVROS node which will allow us to interface the autopilot with ROS.
 
-## Interfacing with ROS
+Interfacing with ROS
 -----
 
 Assuming that you already created your ``catkin_ws``, we will create symbolic links to the PX4 autopilot and the PX4 simulation package folders into our ROS workspace. This makes it easy to launch everything \(Gazebo+PX4 app+ ROS+MAVROS\) from one place at once.
@@ -142,7 +145,7 @@ Now, you can monitor the dorne's states and control it via a mavros node.
 
 You might be asking, how are we going to get the joystick commands? The next section explains that.
 
-## Joystick Package Installation & Usage
+Joystick Package Installation & Usage
 -----
 
 A package named ``joy`` is going to be used to interface a joystick to ROS. To install that package, simply execute the following command in the terminal.
@@ -226,16 +229,15 @@ You should see an output similar to the following.
 
 Now, let's write a custom node that reads joystick's commands and convert them to position setpoints to control the quadcopter's poisiton in Gazebo.
 
-## Custom Setpoint Node
+Custom Setpoint Node
 
 -----
 
-**Now, it's time for some coding!**  
-You will write a ROS node in Python that listens to the ``/joy`` topic that is published by the ``joy`` node, and convrets the joystick commands to xyz position setpoints. Then, it will publish the calculated position setpoints into ``/mavros/setpoint_raw/local``
+**Now, it's time for some coding!** You will write a ROS node in Python that listens to the ``/joy`` topic that is published by the ``joy`` node, and convrets the joystick commands to xyz position setpoints. Then, it will publish the calculated position setpoints into ``/mavros/setpoint_raw/local``
 
 Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the autopilot to track the setpoints. It has to be in **OFFBOARD** mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to **remember** that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publsihing setpoints. **If you don't publish setpoints at more than 2Hz, it will go into a failsafe mode**.
 
-* **First, create your custom ROS package.** The code is commented so you can get an idea of what each part does.
+First, create your custom ROS package. The code is commented so you can get an idea of what each part does.
 
 
 .. code-block:: bash
@@ -249,7 +251,7 @@ Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the auto
   gedit setpoints_node.py
 
 
-* **Copy the following code** to the ``setpoints_node.py`` file
+Copy the following code to the ``setpoints_node.py`` file
 
 .. code-block:: python
 
