@@ -32,10 +32,10 @@ If not, please refer to a [online course](http://www.rsl.ethz.ch/education-stude
 * What does KV2200 means? What will be changed if KV number grows?
 * What are the parameters of your motors?
 
-## Hardware assembly
+Hardware assembly
 -----
 
-### Introduction
+Introduction
 ^^^^^
 
 Take a look at your RISC shoebox.
@@ -56,13 +56,14 @@ Assembly process
 * Assemble the frame. Attach the power distribution board to it.
 * Mount the motors. Mind CW and CCW. They should be mounted as follows. 
 
+.. image:: ../_static/quad_1.jpg
+   :scale: 50 %
+   :align: center
+
 .. important::
 
 	DON’T install the propellers now.
 
-.. image:: ../_static/quad_1.jpg
-   :scale: 50 %
-   :align: center
 
 Note that the “front” direction of the quad needs to be decided. Take a look at the Pixhawk and there’s an arrow and it should be pointed at “front” when mounted. And it should also be the direction between 1 and 3 in above picture. We are using “X” configuration.
 
@@ -86,12 +87,12 @@ Note that the “front” direction of the quad needs to be decided. Take a look
 RC flying
 -----
 
-* Download QGroundControl on your PC and open it.
+* Download ``QGroundControl`` on your PC and open it.
 * Connect Pixhawk with your PC via USB. You should see it connected in the software.
 * Airframe tab
 * Choose proper airframe according to the one you have.
 * Radio tab
-* Click “Calibrate” button and follow instructions.
+* Click ``Calibrate`` button and follow instructions.
 * Sensors tab
 * Calibrate all the sensors following the instructions. After calibration they will be green.
 * Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press “OK” and move on to the next.
@@ -105,9 +106,10 @@ RC flying
 * Power tab
 * Write the parameters of your battery (Number of cells, Full/ Empty voltages)
 * Click “Calculate” beside “Voltage divider” and type in measured voltage (can be measured using voltage meter provided in the toolbox), click “Calculate”
-* Click “Calibrate” to calibrate ESCs
+* Click ``Calibrate`` to calibrate ESCs
 * Parameters tab
 * General process is tuning P first then I and D at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned.
+
 [Guide](https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html)
 * You can plug other quads we have to your PC and export the parameters there and load them to your quad directly
 * Flying
