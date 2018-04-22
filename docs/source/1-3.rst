@@ -18,13 +18,16 @@ This tutorial assumes you have the following skills:
 * Soldering, if not, please refer to basic skill `video <https://www.youtube.com/watch?v=BLfXXRfRIzY>`_.
 
 * Basic knowledge about LiPo batteries. Answer the following questions. You may read this `article <https://rogershobbycenter.com/lipoguide/>`_. 
+
   - What do 3s, 4s mean?
   - What does 20c mean?
   - What does 1400mAh mean?
   - What are the parameters of your battery?
   - How to charge LiPo battery? How to measure it voltage using meter?
   - What’s the minimum voltage to use a LiPo on the quad
+
 * Basic knowledge about motors. Answer the following questions.
+
   + Different types of motors. We are using brushless motor for quads.
   + What does KV2200 means? What will be changed if KV number grows?
   + What are the parameters of your motors?
@@ -91,7 +94,8 @@ Calibration process
 * In ``Radio tab`` click ``Calibrate`` button and follow instructions.
 * In ``Sensors tab`` calibrate all the sensors following the instructions. After calibration they will be green. Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press ``OK`` and move on to the next.
 * In ``Flight Modes tab``
-  - Modes: Channel 6 (marked as FLAP/GYRO)
+
+  - Modes: Channel 6 (marked as ``FLAP/GYRO``)
   - Mode 1: Position
   - Mode 4: Altitude
   - Mode 6: Manual
@@ -103,7 +107,8 @@ Calibration process
   - Click ``Calculate`` beside ``Voltage divider`` and type in measured voltage (can be measured using voltage meter provided in the toolbox), click ``Calculate``
   - Click ``Calibrate`` to calibrate ESCs
 
-* In ``Parameters tab`` tune the parameters, general process is tuning P first then I and D at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned. You may follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_.
+* In ``Parameters tab`` tune the parameters, general process is tuning ``P`` first then ``I`` and ``D`` at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned. You may follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_.
+
 * You can plug other quads we have to your PC and export the parameters there and load them to your quad directly
 
 
