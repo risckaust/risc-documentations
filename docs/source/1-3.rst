@@ -3,23 +3,24 @@ Quadcopter Assembly
 
 This is a tutorial for RISC lab boot camp. Please find all the components in RISC shoebox and toolbox prepared in Area C’s shelf.
 
-## Basic principles
+Basic principles
 -----
 
-* Feel free to place the components anywhere but take care of wirings. Refer to quads we already have in the lab.
-* Carefully choose zipties, shrinking tubes, duct tapes or soldering for different situations. Generally, for fixing motor wires we use
-**zipties**. Shrinking tubes are for permanent connection between wires while soldering then together.
-* Pay attention to **calibration**, and prepare for 50% possibility to fail:-)
+Feel free to place the components anywhere but take care of wirings. Refer to quads we already have in the lab. Carefully choose zipties, shrinking tubes, duct tapes or soldering for different situations. Generally, for fixing motor wires we use **zipties**. Shrinking tubes are for permanent connection between wires while soldering then together. Pay attention to **calibration**, and prepare for 50% possibility to fail :-)
 
-## Preliminaries
+Preliminaries
 ------
 
 This tutorial assumes you have the following skills:
 
-* ROS
+* ROS Basics or ETHZ Online Course [solutions]
+
 If not, please refer to a [online course](http://www.rsl.ethz.ch/education-students/lectures/ros.html) produced by ETHZ. And refer to [solutions to the exercises](https://github.com/luym11/ros_practise) on my github.
+
 * Soldering If not, please refer to [basic skill video](https://www.youtube.com/watch?v=BLfXXRfRIzY).
-* Basic knowledge about LiPo batteries (Answer the following questions)
+
+* Basic knowledge about LiPo batteries (Answer the following questions) (https://rogershobbycenter.com/lipoguide/)
+
 * What do 3s, 4s mean?
 * What does 20c mean?
 * What does 1400mAh mean?
@@ -40,28 +41,28 @@ If not, please refer to a [online course](http://www.rsl.ethz.ch/education-stude
 Take a look at your RISC shoebox.
 
 * Frame
-* Power distribution board
-Distribute power from battery to 4 ESCs.
-* Pixhawk
-Autopilot. It contains IMU and flight controller.
-* Power wires
-Connect batteries. Distribute power to Pixhawk and other components such as Odroid.
-* Motors and propellers
-While installing take a look at their directions(CW vs CCW).
-* Electronic speed controller(ESC)
-Power and control brushless motors using PWM. It takes DC from power distribution board and convert it to controlled three phase AC, and also it takes control signals from Pixhawk via signal wires (look like jumper wires).
+* Power distribution board distribute power from battery to 4 ESCs.
+* Pixhawk Autopilot. It contains IMU and flight controller.
+* Power wires connect batteries. Distribute power to Pixhawk and other components such as Odroid.
+* Motors and propellers, while installing take a look at their directions(CW vs CCW).
+* Electronic speed controller(ESC). Power and control brushless motors using PWM. It takes DC from power distribution board and convert it to controlled three phase AC, and also it takes control signals from Pixhawk via signal wires (look like jumper wires).
 
-* RC receiver
-Used with RC to control the quad using RC.
-* BEC
-Convert voltage to power Odroid.
+* RC receiver. Used with RC to control the quad using RC.
+* BEC. Convert voltage to power Odroid.
 
-### Assembly process
+Assembly process
 ^^^^^
 
 * Assemble the frame. Attach the power distribution board to it.
-* Mount the motors. Mind CW and CCW. They should be mounted as follows. DON’T install the propellers now.
-![](https://luym11.github.io/images/quad_1.jpg "Motor")
+* Mount the motors. Mind CW and CCW. They should be mounted as follows. 
+
+.. important::
+
+	DON’T install the propellers now.
+
+.. image:: ../_static/quad_1.jpg
+   :scale: 50 %
+   :align: center
 
 Note that the “front” direction of the quad needs to be decided. Take a look at the Pixhawk and there’s an arrow and it should be pointed at “front” when mounted. And it should also be the direction between 1 and 3 in above picture. We are using “X” configuration.
 
@@ -82,7 +83,7 @@ Note that the “front” direction of the quad needs to be decided. Take a look
 * Plug the battery and check 4 ESCs has static green LED lighted up and BEC has red. Buzzer will produce sound in the beginning and remain slient. Unplug the battery.
 * For this stage there’s no need to install Odroid. This will be illustrated later.
 
-## RC flying
+RC flying
 -----
 
 * Download QGroundControl on your PC and open it.
@@ -120,7 +121,7 @@ Note that the “front” direction of the quad needs to be decided. Take a look
 * Put the quad in the cage and arm again. Slowly add throttle while keep it in the middle of the cage by controlling pitch and yaw.
 * If it flies, you can do more manoeuvres
 
-## Trouble shooting
+Trouble shooting
 ------
 
 * Motors not rotating while armed and rotates with higher throttle
