@@ -6,7 +6,7 @@ This is a tutorial for RISC lab boot camp. Please find all the components in RIS
 Basic principles
 -----
 
-Feel free to place the components anywhere but take care of wirings. Refer to quads we already have in the lab. Carefully choose zipties, shrinking tubes, duct tapes or soldering for different situations. Generally, for fixing motor wires we use **zipties**. Shrinking tubes are for permanent connection between wires while soldering then together. Pay attention to **calibration**, and prepare for 50% possibility to fail :-)
+Feel free to place the components anywhere but take care of wirings. Refer to quads we already have in the lab. Carefully choose zipties, shrinking tubes, duct tapes or soldering for different situations. Generally, for fixing motor wires we use **zipties**. Shrinking tubes are for permanent connection between wires while soldering then together. Pay attention to **calibration**, and prepare for 50% possibility of fail :-)
 
 Preliminaries
 ------
@@ -119,7 +119,7 @@ Flying
 * Press Safety switch on Pixhawk until it blinks faster
 * Arm (Hold throttle at minimum and rudder to the right for 2 seconds) the quad using RC and check if the motors are spinning in correct directions as the picture by slightly touching them. If not, change any two wires of that motor. Disarm (Opposite of arm)
 * Install propellers. Note that there are CW and CCW propellers as well.
-* **OPTIONAL.** If still want to connect the quad to QGroundControl, install telemetry
+* **OPTIONAL.** If still want to connect the quad to ``QGroundControl``, install telemetry
 * Manual kill switch off. Select manual mode.
 * Check battery condition. **Always keep this in mind.**
 * Put the quad in the cage and arm again. Slowly add throttle while keep it in the middle of the cage by controlling pitch and yaw.
