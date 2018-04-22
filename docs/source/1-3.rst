@@ -96,10 +96,13 @@ Calibration process
   - Mode 4: Altitude
   - Mode 6: Manual
   - Kill switch: Channel 5 (GEAR MIX)
-  - If you set them right, when you are picking those channels your action will be reported in QGroundControl
+  - If you set them right, when you are picking those channels your action will be reported in ``QGroundControl``
+
 * In ``Power tab`` write the parameters of your battery (Number of cells, Full/ Empty voltages)
+
   - Click ``Calculate`` beside ``Voltage divider`` and type in measured voltage (can be measured using voltage meter provided in the toolbox), click ``Calculate``
   - Click ``Calibrate`` to calibrate ESCs
+
 * In ``Parameters tab`` tune the parameters, general process is tuning P first then I and D at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned. You may follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_.
 * You can plug other quads we have to your PC and export the parameters there and load them to your quad directly
 
