@@ -55,7 +55,7 @@ Then, build your workspace using ``catkin build``
 
 * [Nuttx based Hardware](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware). Go through all installation instructions. If you get some messages about not found directorires, ignore them!
 
-* Install ``QGroundcotrol`` from [here](https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux). Use the AppImage option.
+* Install ``QGroundControl`` from [here](https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux). Use the AppImage option.
 
 * Now, you need to clone the autopilot firmware source, PX4.
 
@@ -138,7 +138,7 @@ Now, you can monitor the dorne's states and control it via a mavros node.
 * A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer thos setpoints to the autopilot to execute.
 * If the autopilot's flight mode is **OFFBOARD**, the autopilot will accept the received setpoints and execute them.
 * We will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the mavros node will send it to the autopilot.
-* The setpoint topic that we will use in this tutorial is ``/mavros/setpoint_raw/local``. This topic accepts both position and velocity setpoints according to a specific flag. Next, we will create our custom simple ROS package in which we create a simple ROS node that listens to joystic commands from a ROS topic. Then, it will convert joystic commands to position setpoints which will be published to the ```/mavros/setpoint_raw/local`` topic. Finally, MAVROS will take the position set points and send them to the autopilot.
+* The setpoint topic that we will use in this tutorial is ``/mavros/setpoint_raw/local``. This topic accepts both position and velocity setpoints according to a specific flag. Next, we will create our custom simple ROS package in which we create a simple ROS node that listens to joystic commands from a ROS topic. Then, it will convert joystic commands to position setpoints which will be published to the ``/mavros/setpoint_raw/local`` topic. Finally, MAVROS will take the position set points and send them to the autopilot.
 
 You might be asking, how are we going to get the joystick commands? The next section explains that.
 
@@ -440,12 +440,12 @@ Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the auto
 
 Make the python file an executable,
 
-..code-block:: bash
+.. code-block:: bash
 
   chmod +x setpoints_node.py
 
 
-* **Make a launch folder. We will create a ROS laucnh file to run everything at once.**
+Make a **launch** folder. We will create a ROS laucnh file to run everything at once.
 
 .. code-block:: bash
 
@@ -455,7 +455,7 @@ Make the python file an executable,
   gedit joystick_flight.launch
 
 
-* **Then, copy the following lines to the launch file**
+Then, copy the following lines to the launch file
 
 .. code-block:: xml
 
@@ -480,14 +480,14 @@ Make the python file an executable,
   </launch>
 
 
-* **In a fresh terminal, you can run the whole system by executing**
+In a fresh terminal, you can run the whole system by executing
 
 .. code-block:: bash
 
   roslaunch mypackage joystick_flight.launch
 
 
-* **DONE**. Now, you should see a quadcopter in Gazebo flying at a fixed height and responding to your joystick commands.
+Now, you should see a quadcopter in Gazebo flying at a fixed height and responding to your joystick commands.
 
 .. warning:: 
 
