@@ -111,6 +111,7 @@ Relay the mocap data to the flight controller
 * If you are using **LPE**
 
 .. code-block:: bash
+
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
 
 
@@ -119,6 +120,7 @@ Check in ``QGroundControl`` that you get ``mocap init ....`` message which means
 * If you use **EKF2**
 
 .. code-block:: bash
+
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
 
@@ -174,3 +176,8 @@ The default log file format in PX4 is ``Ulog``. Usually, the default setting, is
 Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding mocap data at high rate.
 
 ![](/assets/log_ekf2_innov.png)
+
+
+.. image:: ../_static/log_ekf2_innov.png
+   :scale: 50 %
+   :align: center
