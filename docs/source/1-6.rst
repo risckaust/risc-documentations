@@ -5,7 +5,11 @@ Setting EKF2 Estimator for MOCAP Fusion
 -----
 
 * First choose ``ekf2`` as your estimator from the ``System`` tab
-![](/assets/ekf2_est.png)
+
+.. image:: ../_static/ekf2_est.png
+   :scale: 50 %
+   :align: center
+
 Also make sure the you set the baudrate correctly ``SYS_COMPANION``
 
 * In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use vision position and yaw.
@@ -44,24 +48,44 @@ Also make sure the you set the baudrate correctly ``SYS_COMPANION``
 
 
 
-
-
-
-
 Setting LPE Estimator for MOCAP Fusion
 ------
 
 You will need to set some parameters on Pixhawk as follows
 
-* Select **LPE** as your estimator. You can change that from the *System* tab in QGroundControl.
+* Select ``LPE`` as your estimator. You can change that from the ``System`` tab in ``QGroundControl``.
+
 * You will also need to use the highest baud rate for the serial connection. See below picture.
-![](/assets/systems_tab.png)
-* Use heading from mocap. Adjust the `ATT_EXT_HDG_M` parameter as follows
-![](/assets/heading.png)
-* You will need to set the `LPE_FUSION` parameter to **not** to use GPS and **not** to use barometer, since most likely your mocap altitude is highly accurate. See following picture.
-![](/assets/lpe_fusion.jpg)
+
+
+.. image:: ../_static/systems_tab.png
+   :scale: 50 %
+   :align: center
+
+
+* Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows
+
+.. image:: ../_static/heading.png
+   :scale: 50 %
+   :align: center
+
+
+* You will need to set the ``LPE_FUSION`` parameter to **not** to use GPS and **not** to use barometer, since most likely your mocap altitude is highly accurate. See following picture.
+
+
+.. image:: ../_static/lpe_fusion.jpg
+   :scale: 50 %
+   :align: center
+
+
 * Also, disable any altitude sensor e.g. LIDAR
-![](/assets/sensors.png)
+
+
+.. image:: ../_static/sensors.png
+   :scale: 50 %
+   :align: center
+
+
 * Restart Pixhawk
 
 
