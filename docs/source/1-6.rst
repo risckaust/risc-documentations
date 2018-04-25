@@ -50,9 +50,9 @@ Software Requirements
 
 Again, this is included in the provided image
 
-Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2``(default) an extended Kalman filter, and ``LPE``.
+Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2`` (default) an extended Kalman filter, and ``LPE``.
 
-``LPE` estimator supports mocap data directly. ``EKF2``, however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
+``LPE`` estimator supports mocap data directly. ``EKF2``, however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
 
 
 
