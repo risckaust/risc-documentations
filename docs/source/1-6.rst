@@ -4,7 +4,7 @@ Feeding MOCAP data to Pixhawk
 Setting EKF2 Estimator for MOCAP Fusion
 -----
 
-* First choose ``ekf2`` as your estimator from the ``System`` tab
+First choose ``ekf2`` as your estimator from the ``System`` tab
 
 .. image:: ../_static/ekf2_est.png
    :scale: 50 %
@@ -12,14 +12,14 @@ Setting EKF2 Estimator for MOCAP Fusion
 
 Also make sure the you set the baudrate correctly ``SYS_COMPANION``
 
-* In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use vision position and yaw.
+In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use vision position and yaw.
 
 .. image:: ../_static/ekf2_mask.png
    :scale: 50 %
    :align: center
 
 
-* There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/en/tutorials/tuning_the_ecl_ekf.html>`_
+There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/en/tutorials/tuning_the_ecl_ekf.html>`_
 
 
 .. image:: ../_static/ekf2_delay.png
@@ -27,7 +27,7 @@ Also make sure the you set the baudrate correctly ``SYS_COMPANION``
    :align: center
 
 
-* Choose the hight mode to be vision
+Choose the hight mode to be vision
 
 .. image:: ../_static/ekf2_hight_mode.png
    :scale: 50 %
@@ -35,7 +35,7 @@ Also make sure the you set the baudrate correctly ``SYS_COMPANION``
 
 
 
-* Set the position of the center of the markers (that define the rigid body in the mocap system) with respect to the center of the flight controller. +x points forward, +y right, +z down
+Set the position of the center of the markers (that define the rigid body in the mocap system) with respect to the center of the flight controller. +x points forward, +y right, +z down
 
 
 .. image:: ../_static/marker_pos.png
@@ -53,9 +53,9 @@ Setting LPE Estimator for MOCAP Fusion
 
 You will need to set some parameters on Pixhawk as follows
 
-* Select ``LPE`` as your estimator. You can change that from the ``System`` tab in ``QGroundControl``.
+Select ``LPE`` as your estimator. You can change that from the ``System`` tab in ``QGroundControl``.
 
-* You will also need to use the highest baud rate for the serial connection. See below picture.
+You will also need to use the highest baud rate for the serial connection. See below picture.
 
 
 .. image:: ../_static/systems_tab.png
@@ -63,14 +63,14 @@ You will need to set some parameters on Pixhawk as follows
    :align: center
 
 
-* Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows
+Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows
 
 .. image:: ../_static/heading.png
    :scale: 50 %
    :align: center
 
 
-* You will need to set the ``LPE_FUSION`` parameter to **not** to use GPS and **not** to use barometer, since most likely your mocap altitude is highly accurate. See following picture.
+You will need to set the ``LPE_FUSION`` parameter to **not** to use GPS and **not** to use barometer, since most likely your mocap altitude is highly accurate. See following picture.
 
 
 .. image:: ../_static/lpe_fusion.jpg
@@ -78,7 +78,7 @@ You will need to set some parameters on Pixhawk as follows
    :align: center
 
 
-* Also, disable any altitude sensor e.g. LIDAR
+Also, disable any altitude sensor e.g. LIDAR
 
 
 .. image:: ../_static/sensors.png
@@ -86,7 +86,7 @@ You will need to set some parameters on Pixhawk as follows
    :align: center
 
 
-* Restart Pixhawk
+Now Restart Pixhawk
 
 
 
@@ -96,54 +96,66 @@ You will need to set some parameters on Pixhawk as follows
 Getting MOCAP data into PX4
 -----
 
-1. Please refer to the [MOCAP-ROS interface tutorial](motion-capture-setup-and-wifi-communications.md) to get mocap data into ROS on your ODROID, by running `vrpn_client_ros` node
-2. You will need to run MAVROS node in order to connect ODROID to the flight controller.
-```bash
-roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.1.102:14550
-```
-`ttyUSB0` should match the serial port ID in your ODROID.
-`gcs_url:=udp://@192.168.1.102:14550` this is used to allow you to receive data to QGroundControl on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs QGC.
-3. relay the mocap data to the flight controller
-    * If you are using **LPE**
-```bash
-rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
-```
-Check in QGC that you get `mocap init ....` message which means mocap data is received by Pixhawk.
+Please refer to the **OptiTrack Interface to ROS** to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
 
-    * if you use **EKF2**
-```bash
-rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
-```
+You will need to run MAVROS node in order to connect ODROID to the flight controller.
+
+.. code-block:: bash
+
+	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.1.102:14550
+
+``ttyUSB0`` should match the serial port ID in your ODROID. ``gcs_url:=udp://@192.168.1.102:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
+
+Relay the mocap data to the flight controller
+
+* If you are using **LPE**
+
+.. code-block:: bash
+	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
+
+
+Check in ``QGroundControl`` that you get ``mocap init ....`` message which means mocap data is received by Pixhawk.
+
+* If you use **EKF2**
+
+.. code-block:: bash
+	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
 
 Now you are ready to use position hold/offboard modes.
 
-<div class="warning">
-It is very important that you align the forward direction of your drone (robot) with the x-axis of your mocap when you first define a rigid body. You can find the x-axis direction in the mocap software, Motive.
-</div>
+.. warning::
 
-<div class="warning">
-If you use the Ubuntu minimal image that is provided above, you will need to adjust the WiFi connection in order to connect to your WiFi router
-</div>
+	It is very important that you align the forward direction of your drone (robot) with the x-axis of your mocap when you first define a rigid body. You can find the x-axis direction in the mocap software, Motive.
 
-* connect 5Ghz WiFi module to ODROID XU4. Open a terminal in ODROID and type
-```bash
-ifconfig
-```
-in order to know your WiFi module ID number. It should be something like `wlan0`.
-* edit the `interfaces` file to provide the correct WiFi module ID you got above, and use your WiFi network name and password
-```bash
-nano /etc/network/interfaces
-```
-After you finish editing, use *CTRL+x* to try to exut. It will ask you if you want to save. Hit `Y` key and then `ENTER`.
 
-If it gives you error like  `permission denied` use,
-```bash
-sudo nano /etc/network/interfaces
-```
+.. warning::
 
-**DONE!**
+	If you use the Ubuntu minimal image that is provided above, you will need to adjust the WiFi connection in order to connect to your WiFi router
 
+
+Connect 5Ghz WiFi module to ODROID XU4. Open a terminal in ODROID and type
+
+.. code-block:: bash
+
+	ifconfig
+
+in order to know your WiFi module ID number. It should be something like ``wlan0``.
+
+Edit the ``interfaces`` file to provide the correct WiFi module ID you got above, and use your WiFi network name and password
+
+
+.. code-block:: bash
+
+	nano /etc/network/interfaces
+
+After you finish editing, use ``CTRL+X`` to try to exit. It will ask you if you want to save. Hit ``Y`` key and then ENTER.
+
+If it gives you error like  ``permission denied`` use,
+
+.. code-block:: bash
+	
+	sudo nano /etc/network/interfaces
 
 
 
@@ -152,10 +164,13 @@ Checking EKF2 Consistency via  Log Files
 
 It's important to make sure that EKF2 estimator provides accurate enough estimates of the states for your flight controller to perform well. A quick way to debug that is through the log files.
 
-The default log file format in PX4 is *Ulog*. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm.
+The default log file format in PX4 is ``Ulog``. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm.
 
-* Use QGC to download a Ulog file you wish to analyze
-* Download the [**FlightPlot**](https://pixhawk.org/dev/flightplot) software to open your logs.
-* Plot the fields `ekf2_innovations_0.vel_pos_innov[3]`, `ekf2_innovations_0.vel_pos_innov[4]`, `ekf2_innovations_0.vel_pos_innov[5]`
-Those are the innovations on the x/y/z position estimates reported by the EKF2. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then EKF2 is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the `EKF2_<sensor>_DELAY` paramters that affect the position estimates. For example, if you are using mocap, then you will need to adjust `EKF2_EV_DELAY`. It should be decreased if you are feeding mocap data at high rate.
+* Use QGC to download a ``Ulog`` file you wish to analyze
+
+* Download the `FlightPlot <https://pixhawk.org/dev/flightplot>`_ software to open your logs.
+
+* Plot the fields ``ekf2_innovations_0.vel_pos_innov[3]``, ``ekf2_innovations_0.vel_pos_innov[4]``, ``ekf2_innovations_0.vel_pos_innov[5]``
+Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding mocap data at high rate.
+
 ![](/assets/log_ekf2_innov.png)
