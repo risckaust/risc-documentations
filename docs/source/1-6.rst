@@ -1,6 +1,95 @@
 Feeding MOCAP data to Pixhawk
 =====
 
+
+.. image:: ../_static/mocap-ros.png
+   :scale: 50 %
+   :align: center
+
+
+Intro
+----
+
+This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to an ODROID, or an onboard linux computer. This will allow Pixhawk to have indoor position and heading information for position stabilization.
+
+Hardware Requirements
+-----
+
+* Pixhawk or simial controller that runs PX4 firmware
+* ODROID (we will assume XU4)
+* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using *Pixhawk 2*, then connect the serial cable to *TELEM2* port. If you are using *MindPX* flight controller, just use a USB to micro-USB cable.
+* OptiTrack PC
+* WiFi router (5GHz is recommended)
+
+Software Requirements
+------
+
+* Linux Ubuntu 16 installed on ODROID XU4. A minimal image is recommended for faster executions.
+
+.. hint::
+
+	A ready image for your eyes is available in `here <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_. This image has all the required software that is needed in this tutorial. You can use `Etcher <https://etcher.io/>`_ to flash your eMMC card with the provided ``.img`` file
+
+
+.. hint::
+
+	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card.
+
+
+* ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. The above image already includes this
+
+* ``MAVROS`` package: `Binary installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb>`_. Again, the above image includes this
+
+* Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. You can use the following command to install the package (assuming *ROS Kinetic* is used).
+
+
+.. code-block:: bash
+
+	sudo apt-get install ros-kinetic-vrpn-client-ros -y
+
+
+Again, this is included in the provided image
+
+Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2``(default) an extended Kalman filter, and ``LPE``.
+
+``LPE` estimator supports mocap data directly. ``EKF2``, however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Setting EKF2 Estimator for MOCAP Fusion
 -----
 
@@ -175,7 +264,6 @@ The default log file format in PX4 is ``Ulog``. Usually, the default setting, is
 * Plot the fields ``ekf2_innovations_0.vel_pos_innov[3]``, ``ekf2_innovations_0.vel_pos_innov[4]``, ``ekf2_innovations_0.vel_pos_innov[5]``
 Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding mocap data at high rate.
 
-![](/assets/log_ekf2_innov.png)
 
 
 .. image:: ../_static/log_ekf2_innov.png
