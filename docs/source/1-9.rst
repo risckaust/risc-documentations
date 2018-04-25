@@ -4,9 +4,7 @@ Setup HIL with PX4 & V-REP
 
 .. warning::
 
-	This is an old attempt to do hardware-in-the-loop simulation with VREP simulator and is deprecated. The current ongoing work is to make HIL with Gazebo via a MAVROS plugin. See following link.
-
-HIL with Gazebo via a ` MAVROS plugin in progress <https://github.com/mavlink/mavros/pull/684>`_.
+	This is an old attempt to do hardware-in-the-loop simulation with VREP simulator and is deprecated. The current ongoing work is to make HIL with Gazebo via a MAVROS plugin. See following link. HIL with Gazebo via a `MAVROS plugin in progress <https://github.com/mavlink/mavros/pull/684>`_.
 
 Prerequisites
 ----
