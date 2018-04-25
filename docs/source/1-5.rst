@@ -19,7 +19,7 @@ Required Software
 
 * Motive. This is the motion capture software that runs on the mocap machine. It allows you to calibrate your optitrack system, stream tracking information to external entities.
 
-* ROS *Kinetic* installed on your Linux computer. If you will use ODROID XU4, flash it with Ubuntu 16 and ROS Kinetic. Ready Ubuntu images with ROS Kinetic for your eyes are available. ([ubuntu16_minimal_image](https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0), [full_ubuntu16](https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0))
+* ROS *Kinetic* installed on your Linux computer. If you will use ODROID XU4, flash it with Ubuntu 16 and ROS Kinetic. Ready Ubuntu images with ROS Kinetic for your eyes are available. `ubuntu16_minimal_image <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_, `full_ubuntu16 <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_.
 
 You can use `Etcher <https://etcher.io/>`_ to flash your ODROID eMMC card with your Ubuntu ``.img`` file.
 
