@@ -17,7 +17,7 @@ Prerequisites
 
 * `V REP <http://www.coppeliarobotics.com/downloads.html>`_ installed
 
-* V-REP HIL scene: can be found in the ``catkin_ws/src/v_repExtRosInterface/vrep_hil``  folder after you run the setup .sh script
+* V-REP HIL scene: can be found in the ``catkin_ws/src/v_repExtRosInterface/vrep_hil``  folder after you run the setup ``.sh`` script.
 
 * Pixhawk loaded with PX4 HIL `firmware <https://github.com/PX4/Firmware/releases/tag/v1.4.4)>`_.
 
