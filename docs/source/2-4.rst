@@ -1,6 +1,8 @@
 Pixhawk Interface
 =====
 
+Intro
+-------
 
 OFFBOARD control means that we would like to be able to send (usually) high-level control commands to *Pixahwk*. For example, sending position, velocity , or acceleration set-points. Then, *Pixhawk* will receive those set-points and perform the neccessary low-level control (e.g. attitude/engines control).
 
@@ -23,10 +25,15 @@ Off-board serial interface
 Serial interface with Pixhawk can be done using:
 
 * Radio modules:
+
   - XBee module
+
   - 3DR telemetry module
+
 * Wired serial:
+
   - Direct serial interface
+
   - FTDI/USB
 
 
@@ -34,21 +41,29 @@ WiFi Interface with ESP-07
 -----
 
 
-In this tutorial, we are going to use the *ESP8266* WiFi module to communicate with *Pixhawk* via Wifi.
+In this tutorial, we are going to use the ``ESP8266`` WiFi module to communicate with *Pixhawk* via WiFi.
 
 Required:
-* [ESP-07 ESP8266 Serial Wi-Fi Wireless Transceiver Module](http://www.dx.com/p/esp-07-esp8266-serial-wi-f-wireless-module-w-built-in-antenna-compatible-with-3-3v-5v-for-arduino-400559#.V0rfbGMwzww)
-* [FTDI/USB cable](http://www.robotshop.com/en/ftdi-usb-to-ttl-serial-cable-5v.html): to flash firmware
+* ESP-07 ESP8266 Serial Wi-Fi Wireless Transceiver Module
+
+.. image:: ../_static/sku_400559_1.jpg
+   :scale: 50 %
+   :align: center
+
+
+* FTDI/USB cable to flash firmware
+
+.. image:: ../_static/ftdi-usb-to-ttl-serial-cable-5v_1.jpg
+   :scale: 50 %
+   :align: center
+
 
 Connect the FTDI/USB cable to the ESP module. The orange cable (TX) is connected to (RX) pin on the module. Yellow cable (RX) is connected to (TX) pin on the module. Connect the power (red) and ground (black).
 
 Follow the guide in the link below to flash the *mavesp8266* firmware.
 
-<div class="info">
-Follow the
-<a href="https://pixhawk.org/peripherals/8266">this guide</a>
-to setup the ESP8266.
-</div>
+
+Follow the `this guide <https://pixhawk.org/peripherals/8266>`_ to setup the ESP8266.
 
 **NOTE**: Use `platformio run -e esp01_1m -t upload` to upload the firmware to the board.
 
@@ -69,8 +84,8 @@ Now you are connected to Pixhawk via WiFi. The Wifi Module is in *Access point* 
 
 
 
-# WiFi Interface with WiFly RN XV
----
+WiFi Interface with WiFly RN XV
+-----
 
 
 In this section, we learn how to setup a WiFi communication with *Pixhawk* using the *RN-XV Wifly* module.
@@ -83,14 +98,17 @@ Requirements:
 
 In this tutorial, *TELEM2* is going to be used to connect the WiFi module at baud rate 921600. *TELEM1* can be used too, but will require further configuration steps, but you can stil use it direectly at baud 57600 (which is its default).
 
-<div class="info">
-It is recommended to set the baud rate of TELEM2 (or TELEM1) to 921600 for faster data exchange, and less latency.
-</div>
+.. info::
 
-## Pixhawk TELEM setup
+	It is recommended to set the baud rate of TELEM2 (or TELEM1) to 921600 for faster data exchange, and less latency.
+
+
+Pixhawk TELEM setup
+^^^^^^^
 To set the baude rate of *TELEM2* to 921600, connect *Pixhawk* to *Qgroundcontrol*. Go to the *System* tab. Change the *SYS_COMP* parameter to use companion with 921600 baudrate. Restart *Pixhawk* to take effect.
 
-## WiFi module setup
+WiFi module setup
+^^^^^^^
 
 Official Roving Network documentation
 * [Reference Manual](http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Wireless/WiFi/WiFly-RN-UM.pdf)
@@ -99,8 +117,11 @@ Connect the WiFi module to the XBee explorer USB board and connect it to the com
 
 On a Mac terminal, use the screen command to log into the Wifly
 
-```sh
-screen /dev/tty.usbserial-FTFABC 9600 8N1
+.. code-block:: bash
+
+	screen /dev/tty.usbserial-FTFABC 9600 8N1
+
+
 ```
 `/dev/tty.usbserial-FTFABC` is the device port on Mac. You can find yours using
 ```sh
@@ -182,10 +203,13 @@ save and reboot
 ```sh
 save
 reboot
-```
-<div class="error">
-Make sure that you save your settings, otherwise it will be lost
-</div>
+
+
+
+.. attention::
+
+	Make sure that you save your settings, otherwise it will be lost
+
 
 To check the settings current yon the device,
 IP settings:
@@ -225,14 +249,19 @@ set ip localport 2000
 ```
 set the remote host IP and remote port as before.
 
+
+
 Save and reboot
+
 ```sh
 save
 reboot
 ```
+
 Make sure that the device can join the WiFi netowrk. Log in to the device using (e.g. `screen` command), and type **\$\$\$**. Then join the network by typing `join <network ssid>`
 
 Once successful, you can now go to next step to set higher baud rates.
+
 #### Configure higher baud rates
 <div class="error">
 DO NOT set high baud rates while you are on serial (e.g. 921600), because you will not be able to log in again from the serial consol. You can set higher baud rate after you log in to the Wifly module via WiFi, using `telnet` command in Mac OS
