@@ -3,7 +3,7 @@ Motion Capture Setup: Optitrack
 
 
 Intro
----
+-----
 
 The setup of the *OptiTrack* ``mocap`` includes:
 
@@ -11,10 +11,10 @@ The setup of the *OptiTrack* ``mocap`` includes:
 * System calibration
 * Software, *Motive*, setup (e.g. creating rigid bodies)
 
-Next, we learn how to stream the position/orientation information of the objects (rigid bodies) to the *Pixhawk* for feedback. This is done using the custom-made streaming application, called ``OptiStream``.
+Next, we learn how to stream the position/orientation information of the objects (rigid bodies) to the *Pixhawk* for feedback. This is done using the custom-maade streaming application, called ``OptiStream``.
 
 Camera calibration
----
+-----
 
 
 Make sure that you remove any markers from the captured area before performing calibration.
@@ -43,18 +43,14 @@ Calibration video:
 
 
 Motive setup
----
+-----
 
 In this section, we mainly want to learn how to 
 
 * Create rigid bodies that represent objects to be tracked (e.g. quadrotor)
 * Activate the streaming of rigid bodies information (e.g. position orientation)
 
-Make sure that you have clean markers.
-
-Markers should not be placed in symmetric shape.
-
-Markers should not be close to each other.
+Make sure that you have clean markers. Markers should not be placed in symmetric shape. Markers should not be close to each other.
 
 Read `this guide <http://wiki.optitrack.com/index.php?title=Markers>`_ for markers setup.
 
@@ -62,7 +58,7 @@ Follow `this guide <http://wiki.optitrack.com/index.php?title=Rigid_Body_Trackin
 
 
 Setup streaming application (deprecated)
----
+-----
 
 In this section, we learn how to install and use the streaming application, *OptiStream*. *OptiStream* is used to receive rigid bodies information (i.e. position & orientation), and stream them to the desired *Pixhawk*.
 

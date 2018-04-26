@@ -26,11 +26,11 @@ Let's discuss in detail each element
 Motion capture system
 -----
 
-Motion capture (or ```mocap``` in brief) is used to provide high precision indoor local positions and orientation estimation of tracked objects. This is done using overhead cameras. The number of the objects the mocap system can track depends mainly on the camera types. At the time of writing this guide, RISC lab uses 20 Prime17w camera that are installed in the flying arena.
+Motion capture (or ``mocap`` in brief) is used to provide high precision indoor local positions and orientation estimation of tracked objects. This is done using overhead cameras. The number of the objects the mocap system can track depends mainly on the camera types. At the time of writing this guide, RISC lab uses 20 Prime17w camera that are installed in the flying arena.
   
 Objects are tracked by mounting retroflective markers on them that are rigidly attached.
   
-Elements of ```mocap```:
+Elements of ``mocap``:
 
   * Tracking cameras (Prime17w)
   * Network switches, to connect the cameras
@@ -39,7 +39,7 @@ Elements of ```mocap```:
 Object to be tracked e.g. quadrotors, ground vehicles.
 ------
 
-Objects are considered rigid bodies in the ```mocap``` system. They can be stationary or moving. There are 2 main types of information a rigid body (object) has in the ```mocap```: position and orientation. Position is in meters. Orientation are ``quaternion`` and can be converted to ``Euler`` angles, in radians.
+Objects are considered rigid bodies in the ``mocap`` system. They can be stationary or moving. There are 2 main types of information a rigid body (object) has in the ``mocap``: position and orientation. Position is in meters. Orientation are ``quaternion`` and can be converted to ``Euler`` angles, in radians.
 
 ``mocap`` setup is discussed in `here <http://risc.readthedocs.io/en/latest/2-2.html>`_.
 
