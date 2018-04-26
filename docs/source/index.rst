@@ -24,10 +24,17 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    1-4
    1-5
    1-6
+   1-10
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Special tutorials
+
    1-7
    1-8
    1-9
-   1-10
+   
 
 .. toctree::
    :maxdepth: 2
