@@ -11,7 +11,10 @@ Pixhawk Setup
 Pixhawk Autopilot
 -----
 
-> PIXHAWK is a high-performance autopilot-on-module suitable for fixed wing, multi rotors, helicopters, cars, boats and any other robotic platform that can move. It is targeted towards high-end research, amateur and industry needs and combines the functionality of the PX4FMU + PX4IO.
+
+.. line-block::
+
+	PIXHAWK is a high-performance autopilot-on-module suitable for fixed wing, multi rotors, helicopters, cars, boats and any other robotic platform that can move. It is targeted towards high-end research, amateur and industry needs and combines the functionality of the PX4FMU + PX4IO.
 
 See above link for the features.
 
@@ -19,4 +22,39 @@ In this guide, we are going to learn how to setup Pixhawk for indoor fly.
 
 
 
+Hardware setup
+-----
 
+
+> put a picture of the required hardware
+
+
+Required hardware:
+
+* Pixhawk
+* micro-USB cable
+* safety switch
+* power module
+* Telemetry module e.g. Xbee
+* Quadrotor frame
+* ESCs
+* Motors
+* Propellers
+* LiPo battery
+
+
+
+
+Firmware setup
+-----
+
+
+In this section, we are going to learn how to setup the flight controller firmware (code that is called *PX4 Firmware*) on the *Pixhawk* flight controller.
+
+Take a look at this video:
+
+
+
+.. raw:: html
+	
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
