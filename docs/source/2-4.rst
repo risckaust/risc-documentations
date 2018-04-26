@@ -8,7 +8,7 @@ OFFBOARD control means that we would like to be able to send (usually) high-leve
 
 In general, sending high-level commands is done off-board (board here refers to *Pixhawk*). In other words, an offboard computer is usually used to execute some code to take some high-level decisions. Then, high-level decisions are translated to set-points (e.g. position set-points) which, then, are sent to the *Pixhawk* to be executed. For example, an offboard computer can be used to do run some image processing algorithm for object tracking. The output of the algorithm is position set-points to tell *Pixhawk* to move to the direction of the tracked object.
 
-In general, executing such offboard tasks are not feasible due to the limited resources on *Pixhwak*. Therefore, more powerful computers are used.
+In general, executing such offboard tasks are not feasible due to the limited resources on *Pixhawk*. Therefore, more powerful computers are used.
 
 Offboard computers can be single board computer (or SBC in brief), e.g. ``ODROID XU4``. Or, it can be a fully loaded workstaton, desktop, or laptop.
 
@@ -44,14 +44,15 @@ WiFi Interface with ESP-07
 In this tutorial, we are going to use the ``ESP8266`` WiFi module to communicate with *Pixhawk* via WiFi.
 
 Required:
-* ESP-07 ESP8266 Serial Wi-Fi Wireless Transceiver Module
+
+* `ESP\-07 ESP8266 Serial Wi\-Fi Wireless Transceiver Module <http://www.dx.com/p/esp-07-esp8266-serial-wi-f-wireless-module-w-built-in-antenna-compatible-with-3-3v-5v-for-arduino-400559#.WuHT8J9fi91>`_
 
 .. image:: ../_static/sku_400559_1.jpg
    :scale: 50 %
    :align: center
 
 
-* FTDI/USB cable to flash firmware
+* `FTDI\/USB cable to flash firmware <https://www.robotshop.com/en/ftdi-usb-to-ttl-serial-cable-5v.html>`_
 
 .. image:: ../_static/ftdi-usb-to-ttl-serial-cable-5v_1.jpg
    :scale: 50 %
