@@ -52,7 +52,7 @@ Required:
    :align: center
 
 
-* `FTDI\/USB cable to flash firmware <https://www.robotshop.com/en/ftdi-usb-to-ttl-serial-cable-5v.html>`_
+* `FTDI\/USB cable <https://www.robotshop.com/en/ftdi-usb-to-ttl-serial-cable-5v.html>`_ to flash firmware.
 
 .. image:: ../_static/ftdi-usb-to-ttl-serial-cable-5v_1.jpg
    :scale: 50 %
@@ -61,27 +61,39 @@ Required:
 
 Connect the FTDI/USB cable to the ESP module. The orange cable (TX) is connected to (RX) pin on the module. Yellow cable (RX) is connected to (TX) pin on the module. Connect the power (red) and ground (black).
 
-Follow the guide in the link below to flash the *mavesp8266* firmware.
 
+Follow the `this guide <https://pixhawk.org/peripherals/8266>`_ to flash and setup the ESP8266.
 
-Follow the `this guide <https://pixhawk.org/peripherals/8266>`_ to setup the ESP8266.
+.. note::
+  Use ``platformio run -e esp01_1m -t upload`` to upload the firmware to the board.
 
-**NOTE**: Use `platformio run -e esp01_1m -t upload` to upload the firmware to the board.
 
 Connect the module to the Pixhawk as follows.
-![](pixhawk_telem_cable.png)
-* **NOTE:** You first need to make sure that you configured `TELEM2` port to be used for ESP link with baud 921600. You can do this, by first, connecting to Pixhawk via USB, and modify the `SYS_COMP` parameter in the **System** tab on the left. Now, you can proceed.
-* Power-on the Pixhawk with the WiFi module connected to `TELEM2` as mentioned above.
-* Search for the *Pixracer* WiFi netwrok. Connect to that network with the password *pixracer*.
-* Open QgroundControl and connect using UDP connection.
-
-Now you are connected to Pixhawk via WiFi. The Wifi Module is in *Access point* mode by default, and it creates its own WiFi network (Pixracer). If you wish to connect to your own local WiFi network, then
-* in QGC, while you are connected to *Pixracer* network, go to the **WiFi Bridge** tab on the left and choose *station mode*.
-* Write the desired network name and password in the appropriate field.
-* Restart Pixhawk, and the WiFi module should try to connect to your local network.
-* Now, you can connect your machine to the same local network, then connect to Pixhawk from QGC via UDP.
 
 
+.. image:: ../_static/pixhawk_telem_cable.png
+   :scale: 50 %
+   :align: center
+
+
+
+.. important:: 
+  
+  You first need to make sure that you configured ``TELEM2`` port to be used for ESP link with baud 921600. You can do this, by first, connecting to Pixhawk via USB, and modify the ``SYS_COMP`` parameter in the ``System`` tab on the left. Now, you can proceed.
+
+Power-on the Pixhawk with the WiFi module connected to ``TELEM2`` as mentioned above.
+
+Search for the **Pixracer** WiFi network. Connect to that network with the password **pixracer**.
+
+Open QGroundControl and connect using UDP connection.
+
+Now you are connected to Pixhawk via WiFi. The Wifi Module is in *Access point* mode by default, and it creates its own WiFi network (**Pixracer**). If you wish to connect to your own local WiFi network, then in QGC, while you are connected to *Pixracer* network, go to the **WiFi Bridge** tab on the left and choose *station mode*.
+
+Write the desired network name and password in the appropriate field.
+
+Restart Pixhawk, and the WiFi module should try to connect to your local network.
+
+Now, you can connect your machine to the same local network, then connect to Pixhawk from QGroundControl via UDP.
 
 
 
