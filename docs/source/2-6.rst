@@ -47,9 +47,10 @@ The previous images are bare images in the sense that you will have to install a
 
 If you want a ready image with most of the required software *in this tutorial*, you can find a minimal image (no GUI) for your eyes in [this link](https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0).
 
-<div class="warning">
-Until you setup a WiFi connection, you will need to use an ethernet cable to connect your odroid to internet.
-</div>
+.. note::
+
+	Until you setup a WiFi connection, you will need to use an ethernet cable to connect your odroid to internet.
+
 
 User account setup
 """""""""""
@@ -57,22 +58,26 @@ User account setup
 After a fresh Ubuntu installation, it is recommended to setup a user account for easier handling in the future. The Ubuntu full image (that you download from ODROID repo) already comes with an account called *odroid*  with default password *odroid*. However, the minimal image (or sometimes called Ubuntu server) is just a bare bones image, and you will need to do a lot of configuration to get it ready.
 
 * In the minimal image, you can add a user account (call it *odroid*) using the following commands. You can do this by plugging a screen, keyboard/mouse, or through the [console cable](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934). If you use the console cable, login using the root account (user: *root*, password: *odroid*). Also make sure that your odroid is connected to internet via ethernet cable.
-```bash
-adduser odroid
-adduser odroid sudo
-apt-get update
-apt-get upgrade
-```
 
-<div class="info">
+.. code-block:: bash
+
+	adduser odroid
+	adduser odroid sudo
+	apt-get update
+	apt-get upgrade
+
+
+
 If you use the minimal image above (that is already pre-configured), skip this step.
-</div>
 
-* Also, add user to `dialout` group to access serial ports
-```bash
-sudo adduser odroid dialout
-```
-`odroid` is the account/user name.
+
+Also, add user to ``dialout`` group to access serial ports
+
+.. code-block:: bash
+
+	sudo adduser odroid dialout
+
+where ``odroid`` is the account/user name.
 
 Network Setup
 ^^^^^^^^^
@@ -117,7 +122,7 @@ add the following
 
 .. note::
 
-	You will need modify 'wlan0' to match the wifi card number on your odroid once the wifi device is connected. Is possible that it changes when you change the wifi device.
+	You will need modify ``wlan0`` to match the wifi card number on your odroid once the wifi device is connected. Is possible that it changes when you change the wifi device.
 
 
 	To check your wifi card number,
@@ -139,19 +144,24 @@ Install ROS
 
 To install ROS on ODROID or ARM-based single-board-computer, follow the [instructions](http://wiki.ros.org/Installation/UbuntuARM) that is mentioned on the ROS websites. We assume that ROS Kinetic is used.
 
-<div class="info">
-Install the 'ROS-Base: (Bare Bones)' not the full desktop version
-</div>
-So, when you reach the step to install ROS using `apt-get`, **don't execute**
-```bash
-sudo apt-get install ros-kinetic-desktop-full
-```
-Instead, **you execute**,
-```bash
-sudo apt-get install ros-kinetic-ros-base
-```
+.. important::
+	
+	Install the ROS-Base: (Bare Bones) not the full desktop version
 
-After installing ROS, you can install ROS packages that you need individually either by using `apt-get` or from source.
+So, when you reach the step to install ROS using ``apt-get``, **don't execute**
+
+..code-block:: bash
+
+	sudo apt-get install ros-kinetic-desktop-full
+
+Instead, **you execute**,
+
+..code-block:: bash
+
+	sudo apt-get install ros-kinetic-ros-base
+
+
+After installing ROS, you can install ROS packages that you need individually either by using ``apt-get`` or from source.
 
 Install MAVROS
 """"""""""""""
@@ -165,30 +175,34 @@ Install OpenCV
 
 Apparently, there are different ways to install OpenCV depending on the OpenCV version and your Python version, if you want to use it with Python. There are plenty of tutorial to follow and you can choose the one that suits your requirements. Normal procedures for general Ubuntu can be used. Here, one way is mentioned to install certain opencv version from source.
 Use the following shell commands to install OpenCV,
-```sh
 
-### INSTALL OPENCV DEPENDENCIES ###
-sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
-```
+..code-block:: bash
+
+	### INSTALL OPENCV DEPENDENCIES ###
+	sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
+
 
 You can choose your suitable opencv versoin (check opnecv website) and execute the following
-```sh
-### GET OPENCV SOURCE ###
-cd ~
-wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip
-unzip opencv-2.4.9.zip
-rm opencv-2.4.9.zip
-cd opencv-2.4.9
-```
 
-```sh
-### BUILD AND INSTALL OPENCV ###
-mkdir build
-cd build
-cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_OPENGL=ON -DWITH_V4L=ON -DWITH_TBB=ON -DBUILD_TBB=ON -DENABLE_VFPV3=ON -DENABLE_NEON=ON ..
-make
-sudo make install
-```
+.. code-block:: bash
+
+	### GET OPENCV SOURCE ###
+	cd ~
+	wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip
+	unzip opencv-2.4.9.zip
+	rm opencv-2.4.9.zip
+	cd opencv-2.4.9
+
+
+..code-block:: bash
+
+	### BUILD AND INSTALL OPENCV ###
+	mkdir build
+	cd build
+	cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_OPENGL=ON -DWITH_V4L=ON -DWITH_TBB=ON -DBUILD_TBB=ON -DENABLE_VFPV3=ON -DENABLE_NEON=ON ..
+	make
+	sudo make install
+
 
 References
 ^^^^^^
