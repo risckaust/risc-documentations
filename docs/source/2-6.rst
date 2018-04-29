@@ -17,7 +17,9 @@ List of components
 * `eMMC reader <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758>`_.
 * `Micro\-SD reader <https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&node=516872>`_.
 * `USB\-UART Module Kit <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934>`_.
-* `WiFi Module 3 \(2\.4Ghz only\)\, good for outdoor use <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369>`_ or `WiFi Module 5 dual band 2\.4\/5Ghz\, good for high\-bandwidth <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389>`_.
+
+* `WiFi Module 3 \(2\.4Ghz only\) <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369>`_ good for outdoor use,  or `WiFi Module 5 dual band 2\.4\/5Ghz <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389>`_ good for high-bandwidth. 
+
 * `DC plug cable \- for onboard\/portable power connection <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056>`_.
 * `Ethernet cable <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141637576518>`_.
 
@@ -31,13 +33,15 @@ Here we will discuss how to setup Ubuntu 16.04LTS
 Flashing Ubuntu image
 """""""
 
-You can use either an SD card or [eMMC](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287). eMMC is recommended as it is much faster than SD card. (16GB (or more) is recommended).
+You can use either an SD card or `eMMC <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_. eMMC is recommended as it is much faster than SD card, 16GB or more is recommended.
 
 You can flash either full ubuntu image with GUI [ubuntu-16.04.3-4.14-mate-odroid-xu4-20171212.img.xz](https://odroid.in/ubuntu_16.04lts/) or minimal image [ubuntu-16.04.3-4.14-minimal-odroid-xu4-20171213.img.xz](https://odroid.in/ubuntu_16.04lts/). Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image to obtain the `.img` image. Then, use Etcher to flash it to either SD or eMMC card.
 You can extract the `/xz` image using
-```bash
-xz -d /path/to/image.img.xz
-```
+
+.. code-block:: bash
+
+	xz -d /path/to/image.img.xz
+
 
 The previous images are bare images in the sense that you will have to install all required software in this tutorial yourself e.g. ROS, MAVORS, OpenCV, ...etc.
 
@@ -195,7 +199,7 @@ Here is a [video for reference](https://www.youtube.com/watch?v=sLLF-Ml2sIo) whi
 Raspberry Pi Setup
 ---------
 
-.. important::
+.. note::
 
 	To be done.
 
@@ -206,6 +210,6 @@ Intel NUC setup
 -------
 
 
-.. important::
+.. note::
 
 	To be done.
