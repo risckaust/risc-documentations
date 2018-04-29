@@ -5,25 +5,27 @@ Companion Computers
 ODROID XU4 setup
 ------
 
-<center>
-<img src="odroidxu4.jpg" alt="odroid" style="width: 250px;"/>
-</center>
+.. image:: ../_static/odroidxu4.jpg
+   :scale: 50 %
+   :align: center
 
 List of components
 ^^^^^^^
 
-* [ODROID XU4](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G143452239825)
-* [16GB (or more) eMMc module](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287)
-* [eMMC reader](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758)
-* micro-SD reader: check [this link](https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&node=516872)
-* [USB-UART Module Kit](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934)
-* [WiFi Module 3 (2.4Ghz only), good for outdoor use](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369) or [WiFi Module 5 dual band 2.4/5Ghz, good for high-bandwidth](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389)
-* [DC plug cable- for onboard/portable power connection](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056)
-* [Ethernet cable](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141637576518)
+* `ODROID XU4 <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G143452239825>`_.
+* `16GB \(or more\) eMMc module <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_.
+* `eMMC reader <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758>`_.
+* `Micro\-SD reader <https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&node=516872>`_.
+* `USB\-UART Module Kit <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934>`_.
+* `WiFi Module 3 \(2\.4Ghz only\)\, good for outdoor use <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369>`_ or `WiFi Module 5 dual band 2\.4\/5Ghz\, good for high\-bandwidth <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389>`_.
+* `DC plug cable \- for onboard\/portable power connection <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056>`_.
+* `Ethernet cable <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141637576518>`_.
 
 Setup Ubuntu
 ^^^^^^
-ODROID XU 4 supports both Ubuntu and Android, see the details on [odroid page](http://www.hardkernel.com/main/products/prdt_info.php).
+
+ODROID XU 4 supports both Ubuntu and Android, see the details on `odroid page <http://www.hardkernel.com/main/products/prdt_info.php>`_.
+
 Here we will discuss how to setup Ubuntu 16.04LTS
 
 Flashing Ubuntu image
