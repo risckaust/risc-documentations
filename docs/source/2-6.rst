@@ -150,13 +150,13 @@ To install ROS on ODROID or ARM-based single-board-computer, follow the [instruc
 
 So, when you reach the step to install ROS using ``apt-get``, **don't execute**
 
-..code-block:: bash
+.. code-block:: bash
 
 	sudo apt-get install ros-kinetic-desktop-full
 
 Instead, **you execute**,
 
-..code-block:: bash
+.. code-block:: bash
 
 	sudo apt-get install ros-kinetic-ros-base
 
@@ -176,7 +176,7 @@ Install OpenCV
 Apparently, there are different ways to install OpenCV depending on the OpenCV version and your Python version, if you want to use it with Python. There are plenty of tutorial to follow and you can choose the one that suits your requirements. Normal procedures for general Ubuntu can be used. Here, one way is mentioned to install certain opencv version from source.
 Use the following shell commands to install OpenCV,
 
-..code-block:: bash
+.. code-block:: bash
 
 	### INSTALL OPENCV DEPENDENCIES ###
 	sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
@@ -194,7 +194,7 @@ You can choose your suitable opencv versoin (check opnecv website) and execute t
 	cd opencv-2.4.9
 
 
-..code-block:: bash
+.. code-block:: bash
 
 	### BUILD AND INSTALL OPENCV ###
 	mkdir build
