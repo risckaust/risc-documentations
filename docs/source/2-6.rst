@@ -1,0 +1,209 @@
+Companion Computers
+=========
+
+
+ODROID XU4 setup
+------
+
+<center>
+<img src="odroidxu4.jpg" alt="odroid" style="width: 250px;"/>
+</center>
+
+List of components
+^^^^^^^
+
+* [ODROID XU4](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G143452239825)
+* [16GB (or more) eMMc module](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287)
+* [eMMC reader](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758)
+* micro-SD reader: check [this link](https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&node=516872)
+* [USB-UART Module Kit](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934)
+* [WiFi Module 3 (2.4Ghz only), good for outdoor use](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369) or [WiFi Module 5 dual band 2.4/5Ghz, good for high-bandwidth](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389)
+* [DC plug cable- for onboard/portable power connection](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056)
+* [Ethernet cable](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141637576518)
+
+Setup Ubuntu
+^^^^^^
+ODROID XU 4 supports both Ubuntu and Android, see the details on [odroid page](http://www.hardkernel.com/main/products/prdt_info.php).
+Here we will discuss how to setup Ubuntu 16.04LTS
+
+Flashing Ubuntu image
+"""""""
+
+You can use either an SD card or [eMMC](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287). eMMC is recommended as it is much faster than SD card. (16GB (or more) is recommended).
+
+You can flash either full ubuntu image with GUI [ubuntu-16.04.3-4.14-mate-odroid-xu4-20171212.img.xz](https://odroid.in/ubuntu_16.04lts/) or minimal image [ubuntu-16.04.3-4.14-minimal-odroid-xu4-20171213.img.xz](https://odroid.in/ubuntu_16.04lts/). Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image to obtain the `.img` image. Then, use Etcher to flash it to either SD or eMMC card.
+You can extract the `/xz` image using
+```bash
+xz -d /path/to/image.img.xz
+```
+
+The previous images are bare images in the sense that you will have to install all required software in this tutorial yourself e.g. ROS, MAVORS, OpenCV, ...etc.
+
+If you want a ready image with most of the required software *in this tutorial*, you can find a minimal image (no GUI) for your eyes in [this link](https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0).
+
+<div class="warning">
+Until you setup a WiFi connection, you will need to use an ethernet cable to connect your odroid to internet.
+</div>
+
+User account setup
+"""""""""""
+
+After a fresh Ubuntu installation, it is recommended to setup a user account for easier handling in the future. The Ubuntu full image (that you download from ODROID repo) already comes with an account called *odroid*  with default password *odroid*. However, the minimal image (or sometimes called Ubuntu server) is just a bare bones image, and you will need to do a lot of configuration to get it ready.
+
+* In the minimal image, you can add a user account (call it *odroid*) using the following commands. You can do this by plugging a screen, keyboard/mouse, or through the [console cable](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934). If you use the console cable, login using the root account (user: *root*, password: *odroid*). Also make sure that your odroid is connected to internet via ethernet cable.
+```bash
+adduser odroid
+adduser odroid sudo
+apt-get update
+apt-get upgrade
+```
+
+<div class="info">
+If you use the minimal image above (that is already pre-configured), skip this step.
+</div>
+
+* Also, add user to `dialout` group to access serial ports
+```bash
+sudo adduser odroid dialout
+```
+`odroid` is the account/user name.
+
+Network Setup
+^^^^^^^^^
+
+It is recommended that you use static IP address if you plan to use ODROID via a WiFi network. This will reduce latency over wifi.
+
+to set static IP address on full Ubuntu using GUI, check the [this video](https://www.youtube.com/watch?v=o9fJWDoX4nE)
+
+
+.. warning::
+	
+	You might need to reserve the IP on the router side
+
+
+To set a static IP address on Ubuntu server (minimal image), do the following.
+* add the following lines in the `/etc/network/interfaces` file.
+
+
+.. code-block:: bash
+	
+	nano /etc/network/interfaces
+
+
+add the following
+
+
+.. code-block:: bash
+
+	auto wlan0
+	# the following will auto-start connection after boot
+	allow-hotplug wlan0
+	iface wlan0 inet static
+	address 192.168.1.131 # choose a static IP, usually you change the last number only for different devices
+	netmask 255.255.255.0
+	broadcast 192.168.1.255
+	gateway 192.168.1.1 # your router IP
+	dns-nameservers 8.8.8.8
+	wpa-ssid "wifi_name"
+	wpa-psk "wifi_password"
+
+
+
+.. note::
+
+	You will need modify 'wlan0' to match the wifi card number on your odroid once the wifi device is connected. Is possible that it changes when you change the wifi device.
+
+
+	To check your wifi card number,
+
+	.. code-block:: bash
+		
+		ifconfig -a
+
+	If you use the provided minimal image above (that is already pre-configured), but you will need to adjust the WiFi name and password to match your router access point that you use.
+
+
+
+
+Installing packages
+^^^^^^^^^^^^^^^
+
+Install ROS
+""""""""""""""
+
+To install ROS on ODROID or ARM-based single-board-computer, follow the [instructions](http://wiki.ros.org/Installation/UbuntuARM) that is mentioned on the ROS websites. We assume that ROS Kinetic is used.
+
+<div class="info">
+Install the 'ROS-Base: (Bare Bones)' not the full desktop version
+</div>
+So, when you reach the step to install ROS using `apt-get`, **don't execute**
+```bash
+sudo apt-get install ros-kinetic-desktop-full
+```
+Instead, **you execute**,
+```bash
+sudo apt-get install ros-kinetic-ros-base
+```
+
+After installing ROS, you can install ROS packages that you need individually either by using `apt-get` or from source.
+
+Install MAVROS
+""""""""""""""
+
+This package is used to interface MAVLink-based autopilots to ROS.
+
+We will simply follow the well documented wiki on MAVROS github page. For simplicity, use the binary installation which is enough for most of the use cases.
+
+Install OpenCV
+"""""""""""""
+
+Apparently, there are different ways to install OpenCV depending on the OpenCV version and your Python version, if you want to use it with Python. There are plenty of tutorial to follow and you can choose the one that suits your requirements. Normal procedures for general Ubuntu can be used. Here, one way is mentioned to install certain opencv version from source.
+Use the following shell commands to install OpenCV,
+```sh
+
+### INSTALL OPENCV DEPENDENCIES ###
+sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
+```
+
+You can choose your suitable opencv versoin (check opnecv website) and execute the following
+```sh
+### GET OPENCV SOURCE ###
+cd ~
+wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip
+unzip opencv-2.4.9.zip
+rm opencv-2.4.9.zip
+cd opencv-2.4.9
+```
+
+```sh
+### BUILD AND INSTALL OPENCV ###
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local -DWITH_OPENGL=ON -DWITH_V4L=ON -DWITH_TBB=ON -DBUILD_TBB=ON -DENABLE_VFPV3=ON -DENABLE_NEON=ON ..
+make
+sudo make install
+```
+
+References
+^^^^^^
+
+Here is a [video for reference](https://www.youtube.com/watch?v=sLLF-Ml2sIo) which explains how to install OpenCV on ODROID XU4.
+
+
+Raspberry Pi Setup
+---------
+
+.. important::
+
+	To be done.
+
+
+
+
+Intel NUC setup
+-------
+
+
+.. important::
+
+	To be done.
