@@ -95,6 +95,7 @@ What we need in this tutorial is to
 
 
 * Select the proper *Vehicle ID*
+
 * In the ``Serial Connection`` tab, select the proper serial port of the communication module from the ``Port Name`` drop menu. Set the ``Baud Rate`` to *57600*. Finally, click the ``Connect`` button. If the connection is successful, it will show a status message in the ``Port Status`` field.
 
 * In the ``Mocap Connection`` tab, leave the ``Mocap IP`` and ``Client IP`` to the defaults IPs (``127.0.0.1``). Hit the ``Connect`` button.
@@ -119,7 +120,8 @@ In this Demo, ODROID is used to capture real-time images and stream them over Wi
 
 Check `this guide <https://github.com/mzahana/Image_Live_Stream>`_ to see how to install the streaming app on ODROID.
 
-To run the application, follow the following steps in order,
+To run the application, follow the following steps in order
+
 * Connect a compatible camera to ODROID
 * Connect a compatibe WiFi module to ODROID (use the ODROID WiFi adapter)
 * Power on the ODROID
@@ -168,6 +170,7 @@ Before you use the MATLAB files associated with this demo, you should setup your
 	Before you use the MATLAB files associated with this demo, you should setup your enviornment properly. Namely, you need to associate your MATLAB with a C/C++ compiler, and instal OpenCV.
 
 Please follow the OpenCV installation as follows,
+
 * For `Mac OS <https://www.youtube.com/watch?v=U49CVY8yOxw>`_.
 * For `Windows <https://www.youtube.com/watch?v=EcFtefHEEII>`_.
 

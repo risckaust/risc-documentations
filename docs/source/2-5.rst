@@ -24,7 +24,7 @@ Intro
 
 OFFBOARD control means that the autopilot controller is commanded by some high-level controller e.g. companion computer (like *ODROID* or *Raspberry Pi*). We are going to work with PX4 autopilot. PX4 accepts the following high-level commands
 
-* Poisition setpoints
+* Position setpoints
 * Velocity setpoints
 * Attitude (and attitude rates) + thrust setpoints
 
@@ -40,13 +40,16 @@ The way that is explained here is by using `MAVROS <http://wiki.ros.org/mavros>`
 Steps
 ^^^^^
 
-The framework works as follows,
+The framework works as follows
+
 * You will set an RC switch on your RC controller to activate/deactivate OFFBOARD mode
+
 * Once OFFBOARD mode is activated, you should already be sending setpoints at least two times per second *2Hz*
+
 * You will write a Python node that publishes setpoints to certain ``MAVROS`` topics at least at *2Hz*
+
 * ``MAVROS`` will take the published setpoints and send the appropriately to the flight controller
 
-That is it!
 
 Setting RC switch for OFFBOARD Mode
 ^^^^^^^^
@@ -55,16 +58,15 @@ Writing Setpoints Python Node
 ^^^^^^^
 
 
-
-
 Off-board control from MATLAB
 ------
 
 
 Requirements:
+
 * *MatMav* toolbox: to run offboard control from *MATLAB*
 
-<div class="info">
-Find MATMAV tutorials in,
-https://mzahana.gitbooks.io/matmav-guide/content/
-</div>
+
+.. note::
+
+	Find MATMAV tutorials `here <https://mzahana.gitbooks.io/matmav-guide/content/>`_.

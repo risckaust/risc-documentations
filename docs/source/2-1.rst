@@ -21,7 +21,7 @@ The overall systems has 3 main elements:
 * Object to be tracker
 * Controller
 
-Let's discuss in detail each element
+Let's discuss each element in details
 
 Motion capture system
 -----
@@ -32,9 +32,9 @@ Objects are tracked by mounting retroflective markers on them that are rigidly a
   
 Elements of ``mocap``:
 
-  * Tracking cameras (Prime17w)
-  * Network switches, to connect the cameras
-  * Mocap PC which runs the ```mocap``` software, Motive, that provides the tracking features.
+* Tracking cameras (Prime17w)
+* Network switches, to connect the cameras
+* Mocap PC which runs the ```mocap``` software, Motive, that provides the tracking features.
   
 Object to be tracked e.g. quadrotors, ground vehicles.
 ------
@@ -50,4 +50,4 @@ Controllers are PCs or single board computer (SBC) which are used to control the
 
 A companion computer is referred to an SBC that is connected to a flight controller. Usually, SBC is used to perform more sophisticated/high computations that the flight controller can not. In other words, the flight controller is designed for low-level tasks e.g. attitude control, motor driving, sensor data aquisition. However, the companion computer is used for high-level-control e.g. path planning, optimization.
   
-In this guide, a special attention is given to the use of `Pixhawk flight controller <http://risc.readthedocs.io/en/latest/2-3.html>`_  and  `ODROID <>`_ SBC, as a companion computer.
+In this guide, a special attention is given to the use of `Pixhawk flight controller <http://risc.readthedocs.io/en/latest/2-3.html>`_  and  `ODROID <http://risc.readthedocs.io/en/latest/2-6.html>`_ SBC, as a companion computer.

@@ -106,9 +106,9 @@ In this section, we learn how to setup a WiFi communication with *Pixhawk* using
 Requirements:
 
 * *Pixhawk*: calibrated and ready to fly
-* WiFi module: [RN-XV WiFly Module - Wire Antenna](https://www.sparkfun.com/products/10822)
-* [XBee explorer USB](https://www.sparkfun.com/products/11812): to configure WiFi module via PC
-* [Xbee breakout board](http://www.robotshop.com/en/droids-xbee-simple-board.html): to interface with *Pixhawk*
+* WiFi module [RN-XV WiFly Module - Wire Antenna. Available `here <https://www.sparkfun.com/products/10822>`_.
+* `XBee explorer USB <https://www.sparkfun.com/products/11812>`_ to configure WiFi module via PC
+* `Xbee breakout board <http://www.robotshop.com/en/droids-xbee-simple-board.html>`_ to interface with *Pixhawk*
 
 In this tutorial, ``TELEM2`` is going to be used to connect the WiFi module at baud rate 921600. ``TELEM1`` can be used too, but will require further configuration steps, but you can stil use it direectly at baud ``57600`` (which is its default).
 
@@ -277,6 +277,7 @@ Save and reboot
 
 
 To check the settings current yon the device,
+
 * IP settings:
 
 
@@ -285,7 +286,7 @@ To check the settings current yon the device,
   get ip
 
 
-*WiFi settings:
+* WiFi settings:
 
 
 .. code-block:: bash
@@ -293,7 +294,7 @@ To check the settings current yon the device,
   get wlan
 
 
-*Serial settings:
+* Serial settings:
 
 .. code-block:: bash
 

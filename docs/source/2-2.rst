@@ -23,9 +23,9 @@ Make sure that you use clean markers on the wanding stick.
 
 The calibration invloves three main steps
 
-  * sample collections using the wanding stick
-  * ground setting using the L-shape tool
-  * ground refinement
+* Sample collections using the wanding stick
+* Ground setting using the L-shape tool
+* Ground refinement
 
 Follow `this guide <http://wiki.optitrack.com/index.php?title=Calibration>`_ in order to perform the calibration.
 
@@ -68,6 +68,7 @@ In this section, we learn how to install and use the streaming application, *Opt
    :align: center
 
 Requirements:
+
 * *OptiStream* Windows Aplication.
 
 .. note::

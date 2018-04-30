@@ -89,10 +89,15 @@ Calibration process
 -----
 
 * Download ``QGroundControl`` on your PC and open it.
+
 * Connect Pixhawk with your PC via USB. You should see it connected in the software.
+
 * In ``Airframe tab`` choose proper airframe according to the one you have.
+
 * In ``Radio tab`` click ``Calibrate`` button and follow instructions.
+
 * In ``Sensors tab`` calibrate all the sensors following the instructions. After calibration they will be green. Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press ``OK`` and move on to the next.
+
 * In ``Flight Modes tab``
 
   - Modes: Channel 6 (marked as ``FLAP/GYRO``)
@@ -130,7 +135,7 @@ Trouble shooting
 
 * Motors not rotating while armed and rotates with higher throttle
 
-Check PWM min/max in parameters and make sure it’s associated with ESCs
+  - Check PWM min/max in parameters and make sure it’s associated with ESCs
 
 
 

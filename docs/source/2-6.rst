@@ -35,8 +35,8 @@ Flashing Ubuntu image
 
 You can use either an SD card or `eMMC <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_. eMMC is recommended as it is much faster than SD card, 16GB or more is recommended.
 
-You can flash either full ubuntu image with GUI [ubuntu-16.04.3-4.14-mate-odroid-xu4-20171212.img.xz](https://odroid.in/ubuntu_16.04lts/) or minimal image [ubuntu-16.04.3-4.14-minimal-odroid-xu4-20171213.img.xz](https://odroid.in/ubuntu_16.04lts/). Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image to obtain the `.img` image. Then, use Etcher to flash it to either SD or eMMC card.
-You can extract the `/xz` image using
+
+You can flash either `full ubuntu image with GUI <https://odroid.in/ubuntu_16.04lts>`_ or `minimal image <https://odroid.in/ubuntu_16.04lts>`_. Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image to obtain the ``.img`` image. Then, use ``Etcher`` to flash it to either SD or eMMC card. You can extract the ``/xz`` image using
 
 .. code-block:: bash
 
@@ -45,7 +45,7 @@ You can extract the `/xz` image using
 
 The previous images are bare images in the sense that you will have to install all required software in this tutorial yourself e.g. ROS, MAVORS, OpenCV, ...etc.
 
-If you want a ready image with most of the required software *in this tutorial*, you can find a minimal image (no GUI) for your eyes in [this link](https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0).
+If you want a ready image with most of the required software *in this tutorial*, you can find a minimal image (no GUI) for your eyes `here <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_.
 
 .. note::
 
@@ -57,7 +57,7 @@ User account setup
 
 After a fresh Ubuntu installation, it is recommended to setup a user account for easier handling in the future. The Ubuntu full image (that you download from ODROID repo) already comes with an account called *odroid*  with default password *odroid*. However, the minimal image (or sometimes called Ubuntu server) is just a bare bones image, and you will need to do a lot of configuration to get it ready.
 
-* In the minimal image, you can add a user account (call it *odroid*) using the following commands. You can do this by plugging a screen, keyboard/mouse, or through the [console cable](http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934). If you use the console cable, login using the root account (user: *root*, password: *odroid*). Also make sure that your odroid is connected to internet via ethernet cable.
+In the minimal image, you can add a user account (call it *odroid*) using the following commands. You can do this by plugging a screen, keyboard/mouse, or through the `console cable <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934>`_. If you use the console cable, login using the root account (user: ``root``, password: ``odroid``). Also make sure that your odroid is connected to the internet via ethernet cable.
 
 .. code-block:: bash
 
@@ -84,7 +84,7 @@ Network Setup
 
 It is recommended that you use static IP address if you plan to use ODROID via a WiFi network. This will reduce latency over wifi.
 
-to set static IP address on full Ubuntu using GUI, check the [this video](https://www.youtube.com/watch?v=o9fJWDoX4nE)
+to set static IP address on full Ubuntu using GUI, check `this video <https://www.youtube.com/watch?v=o9fJWDoX4nE>`_.
 
 
 .. warning::
@@ -93,7 +93,8 @@ to set static IP address on full Ubuntu using GUI, check the [this video](https:
 
 
 To set a static IP address on Ubuntu server (minimal image), do the following.
-* add the following lines in the `/etc/network/interfaces` file.
+
+Open ``/etc/network/interfaces`` file for editing.
 
 
 .. code-block:: bash
@@ -101,8 +102,7 @@ To set a static IP address on Ubuntu server (minimal image), do the following.
 	nano /etc/network/interfaces
 
 
-add the following
-
+Add the following lines
 
 .. code-block:: bash
 
@@ -142,7 +142,7 @@ Installing packages
 Install ROS
 """"""""""""""
 
-To install ROS on ODROID or ARM-based single-board-computer, follow the [instructions](http://wiki.ros.org/Installation/UbuntuARM) that is mentioned on the ROS websites. We assume that ROS Kinetic is used.
+To install ROS on ODROID or ARM-based single-board-computer, follow the `instructions <http://wiki.ros.org/Installation/UbuntuARM>`_ that is mentioned on the ROS websites. We assume that ROS Kinetic is used.
 
 .. important::
 	
@@ -182,7 +182,7 @@ Use the following shell commands to install OpenCV,
 	sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
 
 
-You can choose your suitable opencv versoin (check opnecv website) and execute the following
+You can choose your suitable opencv version (check opencv website) and execute the following
 
 .. code-block:: bash
 
@@ -207,7 +207,7 @@ You can choose your suitable opencv versoin (check opnecv website) and execute t
 References
 ^^^^^^
 
-Here is a [video for reference](https://www.youtube.com/watch?v=sLLF-Ml2sIo) which explains how to install OpenCV on ODROID XU4.
+Here is a `video <https://www.youtube.com/watch?v=sLLF-Ml2sIo>`_ for reference which explains how to install OpenCV on ODROID XU4.
 
 
 Raspberry Pi Setup

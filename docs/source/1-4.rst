@@ -36,17 +36,17 @@ Setup Steps
 
 Please follow this steps carefully to setup the development enviroment which includes the software-in-the-loop simulation. It is assumed that the following steps are done on a clean Ubuntu 16.04 OS image.
 
-Open a new terminal window \(you can hit ctrl+alt+t to bring up one\). Then, please follow the steps in this [link](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#permission-setup), starting by the Permission Setup section. Cover the installation instructions in following sections.
+Open a new terminal window \(you can hit ctrl+alt+t to bring up one\). Then, please follow the steps starting by the Permission Setup section.
 
-* [Permission setup](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#permission-setup)
-* [Remove the modem manager](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#remove-the-modemmanager)
-* [Ninja Build System](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#ninja-build-system)
-* [Common Dependencies](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#common-dependencies)
-* [FastRTPS instalation](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#fastrtps-installation)
-* [jMAVSim](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#jmavsim)
+* `Permission setup <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#permission-setup>`_
+* `Remove the modem manager <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#remove-the-modemmanager>`_
+* `Ninja Build System <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#ninja-build-system>`_
+* `Common Dependencies <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#common-dependencies>`_
+* `FastRTPS instalation <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#fastrtps-installation>`_
+* `jMAVSim <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#jmavsim>`_
 * Skip Gazebo section as it will be done in next step
-* [ROS/Gazebo](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#rosgazebo)\(Kinetic\). Skip this if already done.
-* [MAVROS installation](https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation) from source.
+* `ROS\/Gazebo <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#rosgazebo)\(Kinetic\>`_. Skip this if already done.
+* `MAVROS installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation>`_ from source.
 
 **NOTE** in the step where you install the ``_geographiclib_``, if you get an error like ``_cannot create directories_``, try
 
@@ -56,13 +56,14 @@ Open a new terminal window \(you can hit ctrl+alt+t to bring up one\). Then, ple
 
 Then, build your workspace using ``catkin build``
 
-* [Nuttx based Hardware](https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware). Go through all installation instructions. If you get some messages about not found directorires, ignore them!
+* `Nuttx based Hardware <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware>`_. Go through all installation instructions. If you get some messages about not found directorires, ignore them!
 
-* Install ``QGroundControl`` from [here](https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux). Use the AppImage option.
+* Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
 * Now, you need to clone the autopilot firmware source, PX4.
 
 .. code-block:: bash
+
   cd ~
   mkdir src
   cd src
@@ -73,7 +74,7 @@ Testing SITL with Gazebo \(No ROS\)
 
 In this step, we will validate that the PX4 SITL app and gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal
 
-.. code-block::
+.. code-block:: bash
 
   cd ~/src/Frimware
   make posix_sitl_default gazebo
@@ -120,6 +121,7 @@ Now, you are ready to launch Gazebo+PX4 SITL app+ROS+MAVROS. To do that, execute
 You should be able to see ``/mavros`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see
 
 .. code-block:: bash
+
   $ rosnode list
   /gazebo
   /mavros
@@ -134,13 +136,18 @@ To double check that MAVROS node is connected properly to the PX4 SITL app, try 
 
 Which will show if the mavros node is connected to the PX4 SITL app or not.
 
-Now, you can monitor the dorne's states and control it via a mavros node.
+Now, you can monitor the drone's states and control it via a mavros node.
 
 * As mentioned, in this tutorial, we are going to learn one basic way of controlling the quadcopter's position via a joystick.
+
 * There is a flight mode in PX4 autopilot which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, and attitude setpoints. You cannot mix between different setpoints _e.g._ velocity setpoints in x/y and position in z.
+
 * A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer thos setpoints to the autopilot to execute.
+
 * If the autopilot's flight mode is **OFFBOARD**, the autopilot will accept the received setpoints and execute them.
+
 * We will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the mavros node will send it to the autopilot.
+
 * The setpoint topic that we will use in this tutorial is ``/mavros/setpoint_raw/local``. This topic accepts both position and velocity setpoints according to a specific flag. Next, we will create our custom simple ROS package in which we create a simple ROS node that listens to joystic commands from a ROS topic. Then, it will convert joystic commands to position setpoints which will be published to the ``/mavros/setpoint_raw/local`` topic. Finally, MAVROS will take the position set points and send them to the autopilot.
 
 You might be asking, how are we going to get the joystick commands? The next section explains that.
@@ -158,6 +165,7 @@ A package named ``joy`` is going to be used to interface a joystick to ROS. To i
 You will need to setup permissions before you can use your joystick.
 
 * Plug a joystick
+
 * Check if Linux recognizes your joystick
 
 .. code-block:: bash
@@ -165,7 +173,7 @@ You will need to setup permissions before you can use your joystick.
   ls /dev/input/
   
 
-You will get an output similar to the follwing.
+You will get an output similar to the following.
 
 .. code-block:: bash
 
@@ -230,7 +238,6 @@ You should see an output similar to the following.
 Now, let's write a custom node that reads joystick's commands and convert them to position setpoints to control the quadcopter's poisiton in Gazebo.
 
 Custom Setpoint Node
-
 -----
 
 **Now, it's time for some coding!** You will write a ROS node in Python that listens to the ``/joy`` topic that is published by the ``joy`` node, and convrets the joystick commands to xyz position setpoints. Then, it will publish the calculated position setpoints into ``/mavros/setpoint_raw/local``
