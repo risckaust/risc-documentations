@@ -63,6 +63,7 @@ ROS has many versions. The latest version at the time of writing this tutorial i
 
 
 .. note::
+
   The operating system that we are going to use is **Ubuntu 16.04**. ROS Kinetic does not work with Ubuntu 14.
 
 Simply follow the instructions in the official ROS wiki to install ROS Kinetic - http://wiki.ros.org/kinetic/Installation/Ubuntu.
@@ -81,6 +82,7 @@ During this tutorial, you will work with a simulated robot called **TurtleBot**,
 For reference see: http://wiki.ros.org/Robots/TurtleBot
 
 .. hint::
+
   To bring up a terminal window press ``CTRL+ALT+T``
 
 To install the required packages, execute the following commands in a shell terminal.
