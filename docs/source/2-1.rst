@@ -34,7 +34,7 @@ Elements of ``mocap``:
 
 * Tracking cameras (Prime17w)
 * Network switches, to connect the cameras
-* Mocap PC which runs the ```mocap``` software, Motive, that provides the tracking features.
+* Mocap PC which runs the ``mocap`` software, Motive, that provides the tracking features.
   
 Object to be tracked e.g. quadrotors, ground vehicles.
 ------
