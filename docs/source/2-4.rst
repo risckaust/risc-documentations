@@ -365,7 +365,7 @@ First make sure your computer is connected to the same router as the WiFly devic
 
   telnet <wifly ip address> <wifly localport>
 
-then type ``\$\$\$``, and hit **ENTER**
+then type ``$$$``, and hit **ENTER**
 
 Set high baudrate
 
