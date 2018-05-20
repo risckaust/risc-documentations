@@ -26,6 +26,7 @@ You can use `Etcher <https://etcher.io/>`_ to flash your ODROID eMMC card with y
 Install Mocap ROS package (works with Optitrack and VICON) to receive the tracking data from your mocap system. The package page is called `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_. To install the package use the following command (assuming ROS Kinetic). **If you are using the minimal Ubuntu image provided above, you don't need to install this package as it's already included**
 
 .. code-block:: bash
+
 	sudo apt-get install ros-kinetic-vrpn-client-ros -y
 
 
