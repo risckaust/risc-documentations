@@ -82,9 +82,9 @@ Use any flight controller available in the lab. Just make sure you have compatib
    :align: center
 
 
-* Power module. It is the best way to provide power for flight controller unit. It has voltage and current sensors that allows autopilot to estimate remaining battery charge precisely. Usually it comes with every autopilot controleer as default kit. Check official documentations to match right power module to a selected flight controller.
+* Power module. It is the best way to provide power for flight controller unit. It has voltage and current sensors that allows autopilot to estimate remaining battery charge precisely. Usually it comes with every autopilot controller as a default kit. Check official documentations to match right power module to a selected flight controller.
 
-.. image:: ../_static/ubec.jpg
+.. image:: ../_static/power_module.jpg
    :scale: 40 %
    :align: center
 
