@@ -27,9 +27,11 @@ Along the parts of this course, you will learn:
 - How to use **ROS Debugging Tools** for finding errors in your programs (especially Rviz).
 
 .. note::
+
   We will use **Python** as the programming language in all the course exercises
 
 .. important::
+
   **DO NOT SKIP EXERCISES**. Exercises are the core of this tutorial (remember, practice, practice, practice). If you avoid them, you will be missing the whole thing.
 
 

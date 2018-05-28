@@ -40,14 +40,14 @@ Introduction
 
 You will need
 
-* Quadcopter frame. 250 frame will be good start. 250 means the motor to motor diameter, as shown below.
+* Quadcopter frame. 250 frame will be a good start. 250 means the motor to motor diameter, as shown below.
 
 .. image:: ../_static/quad-diam.png
    :scale: 50 %
    :align: center
 
 
-* Power distribution board distribute power from battery to 4 ESCs.
+* Power distribution board to distribute power from a battery to 4 ESCs.
 
 
 .. image:: ../_static/distro-power.jpg
@@ -57,14 +57,31 @@ You will need
 
 * Flight Controller.
 
-Use any flight controller available in the lab. 
+Use any flight controller available in the lab. Just make sure you have compatible power modules, receveirs, GPS, and other additional modules.
 
-
-* Power wires connect batteries. Distribute power to Pixhawk and other components such as Odroid.
 * Motors and propellers, while installing take a look at their directions (CW vs CCW).
-* Electronic speed controller (ESC). Power and control brushless motors using PWM. It takes DC from power distribution board and convert it to controlled three phase AC, and also it takes control signals from Pixhawk via signal wires.
-* RC receiver to control quadcopter.
-* BEC to convert voltage to power Odroid.
+
+
+* Electronic speed controller (ESC) controls and regualates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown nelow has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn the ESC. 
+
+.. note:: 
+
+  Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn). 
+
+.. image:: ../_static/distro-power.jpg
+   :scale: 50 %
+   :align: center
+
+
+
+* RC receiver to control quadcopter. FrSky or Spektrum... explain how to bind them.
+
+* UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid (in case you are using it). A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
+
+.. image:: ../_static/ubec.jpg
+   :scale: 50 %
+   :align: center
+
 
 Assembly process
 ^^^^^
