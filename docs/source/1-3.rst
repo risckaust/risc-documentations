@@ -26,7 +26,7 @@ This tutorial assumes you have the following skills:
   - How to charge LiPo battery? How to measure it voltage using meter?
   - What’s the minimum voltage to use a LiPo on the quad
 
-* Basic knowledge about motors. Answer the following questions.
+* Basic knowledge about motors. Answer the following questions. You may refer to this `article <https://www.dronetrest.com/t/brushless-motors-how-they-work-and-what-the-numbers-mean/564>`_.
 
   + Different types of motors. We are using brushless motor for quads.
   + What does KV2200 means? What will be changed if KV number grows?
@@ -40,9 +40,26 @@ Introduction
 
 You will need
 
-* Frame.
+* Quadcopter frame. 250 frame will be good start. 250 means the motor to motor diameter, as shown below.
+
+.. image:: ../_static/quad-diam.png
+   :scale: 50 %
+   :align: center
+
+
 * Power distribution board distribute power from battery to 4 ESCs.
-* Pixhawk Autopilot. It contains IMU and flight controller.
+
+
+.. image:: ../_static/distro-power.jpg
+   :scale: 50 %
+   :align: center
+
+
+* Flight Controller.
+
+Use any flight controller available in the lab. 
+
+
 * Power wires connect batteries. Distribute power to Pixhawk and other components such as Odroid.
 * Motors and propellers, while installing take a look at their directions (CW vs CCW).
 * Electronic speed controller (ESC). Power and control brushless motors using PWM. It takes DC from power distribution board and convert it to controlled three phase AC, and also it takes control signals from Pixhawk via signal wires.
