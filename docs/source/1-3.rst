@@ -6,7 +6,7 @@ This is a tutorial for RISC lab boot camp. Please find all the components in RIS
 Basic principles
 -----
 
-Feel free to place the components anywhere but take care of wirings. Refer to quads we already have in the lab. Carefully choose zipties, shrinking tubes, duct tapes or soldering for different situations. Generally, for fixing motor wires we use **zipties**. Shrinking tubes are for permanent connection between wires while soldering then together. Pay attention to **calibration**, and prepare for 50% possibility of fail :-)
+Feel free to place the components anywhere on the frame but take care of wires. Refer to quadcopters we already have in the lab. Carefully choose zipties, shrinking tubes, double sided tapes or soldering for different situations. Generally, for fixing motor wires we use zipties. Shrinking tubes are for permanent connection between wires when soldering.
 
 Preliminaries
 ------
@@ -106,26 +106,18 @@ Assembly process
 	Do not install propellers now.
 
 
-.. note:: 
-
-  **Front** direction of the quadcopter needs to be decided. Take a look at your flight controller and there’s an arrow that should be pointed to **front** when mounted. Also it should point between motor 1 and 3 in above picture.
-
 * Connect ESCs to motors and plug ESCs to power distribution board. As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
 
 
 * Install power module. Find a place to fix it. One end should be plugged to power distribution board and the other end to battery. DON’T plug it for now.
 
-* Install Pixhawk above the power distribution board but separate from it.
+* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3 in above picture.
 
-* There is a wire for powering Pixhawk in the powerwires. Plug it to the power port of the Pixhawk.
+* Plug cable from power module to ``POWER`` port of your flight controller.
 
-* Install buzzer and switch to Pixhawk using their own ports.
+* Plug buzzer and switch to flight controller to their corresponding ports.
 
-* Connect each of your PWM ESCs to the corresponding **Main Out** output.
-
-* Mind the direction of jumper wires
-
-* The numbers on those pins on Pixhawk correspond to the motor numbers of motors in the picture.
+* Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to MAIN OUT port 1.
 
 * Bind the RC receiver with an RC (Use Spectrum RC because those receivers in the shoebox should be used with them) and install them. We have one special binder to do that and it’s placed in the toolbox beside RISC shoeboxes. You will also find RCs there. The binding process is as follows:
 
