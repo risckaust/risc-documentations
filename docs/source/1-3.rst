@@ -86,7 +86,7 @@ You will need
 The most popular form of remote control unit (transmitter) for UAVs is shown below. It has separate control sticks for controlling roll/pitch and for throttle/yaw as shown
 
 .. image:: ../_static/rc_basic_commands.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 
