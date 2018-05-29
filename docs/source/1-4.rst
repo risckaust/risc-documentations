@@ -76,7 +76,7 @@ In this step, we will validate that the PX4 SITL app and gazebo work as expected
 
 .. code-block:: bash
 
-  cd ~/src/Frimware
+  cd ~/src/Firmware
   make posix_sitl_default gazebo
 
 After sometime, you should be able to see an Iris model loaded in gazebo, and the ``pxh>`` command line in the terminal. Just hit ENTER couple of times if you don't see the ``pxh>`` command line, and it should appear.  
