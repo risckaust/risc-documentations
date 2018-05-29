@@ -63,20 +63,12 @@ You will need
   
   There are 2 types of format that manufacturers use.
 
-  L x P x B or LLPP x B
+  L x P x B or LLPP x B where L- length, P – pitch, B – number of blades.
 
-  L- length, P – pitch, B – number of blades.
-
-  For example 6×4.5 (also known as 6045) propellers are 6 inch long and has a pitch of 4.5 inch. Another example, 5x4x3 (sometimes 5040×3) is a 3-blade 5″ propeller that has a pitch of 4 inch.
-
-  “BN” indicates Bullnose props.
+  For example 6×4.5 (also known as 6045) propellers are 6 inch long and has a pitch of 4.5 inch. Another example, 5x4x3 (sometimes 5040×3) is a 3-blade 5″ propeller that has a pitch of 4 inch. “BN” indicates Bullnose props.
 
   Sometimes you might see **R** or **C** after the size numbers, such as 5x3R. **R** indicates the rotation of the propeller, which stands for “reversed”. It should be mounted on a motor that spins clockwise. **C** is the opposite, should be used with motors that spins counter-clockwise.
 
-
-.. image:: ../_static/quad_prop.jpg
-   :scale: 50 %
-   :align: center
 
 * Electronic speed controller (ESC) controls and regualates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
 
@@ -89,9 +81,11 @@ You will need
   Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn). 
 
 
-* Remote control receiver. A remote control (RC) radio system is required if you want to manually control your vehicle. Choose either SPKT/DSM (Spektrum) or PPM-Sum and S.BUS (FrSky) receivers depending on the flight controller you've. 
+* Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware. Spektrum and DSM receivers must connect to a SPKT/DSM input. PPM-Sum and S.BUS receivers must connect directly to the RC ground, power and signal pins (typically labeled **RC** or **RCIN**)
 
-.. image:: ../_static/esc.jpg
+The most popular form of remote control unit (transmitter) for UAVs is shown below. It has separate control sticks for controlling roll/pitch and for throttle/yaw as shown
+
+.. image:: ../_static/rc_basic_commands.png
    :scale: 50 %
    :align: center
 
@@ -130,19 +124,23 @@ Assembly process
 * Connect ESCs to motors and plug ESCs to power distribution board. As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
 
 
-* Install power module. Find a place to fix it. One end should be plugged to power distribution board and the other end to battery. DON’T plug it for now.
+* Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.
 
-* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3 in above picture.
+* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3.
 
 * Plug cable from power module to ``POWER`` port of your flight controller.
 
-* Plug buzzer and switch to flight controller to their corresponding ports.
+* Plug buzzer and switch to their corresponding ports on flight controller.
 
 * Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to MAIN OUT port 1.
 
+`this part need to be explained in a better way`
+
+* If you are using RC receiver with autobind, then do this....
+
 * Bind the RC receiver with an RC (Use Spectrum RC because those receivers in the shoebox should be used with them) and install them. We have one special binder to do that and it’s placed in the toolbox beside RISC shoeboxes. You will also find RCs there. The binding process is as follows:
 
-* receivers connect to the flight controller using the port appropriate to their supported protocol:
+receivers connect to the flight controller using the port appropriate to their supported protocol:
 
 
   + Insert the jumper wire to Pixhawk like a motor, we just need to power it through this way
@@ -186,8 +184,6 @@ Calibration process
   - Click ``Calibrate`` to calibrate ESCs
 
 * In ``Parameters tab`` tune the parameters, general process is tuning ``P`` first then ``I`` and ``D`` at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned. You may follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_.
-
-* You can plug other quads we have to your PC and export the parameters there and load them to your quad directly
 
 
 Flying
