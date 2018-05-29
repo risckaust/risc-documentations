@@ -57,12 +57,26 @@ You will need
 
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available at `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
 
-* Motors and propellers.
+* Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer triblades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag. 
 
-.. image:: ../_static/brushless_motors.jpg
+.. note:: 
+  
+  There are 2 types of format that manufacturers use.
+
+  L x P x B or LLPP x B
+
+  L- length, P – pitch, B – number of blades.
+
+  For example 6×4.5 (also known as 6045) propellers are 6 inch long and has a pitch of 4.5 inch. Another example, 5x4x3 (sometimes 5040×3) is a 3-blade 5″ propeller that has a pitch of 4 inch.
+
+  “BN” indicates Bullnose props.
+
+  Sometimes you might see **R** or **C** after the size numbers, such as 5x3R. **R** indicates the rotation of the propeller, which stands for “reversed”. It should be mounted on a motor that spins clockwise. **C** is the opposite, should be used with motors that spins counter-clockwise.
+
+
+.. image:: ../_static/quad_prop.jpg
    :scale: 50 %
    :align: center
-
 
 * Electronic speed controller (ESC) controls and regualates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
 
@@ -75,7 +89,7 @@ You will need
   Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn). 
 
 
-* Remote control receiver. A remote control (RC) radio system is required if you want to manually control your vehicle. Choose either SPKT/DSM (Spektrum) or PPM-Sum and S.BUS (FrSky) receivers depending on the flight controller you've.
+* Remote control receiver. A remote control (RC) radio system is required if you want to manually control your vehicle. Choose either SPKT/DSM (Spektrum) or PPM-Sum and S.BUS (FrSky) receivers depending on the flight controller you've. 
 
 .. image:: ../_static/esc.jpg
    :scale: 50 %
