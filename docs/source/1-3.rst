@@ -126,7 +126,7 @@ Assembly process
 
 * Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.
 
-* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3.
+* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. Also, use double sided 
 
 * Plug cable from power module to ``POWER`` port of your flight controller.
 
