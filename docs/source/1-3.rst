@@ -141,14 +141,21 @@ Assembly process
   + FrSky X8R, refer to this `document <https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf>`_
     
   + Spektrum receiver with autobind 
-  
+
     1. With the transmitter off, power on the receiver.
     2. The receiver will attempt to connect to the last transmitter it was bound to.
     3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED.
     4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
     5. When the receiver binds the orange LED turns solid.
 
+    .. important::
+
+      Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
+      
   + Spektrum receiver without autobind
+    1. 
+    2.
+    3.
 
 * Bind the RC receiver with an RC (Use Spectrum RC because those receivers in the shoebox should be used with them) and install them. We have one special binder to do that and it’s placed in the toolbox beside RISC shoeboxes. You will also find RCs there. The binding process is as follows:
 
