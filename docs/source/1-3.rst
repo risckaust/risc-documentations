@@ -169,29 +169,29 @@ Calibration process
 
 * Download ``QGroundControl`` on your computer and open it.
 
-* Connect Pixhawk yo your computer via USB. You should see it connected in the software. 
+* `Install PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
-* In ``Airframe tab`` choose proper airframe according to the one you have, eg. Generic 250 Frame.
+* Set the airframe, eg. Generic 250 Frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
-* In ``Radio tab`` click ``Calibrate`` button and follow the instructions.
+* Calibrate `Sensor orientation <https://docs.px4.io/en/config/flight_controller_orientation.html>`_ if any, `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
 
-* In ``Sensors tab`` calibrate all the sensors following the instructions. After calibration they will be green. Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press ``OK`` and move on to the next.
+* Before you can calibrate the radio system the receiver and transmitter must be connected/bound. Follow the steps from this `page <https://docs.px4.io/en/config/radio.html>`_.
 
-* In ``Flight Modes tab``
+* In ``Flight Modes`` tab set:
 
-  - Modes: Channel 6 (maybe marked as FLAP/GYRO)
-  - Mode 1: Position
-  - Mode 4: Altitude
-  - Mode 6: Manual
-  - Kill switch: Channel 5 (GEAR MIX)
-  - If you set them right, when you are picking those channels your action will be reported in ``QGroundControl``
+  - **Modes: Channel 6 (maybe marked as FLAP/GYRO)**
+  - **Mode 1: Position**. When sticks are released the vehicle will stop (and hold position against wind drift).
+  - **Mode 4: Altitude**. Climb and drop are controlled to have a maximum rate.
+  - **Mode 6: Manual**. 
+  - **Kill switch: Channel 5**. Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
 
-* In ``Power tab`` write the parameters of your battery (Number of cells, Full/ Empty voltages)
+.. hint::
+  
+  If you set everything right, you will see changes in **Flight Mode Settings** section highlighted as yellow. Also, moving sticks, dials and switches will be reported in **Channel Monitor** section.
 
-  - Click ``Calculate`` beside ``Voltage divider`` and type in measured voltage (can be measured using multimeter in the toolbox), click ``Calculate``
-  - Click ``Calibrate`` to calibrate ESCs
+* In ``Power tab`` write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this `page <https://docs.px4.io/en/config/battery.html>`_ and `here <https://docs.px4.io/en/advanced_config/esc_calibration.html>`_.
 
-* In ``Parameters tab`` tune the parameters, general process is tuning ``P`` first then ``I`` and ``D`` at last for yaw, pitch and roll. Hold the quad in your hand to feel if it’s well tuned. You may follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_.
+* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for quadcopter.
 
 
 Flying
@@ -199,12 +199,15 @@ Flying
 
 * Unplug the quadcopter from computer
 * Press Safety switch on Pixhawk until it blinks faster
-* Arm (Hold throttle at minimum and rudder to the right for 2 seconds) the quad using RC and check if the motors are spinning in correct directions as the picture by slightly touching them. If not, change any two wires of that motor. Disarm (Opposite of arm)
-* Install propellers. Note that there are CW and CCW propellers as well.
-* **OPTIONAL.** If still want to connect the quad to ``QGroundControl``, install telemetry
-* Manual kill switch off. Select manual mode.
-* Check battery condition. **Always keep this in mind.**
-* Put the quad in the cage and arm again. Slowly add throttle while keep it in the middle of the cage by controlling pitch and yaw.
+
+* Make sure no propellers attached yet. Arm the quadcopter by putting the throttle stick in the bottom right corner. This will start the propellers. To disarm, put the throttle stick in the bottom left corner. Check if the motors are spinning in a correct directions, if not change any two wires of that motor.
+
+Read more on `First Flight Guidelines <https://docs.px4.io/en/flying/first_flight_guidelines.html>`_ and `Flying 101 <https://docs.px4.io/en/flying/basic_flying.html>`_.
+
+* Now you can install propellers. Note that there are CW and CCW propellers as well.
+* Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
+* Check the battery level, make sure it's enough to perform your first flight.
+* Put the quadcopter in the cage and arm again. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
 * If it flies, you can do more manoeuvres
 
 Troubleshooting
