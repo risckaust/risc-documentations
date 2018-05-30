@@ -126,7 +126,7 @@ Assembly process
 
 * Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.
 
-* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. Also, use double sided 
+* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. Also, use thick double side tape with to damp the vibrations to mount the controller to the frame.
 
 * Plug cable from power module to ``POWER`` port of your flight controller.
 
@@ -134,20 +134,27 @@ Assembly process
 
 * Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to MAIN OUT port 1.
 
-`this part need to be explained in a better way`
+``this part need to be explained in a better way``
 
-* If you are using RC receiver with autobind, then do this....
+* Depending on the receiver you use, follow the following steps.
+
+  + FrSky X8R
+    + 
+
+  + Spektrum receiver with autobind 
+
+  + Spektrum receiver without autobind
 
 * Bind the RC receiver with an RC (Use Spectrum RC because those receivers in the shoebox should be used with them) and install them. We have one special binder to do that and it’s placed in the toolbox beside RISC shoeboxes. You will also find RCs there. The binding process is as follows:
 
 receivers connect to the flight controller using the port appropriate to their supported protocol:
 
 
-  + Insert the jumper wire to Pixhawk like a motor, we just need to power it through this way
-  + Insert the signal wire to another end of the RC receiver
-  + Plug the battery (Find in the toolbox) to power wire
-  + Turn on the RC while pressing the left up button (marked as Trainer Bind), wait until the RC receiver is lighting statically
-  + Remove the RC from binder, use its own signal wire to connect with Pixhawk via port SPKT/DSM
+  1. Insert the jumper wire to Pixhawk like a motor, we just need to power it through this way
+  2. Insert the signal wire to another end of the RC receiver
+  3. Plug the battery (Find in the toolbox) to power wire
+  4. Turn on the RC while pressing the left up button (marked as Trainer Bind), wait until the RC receiver is lighting statically
+  5. Remove the RC from binder, use its own signal wire to connect with Pixhawk via port SPKT/DSM
 
 * Plug the battery and check 4 ESCs has static green LED lighted up and BEC has red. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
 
