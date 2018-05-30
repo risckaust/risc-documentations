@@ -208,7 +208,7 @@ Read more on `First Flight Guidelines <https://docs.px4.io/en/flying/first_fligh
 * Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
 * Check the battery level, make sure it's enough to perform your first flight.
 * Put the quadcopter in the cage and arm again. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
-* If it flies, you can do more manoeuvres
+* If it flies, CONGRATULATIONS!
 
 Troubleshooting
 ------
