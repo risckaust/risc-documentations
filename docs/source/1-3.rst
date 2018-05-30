@@ -153,8 +153,9 @@ Assembly process
       Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
 
   + Spektrum receiver without autobind
+  
     1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_
-    2. Insert the bind plug in the BATT/BIND port on the AR8000 receiver and connect RC reciever to AR8000 receiver
+    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC reciever to AR8000 receiver
     3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
     4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
     5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.
