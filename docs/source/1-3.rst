@@ -126,15 +126,13 @@ Assembly process
 
 * Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.
 
-* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. Also, use thick double side tape with to damp the vibrations to mount the controller to the frame.
+* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. To mount the controller to the frame, use thick double side tape to damp the vibrations.
 
 * Plug cable from power module to ``POWER`` port of your flight controller.
 
 * Plug buzzer and switch to their corresponding ports on flight controller.
 
-* Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to MAIN OUT port 1.
-
-``this part need to be explained in a better way``
+* Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to **MAIN OUT** port 1.
 
 * Binding process depens on the receiver you use:
 
@@ -153,14 +151,14 @@ Assembly process
       Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
 
   + Spektrum receiver without autobind
-  
-    1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_
-    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC reciever to AR8000 receiver
-    3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
+
+    1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_.
+    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC reciever to AR8000 receiver.
+    3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
     4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
     5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.
-    6. Remove the bind plug from the BATT/BIND port on the receiver before you power off the transmitter and store it in a convenient place.
-    7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``
+    6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
+    7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
 
 * Plug the battery and check 4 ESCs has static green LED lighted up and BEC has red. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
 
@@ -169,19 +167,19 @@ Assembly process
 Calibration process
 -----
 
-* Download ``QGroundControl`` on your PC and open it.
+* Download ``QGroundControl`` on your computer and open it.
 
-* Connect Pixhawk with your PC via USB. You should see it connected in the software.
+* Connect Pixhawk yo your computer via USB. You should see it connected in the software. 
 
-* In ``Airframe tab`` choose proper airframe according to the one you have.
+* In ``Airframe tab`` choose proper airframe according to the one you have, eg. Generic 250 Frame.
 
-* In ``Radio tab`` click ``Calibrate`` button and follow instructions.
+* In ``Radio tab`` click ``Calibrate`` button and follow the instructions.
 
 * In ``Sensors tab`` calibrate all the sensors following the instructions. After calibration they will be green. Note that there will be a progress bar while calibrationg each sensor, which indicates your progress. After finishing calibration of one sensor, wait until it reaches the end and then press ``OK`` and move on to the next.
 
 * In ``Flight Modes tab``
 
-  - Modes: Channel 6 (marked as ``FLAP/GYRO``)
+  - Modes: Channel 6 (maybe marked as FLAP/GYRO)
   - Mode 1: Position
   - Mode 4: Altitude
   - Mode 6: Manual
@@ -199,7 +197,7 @@ Calibration process
 Flying
 ------
 
-* Unplug the quadcopter from PC
+* Unplug the quadcopter from computer
 * Press Safety switch on Pixhawk until it blinks faster
 * Arm (Hold throttle at minimum and rudder to the right for 2 seconds) the quad using RC and check if the motors are spinning in correct directions as the picture by slightly touching them. If not, change any two wires of that motor. Disarm (Opposite of arm)
 * Install propellers. Note that there are CW and CCW propellers as well.
