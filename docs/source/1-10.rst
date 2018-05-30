@@ -1,2 +1,5 @@
 CAD Design
 =====
+
+
+As for now follow this `guide <http://tutorial45.com/solidworks-tutorial-create-simple-3d-object/>`_.
