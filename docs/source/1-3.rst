@@ -136,12 +136,17 @@ Assembly process
 
 ``this part need to be explained in a better way``
 
-* Depending on the receiver you use, follow the following steps.
+* Binding process depens on the receiver you use:
 
-  + FrSky X8R
-    + 
-
+  + FrSky X8R, refer to this `document <https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf>`_
+    
   + Spektrum receiver with autobind 
+  
+    1. With the transmitter off, power on the receiver.
+    2. The receiver will attempt to connect to the last transmitter it was bound to.
+    3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED.
+    4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
+    5. When the receiver binds the orange LED turns solid.
 
   + Spektrum receiver without autobind
 
