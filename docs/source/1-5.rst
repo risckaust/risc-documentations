@@ -25,6 +25,7 @@ Required Hardware
 	Subnet Mask: 255.255.255.0
 
 	Gateway: 192.168.0.1
+
 	DNS Server: 8.8.8.8
 
 Required Software
@@ -53,43 +54,45 @@ Install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ using following
 Method 2. Odroid XU4
 ^^^^^
 
-Flash `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's recommended to use minimal image.
+Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's recommended to use minimal image.
 
-It's recommended to use `Etcher <https://etcher.io/>`_ to flash your abovementioned images to ODROID eMMC/SD card.
+Flash image with `Etcher <https://etcher.io/>`_ to ODROID XU4 eMMC/SD card.
 
-No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included**
+No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included.
 
+Now connect your ODROID XU4 to monitor using HDMI cable.
 
-.. warning::
-	
-	In Motive, make sure you are streaming VRPN data by going to View > Streaming > Check the box in front of Stream VRPN Data. Lastly, make sure you either turn off the Windows Firewall or create outbound rules for the VRPN port (recommended).
+Mocap computer settings
+^^^^^
 
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in OptiTrack Streaming Engine and VRPN Streaming ENgine sections. Create rigid body by selecting markers of interest. Refer to picture below.
 
-
-.. image:: ../_static/motivecapture.PNG
+.. image:: ../_static/capture1.png
    :scale: 50 %
    :align: center
+
+Make sure you either turn off the Windows Firewall or create outbound rules for the VRPN port (recommended).
+
+Right click on the body created, choose **Properties** and rename it such that there is no spaces in the name.
+
+.. image:: ../_static/capture2.png
+   :scale: 50 %
+   :align: center
+
 
 Streaming MOCAP Data
 -----
 
-Now, you should be set to get data from mocap to your ROS.
+Check the IP address assigned to the Mocap machine, in our case it's 192.168.0.101
 
-1. Make sure that you installed ``vrpn_client_ros`` package. *All required packages are already included in the minimal ubuntu image referenced above*
-2. If you are streaming data to an ODROID which is connected to a flight controller, make sure that you have ``mavros`` installed. See **next tutorial** to know how feed mocap data to Pixhawk that is connected to ODROID.
-3. Make sure that you configured your Motive as mentioned above
-4. Connect the PC that runs Motive to your router with an ethernet cable
-5. Note down the IP address given to the Motive PC, let's call it ``motive_ip``
-6. Create a rigid body in Motive and give it a proper name e.g. ``uav1``
 
-.. error::
-
-	If your rigid body has white spaces in its name e.g. ``robot 1``, the ROS mocap node will not receive it and will give errors
-
-7. In your ROS machine, where you want to get tracking data, run the ``vrpn_client_ros`` node as follows
+In your ROS machine, where you want to get tracking data, run the ``vrpn_client_ros`` node as follows
 
 .. code-block:: bash
 
-	roslaunch vrpn_client_ros sample.launch server:=<motive_ip>
+	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
-8. Now you should be able to receive mocap data under topics that look like ``/vrpn_client_node/<rigid_body_name>/pose``
+Now you should be able to receive mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``
+
+and the data as follow
+
