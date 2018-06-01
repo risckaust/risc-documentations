@@ -58,10 +58,12 @@ Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe
 
 No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. Now connect your ODROID XU4 to monitor using HDMI cable.
 
+Please follow this `page <http://risc.readthedocs.io/en/latest/2-6.html>`_ to know more about ODROID XU4 and how to configure manual IP.
+
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in OptiTrack Streaming Engine and VRPN Streaming Engine sections. Create rigid body by selecting markers of interest. Refer to picture below.
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in OptiTrack Streaming Engine and VRPN Streaming Engine sections. Create a rigid body by selecting markers of interest. Refer to picture below.
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
@@ -88,10 +90,10 @@ In your ROS machine, where you want to get tracking data, run the ``vrpn_client_
 
 	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
-Now you should be able to receive mocap data under topic **/vrpn_client_node/<rigid_body_name>/pose**.
+Now you should be able to receive mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``.
 
 
-Open new terminal and try following command
+Open new terminal (CTRL + ALT + F2 in ODROID XU4) and try following command
 
 .. code-block:: bash
 
@@ -100,5 +102,7 @@ Open new terminal and try following command
 You should get similar to this. More on message type `here <http://docs.ros.org/api/geometry_msgs/html/msg/PoseStamped.html>`_.
 
 .. image:: ../_static/capture4.png
-   :scale: 50 %
+   :scale: 60 %
    :align: center
+
+Now you have position and orientation of your object!

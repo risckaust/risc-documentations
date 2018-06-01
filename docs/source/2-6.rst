@@ -110,10 +110,10 @@ Add the following lines
 	# the following will auto-start connection after boot
 	allow-hotplug wlan0
 	iface wlan0 inet static
-	address 192.168.1.131 # choose a static IP, usually you change the last number only for different devices
+	address 192.168.0.xxx # choose a static IP, usually you change the last number only for different devices
 	netmask 255.255.255.0
-	broadcast 192.168.1.255
-	gateway 192.168.1.1 # your router IP
+	broadcast 192.168.0.255
+	gateway 192.168.0.1 # your router IP
 	dns-nameservers 8.8.8.8
 	wpa-ssid "wifi_name"
 	wpa-psk "wifi_password"
