@@ -6,34 +6,59 @@ Intro
 ----
 
 Getting positions of objects in the observable OptiTrack space to ROS works as follows. The OptiTrack cameras send out pulsed infrared light using the
-attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras, provided the markers are in the field of view of the cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. By allocating several markers to a rigid body, an orientation of this body can be assigned.
+attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras, provided the markers are in the field of view of the cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. By allocating several markers to a rigid body, an orientation of this body can be assigned. More info on Indoor Navigation -> System Architecture `page <http://risc.readthedocs.io/en/latest/2-1.html>`_.
 
 Required Hardware
 ----
 
+* Mocap machine. Runs Motive Motion Capture Software.
 * Optitrack Motion Capture System
 * WiFi router (5GHz recommended)
 * A linux based computer, normal PC or onboard embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
 
+.. note::
+
+	It is recommended that you use *static IP* for your linux machine, like follow:
+
+	IP: 192.168.0.xxx
+
+	Subnet Mask: 255.255.255.0
+
+	Gateway: 192.168.0.1
+	DNS Server: 8.8.8.8
+
 Required Software
 -----
 
-* Motive. This is the Motion Capture Software that runs on the mocap machine. It allows you to calibrate your optitrack system, stream tracking information to external entities.
+* Motive. It allows you to calibrate your OptiTrack system, stream tracking information to external entities.
 
-* ROS *Kinetic* installed on your Linux computer. If you will use ODROID XU4, flash it with Ubuntu 16 and ROS Kinetic. Ready Ubuntu images with ROS Kinetic for your eyes are available. `ubuntu16_minimal_image <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_, `full_ubuntu16 <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_.
+* ROS Kinetic installed on your Linux computer.
 
-You can use `Etcher <https://etcher.io/>`_ to flash your ODROID eMMC card with your Ubuntu ``.img`` file.
+* `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package for ROS to receive the tracking data from the Mocap computer.
 
-Install Mocap ROS package (works with Optitrack and VICON) to receive the tracking data from your mocap system. The package page is called `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_. To install the package use the following command (assuming ROS Kinetic). **If you are using the minimal Ubuntu image provided above, you don't need to install this package as it's already included**
+
+Installation
+-----
+
+Method 1. PC
+^^^^^
+
+Install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ using following command.
 
 .. code-block:: bash
 
 	sudo apt-get install ros-kinetic-vrpn-client-ros -y
 
 
-.. note::
+Method 2. Odroid XU4
+^^^^^
 
-	It is recommended that you use *static IP* for your linux machine e.g. ODROID or PC
+Flash `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's recommended to use minimal image.
+
+It's recommended to use `Etcher <https://etcher.io/>`_ to flash your abovementioned images to ODROID eMMC/SD card.
+
+No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included**
+
 
 .. warning::
 	
