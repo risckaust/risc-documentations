@@ -5,19 +5,20 @@ OptiTrack Interface to ROS
 Intro
 ----
 
-This tutorial will show you how to get OptiTrack information (position and orientation) of a rigid body that is defined in Motive (motion capture software) to a ROS node. This allows you to get localization data on your robot in an indoor environment.
+Getting positions of objects in the observable OptiTrack space to ROS works as follows. The OptiTrack cameras send out pulsed infrared light using the
+attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras, provided the markers are in the field of view of the cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. By allocating several markers to a rigid body, an orientation of this body can be assigned.
 
 Required Hardware
 ----
 
-* Optitrack system
+* Optitrack Motion Capture System
 * WiFi router (5GHz recommended)
-* A linux computer e.g. normal PC or onboard embedded computer like ODROID XU4. This will be connected to the router either via ethernet cable or WiFi connection.
+* A linux based computer, normal PC or onboard embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
 
 Required Software
 -----
 
-* Motive. This is the motion capture software that runs on the mocap machine. It allows you to calibrate your optitrack system, stream tracking information to external entities.
+* Motive. This is the Motion Capture Software that runs on the mocap machine. It allows you to calibrate your optitrack system, stream tracking information to external entities.
 
 * ROS *Kinetic* installed on your Linux computer. If you will use ODROID XU4, flash it with Ubuntu 16 and ROS Kinetic. Ready Ubuntu images with ROS Kinetic for your eyes are available. `ubuntu16_minimal_image <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_, `full_ubuntu16 <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_.
 
