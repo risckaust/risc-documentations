@@ -18,7 +18,7 @@ Required Hardware
 
 .. note::
 
-	It is recommended to use **static IP** for your linux machine, like follow:
+	It is recommended to use **static IP** for your linux machine, as below:
 
 	IP: 192.168.0.xxx 
 
