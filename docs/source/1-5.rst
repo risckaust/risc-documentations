@@ -88,7 +88,7 @@ In your ROS machine, where you want to get tracking data, run the ``vrpn_client_
 
 	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
-Now you should be able to receive mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``
+Now you should be able to receive mocap data under topic **/vrpn_client_node/<rigid_body_name>/pose**.
 
 
 Open new terminal and try following command
@@ -99,6 +99,6 @@ Open new terminal and try following command
 
 You should get similar to this. More on message type `here <http://docs.ros.org/api/geometry_msgs/html/msg/PoseStamped.html>`_.
 
-.. image:: ../_static/capture4-cropped.png
+.. image:: ../_static/capture4.png
    :scale: 50 %
    :align: center
