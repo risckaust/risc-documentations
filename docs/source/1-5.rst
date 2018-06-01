@@ -18,7 +18,7 @@ Required Hardware
 
 .. note::
 
-	It is recommended that you use *static IP* for your linux machine, like follow:
+	It is recommended to use **static IP** for your linux machine, like follow:
 
 	IP: 192.168.0.xxx
 
@@ -54,18 +54,14 @@ Install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ using following
 Method 2. Odroid XU4
 ^^^^^
 
-Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's recommended to use minimal image.
+Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's recommended to use minimal image. Flash image with `Etcher <https://etcher.io/>`_ to ODROID XU4 eMMC/SD card.
 
-Flash image with `Etcher <https://etcher.io/>`_ to ODROID XU4 eMMC/SD card.
-
-No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included.
-
-Now connect your ODROID XU4 to monitor using HDMI cable.
+No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. Now connect your ODROID XU4 to monitor using HDMI cable.
 
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in OptiTrack Streaming Engine and VRPN Streaming ENgine sections. Create rigid body by selecting markers of interest. Refer to picture below.
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in OptiTrack Streaming Engine and VRPN Streaming Engine sections. Create rigid body by selecting markers of interest. Refer to picture below.
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
@@ -94,5 +90,15 @@ In your ROS machine, where you want to get tracking data, run the ``vrpn_client_
 
 Now you should be able to receive mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``
 
-and the data as follow
 
+Open new terminal and try following command
+
+.. code-block:: bash
+
+	rostopic echo vrpn_client_node/<rigid_body_name>/pose
+
+You should get similar to this.
+
+.. image:: ../_static/capture4-cropped.png
+   :scale: 50 %
+   :align: center
