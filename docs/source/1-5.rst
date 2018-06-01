@@ -97,7 +97,7 @@ Open new terminal and try following command
 
 	rostopic echo vrpn_client_node/<rigid_body_name>/pose
 
-You should get similar to this.
+You should get similar to this. More on message type `here <http://docs.ros.org/api/geometry_msgs/html/msg/PoseStamped.html>`_.
 
 .. image:: ../_static/capture4-cropped.png
    :scale: 50 %
