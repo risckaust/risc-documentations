@@ -17,7 +17,7 @@ Hardware Requirements
 
 * Pixhawk or simial controller that runs PX4 firmware
 * ODROID (we will assume XU4)
-* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using *Pixhawk 2*, then connect the serial cable to *TELEM2* port. If you are using *MindPX* flight controller, just use a USB to micro-USB cable.
+* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using **Pixhawk 2**, then connect the serial cable to *TELEM2* port. If you are using **MindPX** flight controller, just use a USB to micro-USB cable.
 * OptiTrack PC
 * WiFi router (5GHz is recommended)
 
@@ -40,7 +40,7 @@ Software Requirements
 
 * ``MAVROS`` package: `Binary installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb>`_. Again, the above image includes this
 
-* Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. You can use the following command to install the package (assuming *ROS Kinetic* is used).
+* Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. You can use the following command to install the package (assuming **ROS Kinetic** is used).
 
 
 .. code-block:: bash
@@ -53,41 +53,6 @@ Again, this is included in the provided image
 Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2`` (default) an extended Kalman filter, and ``LPE``.
 
 ``LPE`` estimator supports mocap data directly. ``EKF2``, however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Setting EKF2 Estimator for MOCAP Fusion
@@ -116,7 +81,7 @@ There are some delay parameters that need to set properly, because they directly
    :align: center
 
 
-Choose the hight mode to be vision
+Choose the height mode to be vision
 
 .. image:: ../_static/ekf2_hight_mode.png
    :scale: 50 %
@@ -130,11 +95,6 @@ Set the position of the center of the markers (that define the rigid body in the
 .. image:: ../_static/marker_pos.png
    :scale: 50 %
    :align: center
-
-
-
-
-
 
 
 Setting LPE Estimator for MOCAP Fusion
@@ -176,10 +136,6 @@ Also, disable any altitude sensor e.g. LIDAR
 
 
 Now Restart Pixhawk
-
-
-
-
 
 
 Getting MOCAP data into PX4
@@ -263,7 +219,6 @@ The default log file format in PX4 is ``Ulog``. Usually, the default setting, is
 
 * Plot the fields ``ekf2_innovations_0.vel_pos_innov[3]``, ``ekf2_innovations_0.vel_pos_innov[4]``, ``ekf2_innovations_0.vel_pos_innov[5]``
 Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding mocap data at high rate.
-
 
 
 .. image:: ../_static/log_ekf2_innov.png
