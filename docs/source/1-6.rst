@@ -15,9 +15,9 @@ This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to a
 Hardware Requirements
 -----
 
-* Pixhawk or simial controller that runs PX4 firmware
+* Pixhawk or similar controller that runs PX4 firmware
 * ODROID (we will assume XU4)
-* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using **Pixhawk 2**, then connect the serial cable to *TELEM2* port. If you are using **MindPX** flight controller, just use a USB to micro-USB cable.
+* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using **Pixhawk 2**, then connect the serial cable to ``TELEM2`` port. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
 * OptiTrack PC
 * WiFi router (5GHz is recommended)
 
@@ -33,7 +33,7 @@ Software Requirements
 
 .. hint::
 
-	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card.
+	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed spce.
 
 
 * ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. The above image already includes this
@@ -112,7 +112,7 @@ You will also need to use the highest baud rate for the serial connection. See b
    :align: center
 
 
-Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows
+Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows. Restart might needed to activate LPE parameters in QGroundControl.
 
 .. image:: ../_static/heading.png
    :scale: 50 %
@@ -141,9 +141,9 @@ Now Restart Pixhawk
 Getting MOCAP data into PX4
 -----
 
-Please refer to the **OptiTrack Interface to ROS** to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
+Please refer to the `OptiTrack Interface to ROS <http://risc.readthedocs.io/en/latest/1-5.html>`_ to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
 
-You will need to run MAVROS node in order to connect ODROID to the flight controller.
+You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2)
 
 .. code-block:: bash
 
@@ -160,7 +160,7 @@ Relay the mocap data to the flight controller
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
 
 
-Check in ``QGroundControl`` that you get ``mocap init ....`` message which means mocap data is received by Pixhawk.
+Check in **QGroundControl** that you get **[Your Time] Info: [lpe] mocap position init: and your values in meters** message which means mocap data is received by Pixhawk.
 
 * If you use **EKF2**
 
@@ -174,36 +174,6 @@ Now you are ready to use position hold/offboard modes.
 .. warning::
 
 	It is very important that you align the forward direction of your drone (robot) with the x-axis of your mocap when you first define a rigid body. You can find the x-axis direction in the mocap software, Motive.
-
-
-.. warning::
-
-	If you use the Ubuntu minimal image that is provided above, you will need to adjust the WiFi connection in order to connect to your WiFi router
-
-
-Connect 5Ghz WiFi module to ODROID XU4. Open a terminal in ODROID and type
-
-.. code-block:: bash
-
-	ifconfig
-
-in order to know your WiFi module ID number. It should be something like ``wlan0``.
-
-Edit the ``interfaces`` file to provide the correct WiFi module ID you got above, and use your WiFi network name and password
-
-
-.. code-block:: bash
-
-	nano /etc/network/interfaces
-
-After you finish editing, use ``CTRL+X`` to try to exit. It will ask you if you want to save. Hit ``Y`` key and then ENTER.
-
-If it gives you error like  ``permission denied`` use,
-
-.. code-block:: bash
-	
-	sudo nano /etc/network/interfaces
-
 
 
 Checking EKF2 Consistency via  Log Files
