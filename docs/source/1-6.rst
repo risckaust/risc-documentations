@@ -10,8 +10,6 @@ Feeding MOCAP data to Pixhawk
 Intro
 ----
 
-Refer to :doc:`Awesome document <1-1>`
-
 This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to an ODROID, or an onboard linux computer. This will allow Pixhawk to have indoor position and heading information for position stabilization.
 
 Hardware Requirements
