@@ -68,7 +68,7 @@ ROS has many versions. The latest version at the time of writing this tutorial i
 
   The operating system that we are going to use is **Ubuntu 16.04**. ROS Kinetic does not work with Ubuntu 14.
 
-Simply follow the instructions in the official ROS wiki to install ROS Kinetic - http://wiki.ros.org/kinetic/Installation/Ubuntu.
+Simply follow the instructions on the official ROS wiki `page <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ to install ROS Kinetic.
 
 
 Install TurtleBot packages
@@ -81,7 +81,7 @@ During this tutorial, you will work with a simulated robot called **TurtleBot**,
    :scale: 50 %
    :align: center
 
-For reference see: http://wiki.ros.org/Robots/TurtleBot
+For reference Turtlebot wiki `page <http://wiki.ros.org/Robots/TurtleBot>`_.
 
 .. hint::
 
@@ -94,7 +94,7 @@ To install the required packages, execute the following commands in a shell term
   sudo apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-turtlebot-gazebo -y
 
 
-After installation is done, check that the simulation works in gazebo. Execute the following commands in a shell terminal.
+After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.
 
 
 .. code-block:: bash
@@ -112,6 +112,7 @@ Move the robot
 ^^^^^^^^
 
 How can you move the Turtlebot?
+
 The easiest way is by executing an existing ROS program to control the robot. A ROS program is executed by using some special files called **launch files**.
 Since a previously-made ROS program already exists that allows you to move the robot using the keyboard, let's launch that ROS program to teleoperate the robot.
 
