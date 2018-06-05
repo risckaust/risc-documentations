@@ -61,9 +61,9 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    3-5
 
 .. toctree::
-   :maxdetpth: 2
+   :maxdepth: 2
    :hidden:
-   :caption: Boot Camp
+   :caption: Boot Camp - don't use
    
    1-1
    1-2
