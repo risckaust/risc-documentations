@@ -175,6 +175,12 @@ Calibration process
 
 * Calibrate `Sensor orientation <https://docs.px4.io/en/config/flight_controller_orientation.html>`_ if any, `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
 
+Video for your reference
+
+.. raw:: html
+  
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 * Before you can calibrate the radio system the receiver and transmitter must be connected/bound. Follow the steps from this `page <https://docs.px4.io/en/config/radio.html>`_.
 
 * In ``Flight Modes`` tab set:
