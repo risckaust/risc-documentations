@@ -178,6 +178,7 @@ Calibration process
 Video for your reference
 
 .. raw:: html
+  
   <iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 * Before you can calibrate the radio system the receiver and transmitter must be connected/bound. Follow the steps from this `page <https://docs.px4.io/en/config/radio.html>`_.
@@ -196,24 +197,19 @@ Video for your reference
 
 * In ``Power tab`` write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this `page <https://docs.px4.io/en/config/battery.html>`_ and `here <https://docs.px4.io/en/advanced_config/esc_calibration.html>`_.
 
+* Now you can install propellers. Note that there are CW and CCW propellers as well.
+
 * Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for quadcopter.
 
 
 Flying
 ------
 
-* Unplug the quadcopter from computer
-* Press Safety switch on Pixhawk until it blinks faster
+* Read `First Flight Guidelines <https://docs.px4.io/en/flying/first_flight_guidelines.html>`_ and `Flying 101 <https://docs.px4.io/en/flying/basic_flying.html>`_.
 
-* Make sure no propellers attached yet. Arm the quadcopter by putting the throttle stick in the bottom right corner. This will start the propellers. To disarm, put the throttle stick in the bottom left corner. Check if the motors are spinning in a correct directions, if not change any two wires of that motor.
-
-Read more on `First Flight Guidelines <https://docs.px4.io/en/flying/first_flight_guidelines.html>`_ and `Flying 101 <https://docs.px4.io/en/flying/basic_flying.html>`_.
-
-* Now you can install propellers. Note that there are CW and CCW propellers as well.
 * Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
 * Check the battery level, make sure it's enough to perform your first flight.
 * Put the quadcopter in the cage and arm again. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
-* If it flies, CONGRATULATIONS!
 
 Troubleshooting
 ------
