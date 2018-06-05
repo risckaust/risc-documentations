@@ -60,3 +60,16 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    3-4
    3-5
 
+.. toctree::
+   :maxdetpth: 2
+   :hidden:
+   :caption: Boot Camp
+   1-1
+   1-2
+   1-10
+   1-4
+   1-3
+   9-1
+
+
+
