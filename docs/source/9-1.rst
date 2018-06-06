@@ -10,7 +10,7 @@ In order to start flying the quadcopter indoor, we need the position and orienta
 This section will guide you how to use OptiTrack Motion Capture System, how to stream position and orientation data to ROS, and feed it to your flight controller.
 
 
-.. image:: ../_static/sys_arch.png
+.. image:: ../_static/sys_arch2.png
    :scale: 50 %
    :align: center
 
