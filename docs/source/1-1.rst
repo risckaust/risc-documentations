@@ -55,7 +55,7 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulatoin excercises mentioned in this tutorial. The following sections will guide you throught the installation procedures.
+In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulatoin exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
 
 Install ROS Kinetic
 """"""""""
@@ -154,7 +154,7 @@ All those files in the package are organized with the following structure:
 - ``CMakeLists.txt``: List of cmake rules for compilation
 - ``package.xml``: Package information and dependencies
 
-To go to any ROS package, ROS gives you a command named roscd. When typing:
+To go to any ROS package, ROS gives you a command named ``roscd``. When typing:
 
 .. code-block:: bash
 
@@ -332,7 +332,7 @@ At this point, you should have your first package created... but now you need to
 
   # navigate to the src folder inside my_package
   roscd my_package/src
-  # make the python file execuatble
+  # make the python file executable
   chmod +x simple.py
 
 3. Create a ``launch`` directory inside the package named ``my_package``
@@ -734,7 +734,7 @@ Launch the program and check that the robot moves.
 
   In order to know the structure of the Twist messages, you need to use the ``rosmsg show`` command, with the type of the message used by the topic ``/cmd_vel``.
 
-  In this case, the robot uses a differential drive plugin to move. That is, the robot can only move linearly in the 'x' axis, or rotationaly in the angular z axis. This means that the only values that you need to fill in the Twist message are the linear x and the angular z.
+  In this case, the robot uses a differential drive plugin to move. That is, the robot can only move linearly in the 'x' axis, or rotationally in the angular z axis. This means that the only values that you need to fill in the Twist message are the linear x and the angular z.
 
   .. image:: ../_static/xyz-frame.jpg
     :scale: 50 %
@@ -943,7 +943,7 @@ This function includes all of the messages of this package (in the ``msg`` folde
   add_message_files(
         FILES
         Age.msg
-      ) # Dont Forget to UNCOMENT the parenthesis and add_message_files TOO
+      ) # Don't Forget to uncomment the parenthesis and add_message_files TOO
 
 
 ``generate_messages()``
@@ -955,7 +955,7 @@ Here is where the packages needed for the messages compilation are imported.
   generate_messages(
         DEPENDENCIES
         std_msgs
-  ) # Dont Forget to uncoment here TOO
+  ) # Dont Forget to uncomment here too
 
 
 In summary, this is the minimum expression of what is needed for the ``CMakeLists.txt`` to work:

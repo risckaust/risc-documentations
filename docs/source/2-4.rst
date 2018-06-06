@@ -110,7 +110,7 @@ Requirements:
 * `XBee explorer USB <https://www.sparkfun.com/products/11812>`_ to configure WiFi module via PC
 * `Xbee breakout board <http://www.robotshop.com/en/droids-xbee-simple-board.html>`_ to interface with *Pixhawk*
 
-In this tutorial, ``TELEM2`` is going to be used to connect the WiFi module at baud rate 921600. ``TELEM1`` can be used too, but will require further configuration steps, but you can stil use it direectly at baud ``57600`` (which is its default).
+In this tutorial, ``TELEM2`` is going to be used to connect the WiFi module at baud rate 921600. ``TELEM1`` can be used too, but will require further configuration steps, but you can still use it directly at baud ``57600`` (which is its default).
 
 .. info::
 
@@ -171,7 +171,7 @@ You can change the serial baudrate by
 WiFi setup
 ^^^^^^^^
 
-Set authentification to WPA2-PSK only:
+Set authentication to WPA2-PSK only:
 
 .. code-block:: bash
   
@@ -318,7 +318,7 @@ Set the WiFi module's IP address
 
 your IP first 3 numbers (e.g. ``192.168.1.\*``) should be the same as your router's first three numbers
 
-Set IP gateway (usually this is your router's IP). You can firdt set up dynamic IP, and then connect to the WiFi. Then, on the WiFi module command line type ``get ip`` to see the *gateway* and the *netmask*, and note them down. Set the *gateway* and *netmask* as follows,
+Set IP gateway (usually this is your router's IP). You can first set up dynamic IP, and then connect to the WiFi. Then, on the WiFi module command line type ``get ip`` to see the *gateway* and the *netmask*, and note them down. Set the *gateway* and *netmask* as follows,
 
 
 .. code-block:: bash

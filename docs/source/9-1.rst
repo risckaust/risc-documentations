@@ -25,14 +25,14 @@ Let's discuss each element in details
 Motion capture system
 -----
 
-OptiTrack motion capture system (mocap hereinafter) works as follows. The overhead cameras send out pulsed infrared light using the attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. Simply mocap provides high precision indoor local position and orientaion estimation. Postion is meters and orientation is in quaternion, which can be converted Euler angles in radians. In RISC lab we use twenty Prime17w cameras that are installed in the flying arena.
+OptiTrack motion capture system (mocap hereinafter) works as follows. The overhead cameras send out pulsed infrared light using the attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. Simply mocap provides high precision indoor local position and orientation estimation. Position is meters and orientation is in quaternion, which can be converted Euler angles in radians. In RISC lab we use twenty Prime17w cameras that are installed in the flying arena.
     
-All cameras are conntected to a single Mocap PC through netwrok switches. Motive Optical motion capture software is installed on this PC.
+All cameras are connected to a single Mocap PC through network switches. Motive Optical motion capture software is installed on this PC.
   
 Controller
 -----
 
-Controllers are PCs or single board computer (SBC) which are used to control the objects in the flying arena. When a PC is used to control an object, this referred as OFFBOARD control. Also a controller can be a flight controller that runs an autopilot firmware to control a vehicle (e.g. quadrotor).
+Controllers are PCs or single board computer (SBC) which are used to control the objects in the flying arena. When a PC is used to control an object, this referred as OFFBOARD control. Also a controller can be a flight controller that runs an autopilot firmware to control a vehicle (e.g. quadcopter).
 
 A companion computer is referred to an SBC that is connected to a flight controller. Usually, SBC is used to perform more sophisticated/high computations that the flight controller can not. In other words, the flight controller is designed for low-level tasks, e.g. attitude control, motor driving, sensor data acquisition. However, the companion computer is used for high-level-control e.g. path planning, optimization.
   
@@ -60,7 +60,7 @@ Make sure that you remove any markers from the captured area before performing c
 
 Make sure that you use clean markers on the wanding stick.
 
-The calibration invloves three main steps
+The calibration involves three main steps
 
 * Sample collections using the wanding stick
 * Ground setting using the L-shape tool
@@ -124,7 +124,7 @@ Required Hardware
 * Mocap machine. Runs Motive Motion Capture Software.
 * Optitrack Motion Capture System
 * WiFi router (5GHz recommended)
-* A linux based computer, normal PC or onboard embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
+* A linux based computer, normal PC or on-board embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
 
 .. note::
 

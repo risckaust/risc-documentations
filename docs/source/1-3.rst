@@ -70,7 +70,7 @@ You will need
   Sometimes you might see **R** or **C** after the size numbers, such as 5x3R. **R** indicates the rotation of the propeller, which stands for “reversed”. It should be mounted on a motor that spins clockwise. **C** is the opposite, should be used with motors that spins counter-clockwise.
 
 
-* Electronic speed controller (ESC) controls and regualates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
+* Electronic speed controller (ESC) controls and regulates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
 
 .. image:: ../_static/esc.jpg
    :scale: 50 %
@@ -134,7 +134,7 @@ Assembly process
 
 * Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to **MAIN OUT** port 1.
 
-* Binding process depens on the receiver you use:
+* Binding process depends on the receiver you use:
 
   + FrSky X8R, refer to this `document <https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf>`_
     
@@ -153,7 +153,7 @@ Assembly process
   + Spektrum receiver without autobind
 
     1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_.
-    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC reciever to AR8000 receiver.
+    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC receiver to AR8000 receiver.
     3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
     4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
     5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.

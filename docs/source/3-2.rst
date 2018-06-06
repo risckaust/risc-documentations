@@ -33,5 +33,5 @@ Ultimaker3 Extended
 -----
 
 .. image:: ../_static/ultimaker.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center

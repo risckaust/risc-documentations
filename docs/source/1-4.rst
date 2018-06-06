@@ -1,7 +1,7 @@
 Software in the Loop Joystick Flight
 =====
 
-This tutorial explains the steps required to fly a simulated quadrotor in the Gazebo simulator using a real joystick. The following diagram shows how the system components work together.
+This tutorial explains the steps required to fly a simulated quadcopter in the Gazebo simulator using a real joystick. The following diagram shows how the system components work together.
 
 .. image:: ../_static/sitl_diagram.png
    :scale: 50 %
@@ -34,7 +34,7 @@ Software Requirements
 Setup Steps
 -----
 
-Please follow this steps carefully to setup the development enviroment which includes the software-in-the-loop simulation. It is assumed that the following steps are done on a clean Ubuntu 16.04 OS image.
+Please follow this steps carefully to setup the development environment which includes the software-in-the-loop simulation. It is assumed that the following steps are done on a clean Ubuntu 16.04 OS image.
 
 Open a new terminal window \(you can hit Ctrl+Alt+T to bring up one\). Then, please follow the steps starting by the Permission Setup section.
 
@@ -56,7 +56,7 @@ Open a new terminal window \(you can hit Ctrl+Alt+T to bring up one\). Then, ple
 
 Then, build your workspace using ``catkin build``
 
-* `Nuttx based Hardware <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware>`_. Go through all installation instructions. If you get some messages about not found directorires, ignore them!
+* `Nuttx based Hardware <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware>`_. Go through all installation instructions. If you get some messages about not found directories, ignore them!
 
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
@@ -142,7 +142,7 @@ Now, you can monitor the drone's states and control it via a mavros node.
 
 * There is a flight mode in PX4 autopilot which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, and attitude setpoints. You cannot mix between different setpoints _e.g._ velocity setpoints in x/y and position in z.
 
-* A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer thos setpoints to the autopilot to execute.
+* A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer those setpoints to the autopilot to execute.
 
 * If the autopilot's flight mode is **OFFBOARD**, the autopilot will accept the received setpoints and execute them.
 

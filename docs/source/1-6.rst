@@ -10,7 +10,7 @@ Feeding MOCAP data to Pixhawk
 Intro
 ----
 
-This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to an ODROID, or an onboard linux computer. This will allow Pixhawk to have indoor position and heading information for position stabilization.
+This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to an ODROID, or an on-board linux computer. This will allow Pixhawk to have indoor position and heading information for position stabilization.
 
 Hardware Requirements
 -----
@@ -33,7 +33,7 @@ Software Requirements
 
 .. hint::
 
-	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed spce.
+	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space.
 
 
 * ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. The above image already includes this

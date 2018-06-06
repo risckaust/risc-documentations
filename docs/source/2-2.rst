@@ -21,7 +21,7 @@ Make sure that you remove any markers from the captured area before performing c
 
 Make sure that you use clean markers on the wanding stick.
 
-The calibration invloves three main steps
+The calibration involves three main steps
 
 * Sample collections using the wanding stick
 * Ground setting using the L-shape tool
@@ -69,7 +69,7 @@ In this section, we learn how to install and use the streaming application, *Opt
 
 Requirements:
 
-* *OptiStream* Windows Aplication.
+* *OptiStream* Windows Application.
 
 .. note::
 

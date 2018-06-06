@@ -71,7 +71,7 @@ In all the tutorials, you will be using ``Rviz`` which is a very powerful ROS to
 Environment Setup
 -----
 
-During this tutorial, you will work with a simulated robot called TurtleBot, to apply the concepts of navigation using ROS. The following image is a picture of the robot you will work with. It is a differntial drive robot, that has a Kinect sensor for environmental mapping, wheel ecnoders for pose estimation.
+During this tutorial, you will work with a simulated robot called TurtleBot, to apply the concepts of navigation using ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for pose estimation.
 
 
 .. image:: ../_static/kobuki.jpg

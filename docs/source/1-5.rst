@@ -14,7 +14,7 @@ Required Hardware
 * Mocap machine. Runs Motive Motion Capture Software.
 * Optitrack Motion Capture System
 * WiFi router (5GHz recommended)
-* A linux based computer, normal PC or onboard embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
+* A linux based computer, normal PC or on-board embedded computer like ODROID XU4 will work. The linux computer should be connected to the router either via ethernet cable or WiFi connection.
 
 .. note::
 

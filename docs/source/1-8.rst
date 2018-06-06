@@ -104,7 +104,7 @@ What we need in this tutorial is to
 
 * Select the one corresponds to the quadcopter. Then, check the ``stream to Mav`` checkbox.
 
-* Now, your quad should be getting its position and orientaion feedback from the Mocap system.
+* Now, your quad should be getting its position and orientation feedback from the Mocap system.
 
 Quadcopter setup
 -----
@@ -123,7 +123,7 @@ Check `this guide <https://github.com/mzahana/Image_Live_Stream>`_ to see how to
 To run the application, follow the following steps in order
 
 * Connect a compatible camera to ODROID
-* Connect a compatibe WiFi module to ODROID (use the ODROID WiFi adapter)
+* Connect a compatible WiFi module to ODROID (use the ODROID WiFi adapter)
 * Power on the ODROID
 * From your laptop (which is connected to the same local WiFi network as the ODROID), open a terminal and remotely log-in to ODROID
 
@@ -163,11 +163,11 @@ We are going to use two main MATLAB classes in this Demo. One is called ``MatMav
 
 ``MatMav`` is a MATLAB class that is used to communicate with Pixhawk. ``ImgStream`` is a MATLAB class that is use to receive live image stream from ODROID (or any Linux computer) over network.
 
-Before you use the MATLAB files associated with this demo, you should setup your enviornment properly.
+Before you use the MATLAB files associated with this demo, you should setup your environment properly.
 
 .. warning::
 	
-	Before you use the MATLAB files associated with this demo, you should setup your enviornment properly. Namely, you need to associate your MATLAB with a C/C++ compiler, and instal OpenCV.
+	Before you use the MATLAB files associated with this demo, you should setup your environment properly. Namely, you need to associate your MATLAB with a C/C++ compiler, and install OpenCV.
 
 Please follow the OpenCV installation as follows,
 
@@ -180,6 +180,6 @@ Google how to associate your MATLAB with a compiler.
 * Open MATLAB and navigate to that folder.
 * Run the ``setup.m`` file.
 
-If all goes well, you should get the message ``Setup is done``. Now, you are ready to procceed with the experiemetn which is implemented in the ``Demo1.m`` MATLAB file.
+If all goes well, you should get the message ``Setup is done``. Now, you are ready to proceed with the experiment which is implemented in the ``Demo1.m`` MATLAB file.
 
 * Check the ``Demo1.m`` file to get familiar with ``MatMav`` and ``ImgStream`` classes.
