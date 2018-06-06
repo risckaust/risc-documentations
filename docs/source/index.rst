@@ -12,19 +12,17 @@ RISC Lab Documentation
 This document provides tutorials/guides/manuals of setups and experiments in the RISC Lab. This is mainly intended for the Robotics, Intelligent Systems and Control Lab users, at KAUST.
 
 
-
 .. toctree::
    :maxdepth: 2
    :hidden:
    :caption: Boot Camp
-
-   1-1
-   1-2
-   1-3
-   1-4
-   1-5
-   1-6
-   1-10
+   
+   1-ros-basics
+   1-ros-navigation
+   1-3d-modeling
+   1-flight-gazebo
+   1-quadcopter-assembly
+   1-indoor-flight
 
 .. toctree::
    :maxdepth: 2
@@ -35,19 +33,9 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    1-8
    1-9
    1-11
-   
-
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Indoor Navigation
-
-   2-1
-   2-2
-   2-3
    2-4
-   2-5
    2-6
+   
 
 .. toctree::
    :maxdepth: 2
@@ -60,17 +48,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    3-4
    3-5
 
-.. toctree::
-   :maxdepth: 2
-   :hidden:
-   :caption: Boot Camp - don't use
-   
-   1-1
-   1-2
-   1-10
-   1-4
-   1-3
-   9-1
+
 
 
 

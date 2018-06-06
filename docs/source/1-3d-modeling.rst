@@ -1,4 +1,4 @@
-3D Modelling
+3D Modeling
 =====
 
 
