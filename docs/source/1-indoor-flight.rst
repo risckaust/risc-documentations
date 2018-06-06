@@ -148,7 +148,7 @@ To set a static IP address open ``/etc/network/interfaces`` file for editing by 
 	
 	sudo nano /etc/network/interfaces
 
-Modify the file so it matches your WiFi network. It should like similar to this.
+Modify the file so it matches your WiFi network. It should look similar to this.
 
 .. code-block:: bash
 

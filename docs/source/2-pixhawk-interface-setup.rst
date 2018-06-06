@@ -1,4 +1,4 @@
-Pixhawk Interface
+Pixhawk Interface Setup
 =====
 
 Intro

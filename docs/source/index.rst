@@ -29,24 +29,25 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    :hidden:
    :caption: Special tutorials
 
-   1-7
-   1-8
-   1-9
-   1-11
-   2-4
-   2-6
+   2-companion-computers-setup
+   2-pixhawk-interface-setup
+   2-running-mavros-after-boot
+   2-odroid-to-matlab
+   2-matlab-pixhawk
+   2-hil-px4-vrep
    
 
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Hardware manuals
+   :caption: Hardware user's guides
 
-   3-1
-   3-2
-   3-3
-   3-4
-   3-5
+   3-3d-printing
+   3-CNC-machine
+   3-drill-press
+   3-dremmel
+   3-circular-saw
+   
 
 
 

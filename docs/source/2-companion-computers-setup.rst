@@ -1,4 +1,4 @@
-Companion Computers
+Companion Computers Setup
 =========
 
 
