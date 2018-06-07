@@ -1,7 +1,7 @@
 Quadcopter Assembly
 =====
 
-This is a tutorial for RISC lab boot camp. Please find all the components in RISC shoebox and toolbox prepared in Area C’s shelf.
+Please find all components on Area-C shelves.
 
 Basic principles
 -----
@@ -13,7 +13,7 @@ Preliminaries
 
 This tutorial assumes you have the following skills:
 
-* `ROS Basics <1-1.html>`_ or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. And refer to `solutions to exercises <https://github.com/luym11/ros_practise>`_ on Github.
+* `ROS Basics <1-1.html>`_ or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. There are `solutions <https://github.com/luym11/ros_practise>`_ to ETHZ exercises available on Github.
 
 * Soldering, if not, please refer to basic skill `video <https://www.youtube.com/watch?v=BLfXXRfRIzY>`_.
 
@@ -40,7 +40,7 @@ Introduction
 
 You will need
 
-* Quadcopter frame. 250 frame will be a good start. 250 means the motor to motor diameter, as shown below.
+* Quadcopter frame. 250 frame will be a good start. The value 250 means the motor to motor diameter, as shown below.
 
 .. image:: ../_static/quad-diam.png
    :scale: 50 %
@@ -57,7 +57,7 @@ You will need
 
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available at `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
 
-* Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer triblades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag. 
+* Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer tri-blades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag. 
 
 .. note:: 
   
@@ -142,7 +142,7 @@ Assembly process
 
     1. With the transmitter off, power on the receiver.
     2. The receiver will attempt to connect to the last transmitter it was bound to.
-    3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED.
+    3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED. If it doesn't, press **Spektrum Bind** button in **Radio** tab.
     4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
     5. When the receiver binds the orange LED turns solid.
 
@@ -197,6 +197,8 @@ Video for your reference
 
 * In ``Power tab`` write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this `page <https://docs.px4.io/en/config/battery.html>`_ and `here <https://docs.px4.io/en/advanced_config/esc_calibration.html>`_.
 
+* Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the propellers on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
+
 * Now you can install propellers. Note that there are CW and CCW propellers as well.
 
 * Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for quadcopter.
@@ -209,7 +211,11 @@ Flying
 
 * Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
 * Check the battery level, make sure it's enough to perform your first flight.
-* Put the quadcopter in the cage and arm again. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
+* Put the quadcopter in the cage and arm. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
+
+.. important::
+  
+  Always check the battery before flying
 
 Troubleshooting
 ------
