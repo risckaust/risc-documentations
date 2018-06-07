@@ -10,7 +10,7 @@ This section will guide you how to use OptiTrack Motion Capture System, how to s
 
 
 .. image:: ../_static/sys_arch2.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 The overall systems has following main elements:
@@ -213,7 +213,7 @@ Feeding MOCAP data to Pixhawk
 
 
 .. image:: ../_static/mocap-ros.png
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 
