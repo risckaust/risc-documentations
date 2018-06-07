@@ -13,7 +13,7 @@ This section will guide you how to use OptiTrack Motion Capture System, how to s
    :scale: 50 %
    :align: center
 
-There are two options to send high level commands to a flight controller. Using a stationary PC via WiFi or an on-board computer via telemetry port. The overall systems has following main elements:
+The overall systems has following main elements:
 
 * OptiTrack Motion Capture System
 * Object to be tracker, eg. quadcopter, ground vehicles.
@@ -59,7 +59,7 @@ Follow `this guide <http://wiki.optitrack.com/index.php?title=Calibration>`_ in 
 
 Calibration video:
 
-.. raw:: html 
+.. raw:: html
 	
 	<iframe width="560" height="315" src="https://www.youtube.com/embed/cNZaFEghTBU?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
