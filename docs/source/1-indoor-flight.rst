@@ -77,6 +77,8 @@ Read `this guide <http://wiki.optitrack.com/index.php?title=Markers>`_ for detai
 
 Follow `this guide <http://wiki.optitrack.com/index.php?title=Rigid_Body_Tracking>`_ to create rigid bodies.
 
+.. _optitrack-interface:
+
 OptiTrack Interface to ROS
 =====
 
@@ -207,8 +209,6 @@ You should get similar to this. More information on message type `here <http://d
    :align: center
 
 
-
-.. _feeding-data-to-pixhawk:
 
 Feeding MOCAP data to Pixhawk
 =====
@@ -353,7 +353,7 @@ Now Restart Pixhawk
 Getting MOCAP data into PX4
 -----
 
-Please refer to the :ref:`feeding-data-to-pixhawk` to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
+Assuming your ``vrpn_client_node`` is still running from :ref:`optitrack-interface` on your ODROID, we will republish it to another topic by ``relay`` command.
 
 You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2)
 
@@ -363,7 +363,7 @@ You will need to run MAVROS node in order to connect ODROID to the flight contro
 
 ``ttyUSB0`` should match the serial port ID in your ODROID. ``gcs_url:=udp://@192.168.1.102:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
-Relay the mocap data to the flight controller
+Relay the Mocap data to the flight controller
 
 * If you are using **LPE**
 
@@ -372,7 +372,7 @@ Relay the mocap data to the flight controller
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
 
 
-Check in **QGroundControl** that you get **[Your Time] Info: [lpe] mocap position init: and your values in meters** message which means mocap data is received by Pixhawk.
+Check in **QGroundControl** that you'll get some message which means Mocap data is received by Pixhawk.
 
 * If you use **EKF2**
 
@@ -385,7 +385,7 @@ Now you are ready to use position hold/offboard modes.
 
 .. warning::
 
-	It is very important that you align the forward direction of your drone (robot) with the x-axis of your mocap when you first define a rigid body. You can find the x-axis direction in the mocap software, Motive.
+	It is very important that you align the forward direction of your drone (robot) with the x-axis of your Mocap when you first define a rigid body. You can find the x-axis direction in the Mocap software, Motive.
 
 
 Checking EKF2 Consistency via  Log Files
@@ -400,7 +400,7 @@ The default log file format in PX4 is ``Ulog``. Usually, the default setting, is
 * Download the `FlightPlot <https://pixhawk.org/dev/flightplot>`_ software to open your logs.
 
 * Plot the fields ``ekf2_innovations_0.vel_pos_innov[3]``, ``ekf2_innovations_0.vel_pos_innov[4]``, ``ekf2_innovations_0.vel_pos_innov[5]``
-Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding mocap data at high rate.
+Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using Mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding Mocap data at high rate.
 
 
 .. image:: ../_static/log_ekf2_innov.png
