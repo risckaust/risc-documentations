@@ -353,7 +353,7 @@ Now Restart Pixhawk
 Getting MOCAP data into PX4
 -----
 
-Please refer to the :ref: `feeding-data-to-pixhawk` to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
+Please refer to the :ref:`feeding-data-to-pixhawk` to get mocap data into ROS on your ODROID, by running ``vrpn_client_ros`` node
 
 You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2)
 
