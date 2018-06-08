@@ -13,7 +13,7 @@ Preliminaries
 
 This tutorial assumes you have the following skills:
 
-* :doc:`1-ros-basisc` or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. There are `solutions <https://github.com/luym11/ros_practise>`_ to ETHZ exercises available on Github.
+* :doc:`1-ros-basics` or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. There are `solutions <https://github.com/luym11/ros_practise>`_ to ETHZ exercises available on Github.
 
 * Soldering, if not, please refer to basic skill `video <https://www.youtube.com/watch?v=BLfXXRfRIzY>`_.
 
