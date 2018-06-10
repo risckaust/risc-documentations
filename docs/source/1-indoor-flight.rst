@@ -415,18 +415,21 @@ Those are the innovations on the x/y/z position estimates reported by the ``EKF2
 Flying
 ======
 
-Not it's time to fly your drone in the cage!
+Intro
+------
 
-We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally mavros will send setpoints to autopilot.
+Now it's time to fly your drone in the cage!
 
-To start set PC running Linux to ROS Master by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally mavros will send setpoints to autopilot (real flight controller on your drone).
+
+* First let's set PC running Linux to be ROS Master by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 
 .. code-block:: bash
 
 	gedit ~/.bashrc
 
-Add following line to the end of the file.
+* Add following lines to the end of the file.
 
 .. code-block:: bash
 
@@ -435,7 +438,7 @@ Add following line to the end of the file.
 
 Change the last value (*119*) to match your IP address. Make sure you **source** the ``.bashrc`` file after this.
 
-Log into a ODROID to execute some commands by typing:
+* Log into a ODROID to get access to a command-line over a network.
 
 .. code-block:: bash
 
@@ -443,56 +446,54 @@ Log into a ODROID to execute some commands by typing:
 
 It will prompt to enter password, if you use minimal image provided then it's **odroid**.
 
-We need to edit ``.bashrc`` file on ODROID as well.
+*  We need to edit ``.bashrc`` file on ODROID as well.
 
 .. code-block:: bash
 
 	nano .bashrc
 
-Add the following lines to the file.
+* Add the following lines to the end of the file.
 
 .. code-block:: bash
 
 	export ROS_MASTER_URI=http://192.168.0.119:11311
 	export ROS_HOSTNAME=192.168.0.116
 
-Alt+X, press Y, hit Enter.
+To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file. 
 
-Source the ``.bashrc`` file. 
-
-Run on ODROID ``vrpn_client_ros`` as follows:
+* Run on ODROID ``vrpn_client_ros`` as follows (repeated here for your convenience):
 
 .. code-block:: bash
 
 	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
 
-Open another tab, log into ODROID again and run mavros:
+* Open another tab, log into ODROID again and run mavros:
 
 .. code-block:: bash
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
 
-On PC in new terminal tab relay positions from mocap to mavros (assuming you are using **EKF2**).
+* On Linux PC open new tab, relay positions from mocap to mavros (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Modify ``setpoints_node.py`` file with code from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_.
+* Modify ``setpoints_node.py`` file with code from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_.
 
 
-Also add some changes to ``joystick_flight.launch`` file as provided `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/joystick_flight.launch>`_.
+* Also add some changes to ``joystick_flight.launch`` file as provided `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/joystick_flight.launch>`_.
 
 Make sure you give permissions to the joystick.
 
-Now run in a new terminal your launch file
+* Now run in a new terminal your launch file
 
 .. code-block:: bash
 
   roslaunch mypackage joystick_flight.launch
 
-Press the button #1 on the joystick, it will arm the quadcopter. Pressing button #3 will switch quadcopter to OFFBOARD flight mode. It will takeoff and hover at 1m height. Control the joystick and enjoy your quadcopter flying. Button #3 will land the quadcopter. Now press button #11 to disarm it.
+* Press the button #1 on the joystick, it will arm the quadcopter. Pressing button #3 will switch quadcopter to OFFBOARD flight mode. It will takeoff and hover at 1m height. Control the joystick and enjoy your quadcopter flying. Button #3 will land the quadcopter. Now press button #11 to disarm it.
 
 
 
