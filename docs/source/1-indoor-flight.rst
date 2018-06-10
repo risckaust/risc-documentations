@@ -424,8 +424,7 @@ To start set PC running Linux to ROS Master by editing ``.bashrc`` file. Open te
 
 .. code-block:: bash
 
-	cd ~
-	gedit .bashrc
+	gedit ~/.bashrc
 
 Add following line to the end of the file.
 
@@ -461,7 +460,14 @@ Alt+X, press Y, hit Enter.
 
 Source the ``.bashrc`` file. 
 
-Run on ODROID ``vrpn_client_ros`` as in :ref:`stream-mocap-data`. Open another tab, log into ODROID again and run mavros 
+Run on ODROID ``vrpn_client_ros`` as follows:
+
+.. code-block:: bash
+
+	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
+
+
+Open another tab, log into ODROID again and run mavros:
 
 .. code-block:: bash
 
@@ -473,226 +479,22 @@ On PC in new terminal tab relay positions from mocap to mavros (assuming you are
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Modify ``setpoints_node.py`` accordingly:
-
-.. code-block:: python
-
-	#!/usr/bin/env python
-
-	# ROS python API
-	import rospy
-	# Joy message structure
-	from sensor_msgs.msg import Joy
-	# 3D point & Stamped Pose msgs
-	from geometry_msgs.msg import Point, PoseStamped
-	# import all mavros messages and services
-	from mavros_msgs.msg import *
-	from mavros_msgs.srv import *
-
-	# Flight modes class
-	# Flight modes are activated using ROS services
-	class fcuModes:
-	    def __init__(self):
-	        pass
-
-	    def setArm(self):
-	        rospy.wait_for_service('mavros/cmd/arming')
-	        try:
-	            armService = rospy.ServiceProxy('mavros/cmd/arming', mavros_msgs.srv.CommandBool)
-	            armService(True)
-	        except rospy.ServiceException, e:
-	            print "Service arming call failed: %s"%e
-
-	    def setDisarm(self):
-	        rospy.wait_for_service('mavros/cmd/arming')
-	        try:
-	            armService = rospy.ServiceProxy('mavros/cmd/arming', mavros_msgs.srv.CommandBool)
-	            armService(False)
-	        except rospy.ServiceException, e:
-	            print "Service disarming call failed: %s"%e
-
-	    def setStabilizedMode(self):
-	        rospy.wait_for_service('mavros/set_mode')
-	        try:
-	            flightModeService = rospy.ServiceProxy('mavros/set_mode', mavros_msgs.srv.SetMode)
-	            flightModeService(custom_mode='STABILIZED')
-	        except rospy.ServiceException, e:
-	            print "service set_mode call failed: %s. Stabilized Mode could not be set."%e
-
-	    def setOffboardMode(self):
-	        rospy.wait_for_service('mavros/set_mode')
-	        try:
-	            flightModeService = rospy.ServiceProxy('mavros/set_mode', mavros_msgs.srv.SetMode)
-	            flightModeService(custom_mode='OFFBOARD')
-	        except rospy.ServiceException, e:
-	            print "service set_mode call failed: %s. Offboard Mode could not be set."%e
-
-	    def setAltitudeMode(self):
-	        rospy.wait_for_service('mavros/set_mode')
-	        try:
-	            flightModeService = rospy.ServiceProxy('mavros/set_mode', mavros_msgs.srv.SetMode)
-	            flightModeService(custom_mode='ALTCTL')
-	        except rospy.ServiceException, e:
-	            print "service set_mode call failed: %s. Altitude Mode could not be set."%e
-
-	    def setPositionMode(self):
-	        rospy.wait_for_service('mavros/set_mode')
-	        try:
-	            flightModeService = rospy.ServiceProxy('mavros/set_mode', mavros_msgs.srv.SetMode)
-	            flightModeService(custom_mode='POSCTL')
-	        except rospy.ServiceException, e:
-	            print "service set_mode call failed: %s. Position Mode could not be set."%e
-
-	    def setAutoLandMode(self):
-	        rospy.wait_for_service('mavros/set_mode')
-	        try:
-	            flightModeService = rospy.ServiceProxy('mavros/set_mode', mavros_msgs.srv.SetMode)
-	            flightModeService(custom_mode='AUTO.LAND')
-	        except rospy.ServiceException, e:
-	               print "service set_mode call failed: %s. Autoland Mode could not be set."%e
-
-	# Main class: Converts joystick commands to position setpoints
-	class Controller:
-	    # initialization method
-	    def __init__(self):
-	        # Drone state
-	        self.state = State()
-	        # Instantiate a setpoints message
-	        self.sp         = PositionTarget()
-	        # set the flag to use position setpoints and yaw angle
-	        self.sp.type_mask    = int('010111111000', 2)
-	        # LOCAL_NED
-	        self.sp.coordinate_frame= 1
-
-	        # We will fly at a fixed altitude for now
-	        # Altitude setpoint, [meters]
-	        self.ALT_SP        = 1
-	        # update the setpoint message with the required altitude
-	        self.sp.position.z    = self.ALT_SP
-
-	        # Instantiate a joystick message
-	        self.joy_msg        = Joy()
-	        # initialize
-	        self.joy_msg.axes=[0.0, 0.0, 0.0]
-
-	        # Step size for position update
-	        self.STEP_SIZE = 2.0
-
-	        # Fence. We will assume a square fence for now
-	        self.FENCE_LIMIT = 1.0
-
-	        # A Message for the current local position of the drone
-	        self.local_pos = Point(0.0, 0.0, 0.0)
-
-		self.modes = fcuModes()
-
-	    # Callbacks
-
-	    ## local position callback
-	    def posCb(self, msg):
-	        self.local_pos.x = msg.pose.position.x
-	        self.local_pos.y = msg.pose.position.y
-	        self.local_pos.z = msg.pose.position.z
-
-	    ## joystick callback
-	    def joyCb(self, msg):
-	        self.joy_msg = msg
-
-		if msg.buttons[0] > 0:
-			self.modes.setArm()
-		if msg.buttons[1] > 0:
-			self.modes.setAutoLandMode()
-	       
-	        if msg.buttons[2] > 0:
-			self.modes.setOffboardMode()
-
-		if msg.buttons[10] > 0:
-			self.modes.setDisarm()
+Modify ``setpoints_node.py`` file with code from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_.
 
 
-	    ## Drone State callback
-	    def stateCb(self, msg):
-	        self.state = msg
+Also add some changes to ``joystick_flight.launch`` file as provided `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/joystick_flight.launch>`_.
 
-	    ## Update setpoint message
-	    def updateSp(self):
-	        x = -1*self.joy_msg.axes[1]
-	        y = -1*self.joy_msg.axes[0]
-	      
-		self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
-		self.sp.position.y = self.local_pos.y + self.STEP_SIZE*y
+Make sure you give permissions to the joystick.
 
+Now run in a new terminal your launch file
 
-	# Main function
-	def main():
+.. code-block:: bash
 
-	    # initiate node
-	    rospy.init_node('setpoint_node', anonymous=True)
+  roslaunch mypackage joystick_flight.launch
 
-	    # flight mode object
-	    
-	    # controller object
-	    cnt = Controller()
-
-	    # ROS loop rate, [Hz]
-	    rate = rospy.Rate(20.0)
-
-	    # Subscribe to drone state
-	    rospy.Subscriber('mavros/state', State, cnt.stateCb)
-
-	    # Subscribe to drone's local position
-	    rospy.Subscriber('mavros/local_position/pose', PoseStamped, cnt.posCb)
-	    # subscribe to joystick topic
-	    rospy.Subscriber('joy', Joy, cnt.joyCb)
-
-	    # Setpoint publisher
-	    sp_pub = rospy.Publisher('mavros/setpoint_raw/local', PositionTarget, queue_size=1)
+Press the button #1 on the joystick, it will arm the quadcopter. Pressing button #3 will switch quadcopter to OFFBOARD flight mode. It will takeoff and hover at 1m height. Control the joystick and enjoy your quadcopter flying. Button #3 will land the quadcopter. Now press button #11 to disarm it.
 
 
-
-	    # We need to send few setpoint messages, then activate OFFBOARD mode, to take effect
-	    k=0
-	    while k<10:
-	        sp_pub.publish(cnt.sp)
-	        rate.sleep()
-	        k = k+1
-
-	    # activate OFFBOARD mode
-	    cnt.modes.setOffboardMode()
-
-	    # ROS main loop
-	    while not rospy.is_shutdown():
-	        cnt.updateSp()
-	        sp_pub.publish(cnt.sp)
-	        rate.sleep()
-
-
-	if __name__ == '__main__':
-	    try:
-	        main()
-	    except rospy.ROSInterruptException:
-	        pass
-
-Also add some changes to ``joystick_flight.launch`` file.
-
-.. code-block:: xml
-
-	<launch>
-
-	    <arg name="joy_dev" default="/dev/input/js0"/>
-
-	    <node pkg="joy" type="joy_node" name="joy_node"  required="true" output="screen">
-	            <param name="dev" type="string" value="$(arg joy_dev)" />
-	    </node>
-
-
-	    <node pkg="mypackage" type="setpoints_node.py" name="setpoints_node"  required="true" output="screen">
-
-	    </node>
-
-	</launch>
-
-Make sure you give permission to the joystick.
 
 
 
