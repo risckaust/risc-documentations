@@ -480,6 +480,8 @@ To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file.
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
+It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
+
 * Modify ``setpoints_node.py`` file with code from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_.
 
 
