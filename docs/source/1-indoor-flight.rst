@@ -467,7 +467,7 @@ Run on ODROID ``vrpn_client_ros`` as in :ref:`stream-mocap-data`. Open another t
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
 
-On PC in new terminal tab relay positions from mocap to mavros (assuming you are using **EKF2**.
+On PC in new terminal tab relay positions from mocap to mavros (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
