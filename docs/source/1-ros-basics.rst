@@ -208,23 +208,18 @@ Create a package
 Until now we've been checking the structure of an already-built package. But now, lets create one ourselves.
 When we want to create packages, we need to work in a very specific ROS workspace, which is known as the **catkin workspace**. The **catkin workspace** is the directory in your hard disk where your own ROS packages must reside in order to be usable by ROS. Usually, the catkin workspace directory is called *catkin_ws*.
 
-**Create catkin_ws**
+* catkin_ws
 
-Usually, the *catkin_ws* is created in the *home* folder of your user account. To go to the home folder, type ``cd`` in the command line. Then, create the *catkin_ws* as follows.
+Usually, the *catkin_ws* is created in the *home* folder of your user account. We've already created and initialized catkin workspace for you.
 
-.. code-block:: bash
-
-  mkdir -p catkin_ws/src
-
-
-Go to the src folder inside *catkin_ws*
+Go to the *src* folder inside *catkin_ws*
 
 .. code-block:: bash
 
-  cd catkin_ws/src
+  cd ~/catkin_ws/src
 
 
-The `src` directory is the folder which holds created packages. Those could be your own packages, or packages that you copied from other sources e.g. *Github* repository.
+The *src* directory is the folder which holds created packages. Those could be your own packages, or packages that you copied from other sources e.g. *Github* repository.
 
 In order for the ROS system to recognize the packages in your *catkin_ws*, it needs to be on the ROS file path. ROS file path is an Ubuntu environment variable that holds the paths to ROS packages. To add our catkin_ws to the ROS file path follow the following instructions.
 
@@ -255,11 +250,12 @@ This will  add the *catkin_ws* path in the current terminal session. Once you cl
   nano .bashrc
 
 
-add the command ``source ~/catkin_ws/devel/setup.bash`` to the end of ``.bashrc``. Then, hit ``CTRL+x``, then, ``y``, to save the changes to the file. Done!
+add the command ``source ~/catkin_ws/devel/setup.bash`` to the end of ``.bashrc``. Then, hit ``CTRL+x``, then, ``y``, to save the changes to the file.
 
 Now, lets create a package.
 
 .. important::
+
   Remember to create ROS packages inside the ``src`` folder
 
 Create a package
@@ -278,7 +274,7 @@ This will create, inside our ``src``, directory a new package with some files in
 
 The **package_name** is the name of the package you want to create, and the **package_dependencies** are the names of other ROS packages that your package depends on.
 
-**Now, re-build your catkin_ws and source it as above.**
+Now, re-build your catkin_ws and source it as above.
 
 In order to check that our package has been created successfully, we can use some ROS commands related to packages. For example, let's type:
 
@@ -371,8 +367,8 @@ You should see the print statement
   Help me body, you are my only hope
 
 .. hint::
-  Usually, when we add ROS program to a package, we re-build the *catkin_ws* and source it. However, since we are working with ``Python``, we will not need to do that for now, because a Python code does not need to compile. If you write a ``C++`` ROS program, then, you will need to re-build your *catkin_ws*.
 
+  Usually, when we add ROS program to a package, we re-build the *catkin_ws* and source it. However, since we are working with ``Python``, we will not need to do that for now, because a Python code does not need to compile. If you write a ``C++`` ROS program, then, you will need to re-build your *catkin_ws*.
 
 
 ROS Nodes
@@ -1027,8 +1023,6 @@ Now you have to compile the msgs. To do this, you have to type in the terminal,
 
 
 
-
-
 .. hint::
 
   To verify that your message has been created successfully, type in your terminal ``rosmsg show Age``. If the structure of the Age message appears, it will mean that your message has been created successfully and it's ready to be used in your ROS programs.
@@ -1050,8 +1044,6 @@ You should get
   float32 years
   float32 months
   float32 days
-
-
 
 
 .. warning::
@@ -1081,13 +1073,13 @@ In this project, you will create a code to make the robot avoid the wall that is
 
 Create a Publisher that writes into the ``cmd_vel_mux/input/teleop`` topic in order to move the robot.
 
-Create a Subscriber that reads from the ``/kobuki/laser/scan topic``. This is the topic where the laser publishes its data.
+Create a Subscriber that reads from the ``/scan`` topic. This is the topic where the laser publishes its data.
 
 Depending on the readings you receive from the laser's topic, you'll have to change the data you're sending to the ``cmd_vel_mux/input/teleop`` topic, in order to avoid the wall. This means, use the values of the laser to decide.
 
 .. hint::
   
-  The data that is published into the ``/kobuki/laser/scan`` topic has a large structure. For this project, you just have to pay attention to the ``ranges`` array.
+  The data that is published into the ``/scan`` topic has a large structure. For this project, you just have to pay attention to the ``ranges`` array.
 
 
 To check the laser message type, execute the following:
