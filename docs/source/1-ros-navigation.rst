@@ -78,8 +78,6 @@ During this tutorial, you will work with a simulated robot called TurtleBot, to 
    :scale: 50 %
    :align: center
 
-.. hint::
-	To bring up a terminal window press ``CTRL+ALT+T``
 
 Install TurtleBot packages
 ^^^^^^
@@ -89,7 +87,7 @@ Install TurtleBot packages
 	sudo apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-turtlebot-gazebo -y
 
 
-After installation is done, check that the simulation works in gazebo. Execute the following commands in a shell terminal.
+After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.
 
 .. code-block:: bash
 

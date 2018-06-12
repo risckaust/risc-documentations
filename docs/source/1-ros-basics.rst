@@ -49,7 +49,7 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by following command. This will install ROS, and other many tools and dependencies you will need in the future.
+Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract two ``.sh`` files to your home folder and run by following command. This will install ROS, and many other tools and dependencies you will need in the future.
 
 .. hint::
 
@@ -76,7 +76,7 @@ During this tutorial, you will work with a simulated robot called **TurtleBot**,
 For reference see `Turtlebot wiki page <http://wiki.ros.org/Robots/TurtleBot>`_.
 
 
-Open application called **Terminator**, it's highly to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.
+Open application called **Terminator**, it's highly recommended to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.
 
 .. code-block:: bash
 
@@ -1366,6 +1366,10 @@ Useful Video Tutorials
 * To learn more about Nodes and Topics, check the following video:
   * https://www.youtube.com/watch?v=Yx_vGAt74sk  ​
 
+Solutions
+-----
+
+Solutions are available at `Risc Github page <https://github.com/risckaust/risc-documentations/tree/master/src/ros-basics>_`.
 
 Contributors
 -----
