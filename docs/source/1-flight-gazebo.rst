@@ -29,45 +29,21 @@ Software Requirements
 
 .. note::
   
-  In this tutorial, it is assumed that the reader is familiar with basic linux commands, ROS Basics.
+  In this tutorial, it is assumed that the reader is familiar with basic Linux commands, ROS Basics.
 
 Setup Steps
 -----
 
-Please follow this steps carefully to setup the development environment which includes the software-in-the-loop simulation. It is assumed that the following steps are done on a clean Ubuntu 16.04 OS image.
-
-Open a new terminal window \(you can hit Ctrl+Alt+T to bring up one\). Then, please follow the steps starting by the Permission Setup section.
-
-* `Permission setup <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#permission-setup>`_
-* `Remove the modem manager <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#remove-the-modemmanager>`_
-* `Ninja Build System <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#ninja-build-system>`_
-* `Common Dependencies <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#common-dependencies>`_
-* `FastRTPS instalation <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#fastrtps-installation>`_
-* `jMAVSim <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#jmavsim>`_
-* Skip Gazebo section as it will be done in next step
-* `ROS \/ Gazebo <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#rosgazebo>`_. Skip this if already done.
-* `MAVROS installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#source-installation>`_ from source.
-
-**NOTE** in the step where you install the ``_geographiclib_``, if you get an error like ``_cannot create directories_``, try
+* Download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command.
 
 .. code-block:: bash
+  
+  ./ubuntu-install.sh
+  ./ws.sh
 
-  sudo ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
-
-Then, build your workspace using ``catkin build``
-
-* `Nuttx based Hardware <https://dev.px4.io/en/setup/dev_env_linux_ubuntu.html#nuttx-based-hardware>`_. Go through all installation instructions. If you get some messages about not found directories, ignore them!
+This will setup all permissions and development environment which inclused the software-in-the-loop simulation. 
 
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
-
-* Now, you need to clone the autopilot firmware source, PX4.
-
-.. code-block:: bash
-
-  cd ~
-  mkdir src
-  cd src
-  git clone https://github.com/PX4/Firmware.git
 
 Testing SITL with Gazebo \(No ROS\)
 -----
@@ -94,29 +70,11 @@ If the previous actions succeed the the installation is OK. Next, we will run RO
 Interfacing with ROS
 -----
 
-Assuming that you already created your ``catkin_ws``, we will create symbolic links to the PX4 autopilot and the PX4 simulation package folders into our ROS workspace. This makes it easy to launch everything \(Gazebo+PX4 app+ ROS+MAVROS\) from one place at once.
-
-.. code-block:: bash
-
-  # Go to the workspace src folder
-  cd ~/catkin_ws/src
-  # create symlink to the px4 package
-  ln -s ~/src/Firmware/ px4
-  # Create symlink to the simulation package
-  ln -s ~/src/Firmware/Tools/sitl_gazebo/ mavlink_sitl_gazebo
-  # Build your workspace
-  cd ~/catkin_ws
-  catkin build
-  # Always source your workspace after each build, so changes take effect.
-  source devel/setup.bash
-
 Now, you are ready to launch Gazebo+PX4 SITL app+ROS+MAVROS. To do that, execute the following command.
 
 .. code-block:: bash
   
   roslaunch px4 mavros_posix_sitl.launch fcu_url:="udp://:14540@127.0.0.1:14557"
-
-**TO BE DONE**: explain the previous command.
 
 You should be able to see ``/mavros`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see
 
