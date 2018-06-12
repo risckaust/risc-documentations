@@ -57,9 +57,9 @@ Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP fi
 
 .. code-block:: bash
   
-  chmod +x ws.sh ubuntu_install
-  ./ubuntu-install.sh
-  ./ws.sh
+  chmod +x ws.sh ubuntu_install # Gives permissions to execute
+  ./ubuntu-install.sh # Will take some time to install
+  ./ws.sh # Configures catkin workspace
 
 
 In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
@@ -1369,7 +1369,7 @@ Useful Video Tutorials
 Solutions
 -----
 
-Solutions are available at `Risc Github page <https://github.com/risckaust/risc-documentations/tree/master/src/ros-basics>_`.
+Solutions are available at `Risc Github page <https://github.com/risckaust/risc-documentations/tree/master/src/ros-basics>`_.
 
 Contributors
 -----
