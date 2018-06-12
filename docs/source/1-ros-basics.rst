@@ -17,9 +17,6 @@ What is presented in this document is the main ROS concepts that are the core of
 
 Along the parts of this course, you will learn:
 
-- How to **install ROS Kinetic and ROS packages** used in this tutorial.
-
-
 - How **ROS Basic Structure** works.
 - What are **ROS Topics** and how to use them.
 - What are **ROS Services** and how to use them.
@@ -55,21 +52,9 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
+* Download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command. This will install ROS, and other many things you will need in the future.
+
 In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulatoin exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
-
-Install ROS Kinetic
-""""""""""
-
-ROS has many versions. The latest version at the time of writing this tutorial is *Lunar*. However, we are going to use the version that precedes *Lunar*, called *Kinetic*. This is because it has more support than *Lunar*.
-
-
-
-.. note::
-
-  The operating system that we are going to use is **Ubuntu 16.04**. ROS Kinetic does not work with Ubuntu 14.
-
-Simply follow the instructions on the official ROS wiki `page <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ to install ROS Kinetic.
-
 
 Install TurtleBot packages
 """"""""
