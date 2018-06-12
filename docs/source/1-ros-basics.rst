@@ -199,10 +199,10 @@ You will see:
 
   <launch>
     <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
-    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key.py" name="turtlebot_teleop_keyboard"  output="screen">
+    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard"  output="screen">
       <param name="scale_linear" value="0.5" type="double"/>
       <param name="scale_angular" value="1.5" type="double"/>
-      <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/cmd_vel"/>   <!-- cmd_vel_mux/input/teleop"/-->
+      <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
     </node>
   </launch>
 
@@ -355,10 +355,10 @@ At this point, you should have your first package created... but now you need to
 
   <launch>
     <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
-    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key.py" name="turtlebot_teleop_keyboard"  output="screen">
+    <node pkg="turtlebot_teleop" type="turtlebot_teleop_key" name="turtlebot_teleop_keyboard"  output="screen">
       <param name="scale_linear" value="0.5" type="double"/>
       <param name="scale_angular" value="1.5" type="double"/>
-      <remap from="turtlebot_teleop_keyboard/cmd_vel" to="/cmd_vel"/>   <!-- cmd_vel_mux/input/teleop"/-->
+      <remap from="turtlebot_teleop_keyboard/cmd_vel" to="cmd_vel_mux/input/teleop"/>
     </node>
   </launch>
 
@@ -719,7 +719,7 @@ Now you're ready to create your own publisher and make the robot move, so let's 
 
 Create a launch file that launches the code ``simple_topic_publisher.py`` (you should have already done that in a previous step)
 
-Modify the code you used previously to publish data to the ``/cmd_vel`` topic.
+Modify the code you used previously to publish data to the ``cmd_vel_mux/input/teleop`` topic.
 
 Launch the program and check that the robot moves.
 
@@ -728,13 +728,13 @@ Launch the program and check that the robot moves.
 
   First, you need to bring up the robot simulation in Gazebo.
 
-  The ``/cmd_vel`` topic is the topic used to move the robot. Do a ``rostopic info /cmd_vel`` in order to get information about this topic, and identify the message it uses. You have to modify the code to use that message.
+  The ``cmd_vel_mux/input/teleop`` topic is the topic used to move the robot. Do a ``rostopic info cmd_vel_mux/input/teleop`` in order to get information about this topic, and identify the message it uses. You have to modify the code to use that message.
 
   In order to fill the Twist message, you need to create an instance of the message. In Python, this is done like this: ``var = Twist()``
 
-  In order to know the structure of the Twist messages, you need to use the ``rosmsg show`` command, with the type of the message used by the topic ``/cmd_vel``.
+  In order to know the structure of the Twist messages, you need to use the ``rosmsg show`` command, with the type of the message used by the topic ``cmd_vel_mux/input/teleop``.
 
-  In this case, the robot uses a differential drive plugin to move. That is, the robot can only move linearly in the 'x' axis, or rotationally in the angular z axis. This means that the only values that you need to fill in the Twist message are the linear x and the angular z.
+  In this case, the robot uses a differential drive plugin to move. That is, the robot can only move linearly in the *x* axis, or rotationally in the angular *z* axis. This means that the only values that you need to fill in the Twist message are the linear x and the angular *z*.
 
   .. image:: ../_static/xyz-frame.jpg
     :scale: 50 %
