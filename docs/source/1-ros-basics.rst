@@ -1093,11 +1093,11 @@ With all you've learned during this course, you're now able to do a small projec
 
 In this project, you will create a code to make the robot avoid the wall that is in front of it. To help you achieve this, let's divide the project down into smaller units:
 
-Create a Publisher that writes into the ``/cmd_vel`` topic in order to move the robot.
+Create a Publisher that writes into the ``cmd_vel_mux/input/teleop`` topic in order to move the robot.
 
 Create a Subscriber that reads from the ``/kobuki/laser/scan topic``. This is the topic where the laser publishes its data.
 
-Depending on the readings you receive from the laser's topic, you'll have to change the data you're sending to the ``/cmd_vel`` topic, in order to avoid the wall. This means, use the values of the laser to decide.
+Depending on the readings you receive from the laser's topic, you'll have to change the data you're sending to the ``cmd_vel_mux/input/teleop`` topic, in order to avoid the wall. This means, use the values of the laser to decide.
 
 .. hint::
   
