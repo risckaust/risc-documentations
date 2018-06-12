@@ -32,7 +32,6 @@ Along the parts of this course, you will learn:
   **DO NOT SKIP EXERCISES**. Exercises are the core of this tutorial (remember, practice, practice, practice). If you avoid them, you will be missing the whole thing.
 
 
-
 Basic Concepts
 ------
 
@@ -40,8 +39,6 @@ What is ROS?
 ^^^^^^
 
 ROS is a software framework for writing robot software. The main aim of ROS is to reuse the robotic software across the globe. ROS consists of a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms.
-
-
 
 Official definition on ROS WiKi is:
 
@@ -52,27 +49,34 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-* Download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command. This will install ROS, and other many things you will need in the future.
+Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by following command. This will install ROS, and other many tools and dependencies you will need in the future.
 
-In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulatoin exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
+.. hint::
+
+  To bring up a terminal window press ``CTRL+ALT+T``
+
+.. code-block:: bash
+  
+  chmod +x ws.sh ubuntu_install
+  ./ubuntu-install.sh
+  ./ws.sh
+
+
+In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
 
 Install TurtleBot packages
 """"""""
 
 During this tutorial, you will work with a simulated robot called **TurtleBot**, to apply the concepts of ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for position estimation.
 
-
 .. image:: ../_static/kobuki.jpg
    :scale: 50 %
    :align: center
 
-For reference Turtlebot wiki `page <http://wiki.ros.org/Robots/TurtleBot>`_.
+For reference see `Turtlebot wiki page <http://wiki.ros.org/Robots/TurtleBot>`_.
 
-.. hint::
 
-  To bring up a terminal window press ``CTRL+ALT+T``
-
-To install the required packages, execute the following commands in a shell terminal.
+Open application called **Terminator**, it's highly to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.
 
 .. code-block:: bash
 
@@ -110,9 +114,7 @@ Execute in a separate terminal:
 Read the instructions on the screen to know which keys to use to move the robot around, and start moving the robot!
 
 
-
 Try it!! When you're done, you can ``Ctrl+C`` to stop the execution of the program.
-
 
 
 So, you used a command called ``roslaunch``. What is that command?
@@ -134,10 +136,10 @@ What is a package?
 ROS uses **packages** to organize its programs. You can think of a package as **all the files that a specific ROS program contains**; all its cpp files, python files, configuration files, compilation files, launch files, and parameters files.
 All those files in the package are organized with the following structure:
 
-- ``launch`` folder: Contains launch files
-- ``src`` folder: Source files (cpp, python)
-- ``CMakeLists.txt``: List of cmake rules for compilation
-- ``package.xml``: Package information and dependencies
+- **launch** folder: Contains launch files
+- **src** folder: Source files (cpp, python)
+- **CMakeLists.txt**: List of cmake rules for compilation
+- **package.xml**: Package information and dependencies
 
 To go to any ROS package, ROS gives you a command named ``roscd``. When typing:
 
@@ -147,7 +149,6 @@ To go to any ROS package, ROS gives you a command named ``roscd``. When typing:
 
 
 It will take you to the path where the package *package_name* is located.
-
 
 
 **Example**: navigate to the ``turtlebot_teleop`` package, and check that it has that structure.
