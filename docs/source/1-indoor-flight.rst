@@ -484,6 +484,9 @@ To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file.
 
 It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
 
+* Now modify ``setpoints_node.py`` and ``joystick_flight.launch`` to following states. Try to find and understand what's different from SITL files.
+
+File ``setpoints_node.py``: 
 
 .. code-block:: python
 
@@ -689,9 +692,7 @@ It's important at this stage to check if setpoints are published to ``/mavros/vi
 			pass
 
 
-
-* Download ``setpoints_node.py`` and ``joystick_flight.launch`` files from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_ and replace previous file.
-
+File ``joystick_flight.launch``:
 
 .. code-block:: xml
 
