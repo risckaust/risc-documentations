@@ -422,8 +422,10 @@ Now it's time to fly your drone in the cage!
 
 We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally mavros will send setpoints to autopilot (real flight controller on your drone).
 
-* First let's set PC running Linux to be ROS Master by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+Setup a ROS Network
+-------
 
+* First let's set PC running Linux to be ROS Master by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 .. code-block:: bash
 
@@ -436,7 +438,7 @@ We will need a PC running Linux with Joystick connected to it. To establish ODRO
 	export ROS_MASTER_URI=http://192.168.0.119:11311
 	export ROS_HOSTNAME=192.168.0.119
 
-Change the last value (*119*) to match your IP address. Make sure you **source** the ``.bashrc`` file after this.
+Change the last value of IP adress to to match your IP address. Make sure you **source** the ``.bashrc`` file after this.
 
 * Log into a ODROID to get access to a command-line over a network.
 
@@ -461,6 +463,9 @@ It will prompt to enter password, if you use minimal image provided then it's **
 
 To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file. 
 
+ODROID commands
+---------
+
 * Run on ODROID ``vrpn_client_ros`` as follows (repeated here for your convenience):
 
 .. code-block:: bash
@@ -474,12 +479,14 @@ To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file.
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
 
+Linux PC commands
+---------
+
 * On Linux PC open new tab, relay positions from mocap to mavros (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
-
 
 
 It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
@@ -697,22 +704,15 @@ File ``joystick_flight.launch``:
 .. code-block:: xml
 
 	<launch>
-
 		<arg name="joy_dev" default="/dev/input/js0"/>
-
 		<node pkg="joy" type="joy_node" name="joy_node"  required="true" output="screen">
-			
 			<param name="dev" type="string" value="$(arg joy_dev)" />
-
 		</node>
-
 		<node pkg="mypackage" type="setpoints_node.py" name="setpoints_node"  required="true" output="screen">
-
 		</node>
-
 	</launch>
 
-Make sure you give permissions to the joystick.
+* Make sure you give permissions to the joystick.
 
 .. warning:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
@@ -722,7 +722,15 @@ Make sure you give permissions to the joystick.
 
   roslaunch mypackage joystick_flight.launch
 
-* Press the button #1 on the joystick, it will arm the quadcopter. Pressing button #3 will switch quadcopter to OFFBOARD flight mode. It will takeoff and hover at 1m height. Control the joystick and enjoy your quadcopter flying. Button #3 will land the quadcopter. Now press button #11 to disarm it.
+Joystick control
+-------
+
+``BUTTON 1`` - Arms the quadcopter
+``BUTTON 3`` - Switches quadcopterto OFFBOARD flight mode. It should takeoff after this.
+``BUTTON 2`` - Lands the quadcopter
+``BUTTON 11`` - Disarms the quadcopter
+
+Enjoy your flight.
 
 
 
