@@ -726,8 +726,11 @@ Joystick control
 -------
 
 ``BUTTON 1`` - Arms the quadcopter
+
 ``BUTTON 3`` - Switches quadcopterto OFFBOARD flight mode. It should takeoff after this.
+
 ``BUTTON 2`` - Lands the quadcopter
+
 ``BUTTON 11`` - Disarms the quadcopter
 
 Enjoy your flight.
