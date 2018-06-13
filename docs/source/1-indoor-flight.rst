@@ -482,12 +482,20 @@ To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file.
 
 It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
 
-* Modify ``setpoints_node.py`` file with code from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_.
+* Download ``setpoints_node.py`` and ``joystick_flight.launch`` files from `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/setpoints_node.py>`_ and replace previous file.
 
+.. rst-class:: html-toggle
 
-* Also add some changes to ``joystick_flight.launch`` file as provided `here <https://github.com/risckaust/risc-documentations/blob/master/src/real-flight/joystick_flight.launch>`_.
+	.. code-block:: bash
+
+  		roslaunch mypackage joystick_flight.launch	
+
 
 Make sure you give permissions to the joystick.
+
+.. warning:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
+
+
 
 * Now run in a new terminal your launch file
 
