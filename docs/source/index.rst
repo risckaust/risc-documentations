@@ -36,6 +36,12 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-matlab-pixhawk
    2-hil-px4-vrep
    
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+    :caption: Marine
+
+    4-test
 
 .. toctree::
    :maxdepth: 2
