@@ -119,14 +119,19 @@ class Controller:
     def joyCb(self, msg):
         self.joy_msg = msg
 
-	if msg.buttons[0] > 0:
+	# If button 1 on joystick is pressed
+    if msg.buttons[0] > 0:
 		self.modes.setArm()
-	if msg.buttons[1] > 0:
+
+	# If button 2 on joystick is pressed
+    if msg.buttons[1] > 0:
 		self.modes.setAutoLandMode()
        
-        if msg.buttons[2] > 0:
+    # If button 3 on joystick is pressed 
+    if msg.buttons[2] > 0:
 		self.modes.setOffboardMode()
 
+    # If button 11 on joystick is pressed
 	if msg.buttons[10] > 0:
 		self.modes.setDisarm()
 
@@ -137,7 +142,7 @@ class Controller:
 
     ## Update setpoint message
     def updateSp(self):
-        x = -1*self.joy_msg.axes[1]
+        x = -1*self.joy_msg.axes[1] # negative one might be changed if direction is reverse
         y = -1*self.joy_msg.axes[0]
       
 	self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
@@ -147,10 +152,10 @@ class Controller:
 # Main function
 def main():
 
-    # initiate node
-    rospy.init_node('setpoint_node', anonymous=True)
+    # Initiate node
+    rospy.init_node('setpoints_node', anonymous=True)
 
-    # flight mode object
+    # Flight mode object
     
     # controller object
     cnt = Controller()
@@ -169,7 +174,7 @@ def main():
     # Setpoint publisher
     sp_pub = rospy.Publisher('mavros/setpoint_raw/local', PositionTarget, queue_size=1)
 
-
+    # Some lines deleted from SITL code
 
     # We need to send few setpoint messages, then activate OFFBOARD mode, to take effect
     k=0
@@ -178,7 +183,7 @@ def main():
         rate.sleep()
         k = k+1
 
-    # activate OFFBOARD mode
+    # Activate OFFBOARD mode
     cnt.modes.setOffboardMode()
 
     # ROS main loop
