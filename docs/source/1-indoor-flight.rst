@@ -613,7 +613,7 @@ It's important at this stage to check if setpoints are published to ``/mavros/vi
 			self.modes.setArm()
 
 		# If button 2 on joystick is pressed
-	    if msg.buttons[1] > 0:
+		if msg.buttons[1] > 0:
 			self.modes.setAutoLandMode()
 	       
 	    # If button 3 on joystick is pressed 
@@ -697,18 +697,20 @@ It's important at this stage to check if setpoints are published to ``/mavros/vi
 
     <launch>
 
-    <arg name="joy_dev" default="/dev/input/js0"/>
+	    <arg name="joy_dev" default="/dev/input/js0"/>
 
-    <node pkg="joy" type="joy_node" name="joy_node"  required="true" output="screen">
+    	<node pkg="joy" type="joy_node" name="joy_node"  required="true" output="screen">
+            
             <param name="dev" type="string" value="$(arg joy_dev)" />
-    </node>
+
+    	</node>
 
 
-    <node pkg="mypackage" type="setpoints_node.py" name="setpoints_node"  required="true" output="screen">
+    	<node pkg="mypackage" type="setpoints_node.py" name="setpoints_node"  required="true" output="screen">
 
-    </node>
+    	</node>
 
-	</launch>
+    </launch>
 
 
 
