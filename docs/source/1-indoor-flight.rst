@@ -712,13 +712,9 @@ File ``joystick_flight.launch``:
 
 	</launch>
 
-
-
 Make sure you give permissions to the joystick.
 
 .. warning:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
-
-
 
 * Now run in a new terminal your launch file
 
