@@ -11,8 +11,12 @@ This tutorial explains the steps required to fly a simulated quadcopter in the G
 Hardware Requirements
 -----
 
-* Desktop linux machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
+* Desktop Linux Machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
 * Joystick
+
+.. image:: ../_static/joystick.png
+   :scale: 50 %
+   :align: center
 
 Software Requirements
 -----
@@ -39,23 +43,24 @@ Setup Steps
 .. code-block:: bash
   
   ./ubuntu-install.sh
-  ./ws.sh
 
-This will setup all permissions and development environment which inclused the software-in-the-loop simulation. 
+Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
+
+This will setup all permissions and development environment which includes the software-in-the-loop simulation. 
 
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
 Testing SITL with Gazebo \(No ROS\)
 -----
 
-In this step, we will validate that the PX4 SITL app and gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal
+In this step, we will validate that the PX4 SITL app and Gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal
 
 .. code-block:: bash
 
   cd ~/src/Firmware
   make posix_sitl_default gazebo
 
-After sometime, you should be able to see an Iris model loaded in gazebo, and the ``pxh>`` command line in the terminal. Just hit ENTER couple of times if you don't see the ``pxh>`` command line, and it should appear.  
+After sometime, you should be able to see an Iris model loaded in Gazebo, and the ``pxh>`` command line in the terminal. Just hit ENTER couple of times if you don't see the ``pxh>`` command line, and it should appear.  
 
 To takeoff/land the quadcopter, execute the following commands in the terminal
 
@@ -94,7 +99,7 @@ To double check that MAVROS node is connected properly to the PX4 SITL app, try 
 
 Which will show if the mavros node is connected to the PX4 SITL app or not.
 
-Now, you can monitor the drone's states and control it via a mavros node.
+Now, you can monitor the drone's states and control it via a MAVROS node.
 
 * As mentioned, in this tutorial, we are going to learn one basic way of controlling the quadcopter's position via a joystick.
 

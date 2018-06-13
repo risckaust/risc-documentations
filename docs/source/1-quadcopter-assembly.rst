@@ -17,18 +17,18 @@ This tutorial assumes you have the following skills:
 
 * Soldering, if not, please refer to basic skill `video <https://www.youtube.com/watch?v=BLfXXRfRIzY>`_.
 
-* Basic knowledge about LiPo batteries. Answer the following questions. You may read this `article <https://rogershobbycenter.com/lipoguide/>`_. 
+* Basic knowledge about LiPo batteries. Answer the following questions. You may read `this article <https://rogershobbycenter.com/lipoguide/>`_. 
 
   - What do 3s, 4s mean?
   - What does 20c mean?
   - What does 1400mAh mean?
   - What are the parameters of your battery?
-  - How to charge LiPo battery? How to measure it voltage using meter?
-  - What’s the minimum voltage to use a LiPo on the quad
+  - How to charge LiPo battery? How to measure it voltage using battery meter?
+  - What’s the minimum voltage to use a LiPo on the quadcopter?
 
-* Basic knowledge about motors. Answer the following questions. You may refer to this `article <https://www.dronetrest.com/t/brushless-motors-how-they-work-and-what-the-numbers-mean/564>`_.
+* Basic knowledge about motors. Answer the following questions. You may refer to `this article <https://www.dronetrest.com/t/brushless-motors-how-they-work-and-what-the-numbers-mean/564>`_.
 
-  + Different types of motors. We are using brushless motor for quads.
+  + Different types of motors. We are using brushless motor for quadcopters.
   + What does KV2200 means? What will be changed if KV number grows?
   + What are the parameters of your motors?
 
@@ -55,7 +55,7 @@ You will need
    :align: center
 
 
-* Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available at `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
+* Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
 
 * Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer tri-blades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag. 
 
@@ -136,7 +136,7 @@ Assembly process
 
 * Binding process depends on the receiver you use:
 
-  + FrSky X8R, refer to this `document <https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf>`_
+  + FrSky X8R, refer to `this document <https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf>`_
     
   + Spektrum receiver with autobind 
 
@@ -160,9 +160,9 @@ Assembly process
     6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
     7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
 
-* Plug the battery and check 4 ESCs has static green LED lighted up and BEC has red. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
+* Plug the battery and check 4 ESCs has static green LED lighted up. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
 
-* For this stage there’s no need to install Odroid. This will be illustrated later.
+* For this stage there’s no need to install Odroid.
 
 Calibration process
 -----
@@ -197,11 +197,14 @@ Video for your reference
 
 * In ``Power tab`` write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this `page <https://docs.px4.io/en/config/battery.html>`_ and `here <https://docs.px4.io/en/advanced_config/esc_calibration.html>`_.
 
-* Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the propellers on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
+* Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
 
 * Now you can install propellers. Note that there are CW and CCW propellers as well.
 
-* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for quadcopter.
+.. warning:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
+
+
+* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter.
 
 
 Flying
