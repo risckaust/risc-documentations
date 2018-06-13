@@ -268,13 +268,13 @@ Again, this is included in the provided image
 
 Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2`` (default) an extended Kalman filter, and ``LPE``.
 
-``LPE`` estimator supports mocap data directly. ``EKF2``, however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
+``LPE`` estimator supports mocap data directly. ``EKF2`` (recommended for this tutorial), however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
 
 
 Setting EKF2 Estimator for MOCAP Fusion
 -----
 
-First choose ``ekf2`` as your estimator from the ``System`` tab
+First choose ``EKF2`` as your estimator from the ``System`` tab
 
 .. image:: ../_static/ekf2_est.png
    :scale: 50 %
@@ -360,7 +360,7 @@ Getting MOCAP data into PX4
 
 Assuming your ``vrpn_client_node`` is still running from :ref:`optitrack-interface` on your ODROID, we will republish it to another topic by ``relay`` command.
 
-You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2)
+You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2/F3/F4)
 
 .. code-block:: bash
 
@@ -377,18 +377,17 @@ Relay the Mocap data to the flight controller
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
 
 
-Check in **QGroundControl** that you'll get some message which means Mocap data is received by Pixhawk.
-
 * If you use **EKF2**
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
+Check in **QGroundControl** that you got some message which means Mocap data is received by Pixhawk.
 
 Now you are ready to use position hold/offboard modes.
 
-.. warning::
+.. important::
 
 	It is very important that you align the forward direction of your drone (robot) with the x-axis of your Mocap when you first define a rigid body. You can find the x-axis direction in the Mocap software, Motive.
 
@@ -398,9 +397,9 @@ Checking EKF2 Consistency via  Log Files
 
 It's important to make sure that EKF2 estimator provides accurate enough estimates of the states for your flight controller to perform well. A quick way to debug that is through the log files.
 
-The default log file format in PX4 is ``Ulog``. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm.
+The default log file format in PX4 is ``Ulog``. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm. You can change it, so it logs after you power controller.
 
-* Use QGC to download a ``Ulog`` file you wish to analyze
+* Use QGC to download ``Ulog`` file you wish to analyze
 
 * Download the `FlightPlot <https://pixhawk.org/dev/flightplot>`_ software to open your logs.
 
@@ -420,7 +419,7 @@ Intro
 
 Now it's time to fly your drone in the cage!
 
-We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally mavros will send setpoints to autopilot (real flight controller on your drone).
+We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally MAVROS will send setpoints to autopilot (real flight controller on your drone).
 
 Setup a ROS Network
 -------
@@ -431,14 +430,14 @@ Setup a ROS Network
 
 	gedit ~/.bashrc
 
-* Add following lines to the end of the file.
+* Add following lines to the end of the file. Both IP adresses are the same and represents IP address of the PC.
 
 .. code-block:: bash
 
 	export ROS_MASTER_URI=http://192.168.0.119:11311
 	export ROS_HOSTNAME=192.168.0.119
 
-Change the last value of IP adress to to match your IP address. Make sure you **source** the ``.bashrc`` file after this.
+Make sure you **source** the ``.bashrc`` file after this.
 
 * Log into a ODROID to get access to a command-line over a network.
 
@@ -454,7 +453,7 @@ It will prompt to enter password, if you use minimal image provided then it's **
 
 	nano .bashrc
 
-* Add the following lines to the end of the file.
+* Add the following lines to the end of the file. First IP address belongs to PC, and the second one to ODROID.
 
 .. code-block:: bash
 
@@ -473,7 +472,7 @@ ODROID commands
 	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
 
-* Open another tab, log into ODROID again and run mavros:
+* Open another tab, log into ODROID again and run MAVROS:
 
 .. code-block:: bash
 
@@ -482,7 +481,7 @@ ODROID commands
 Linux PC commands
 ---------
 
-* On Linux PC open new tab, relay positions from mocap to mavros (assuming you are using **EKF2**).
+* On Linux PC open new tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
@@ -491,7 +490,7 @@ Linux PC commands
 
 It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
 
-* Now modify ``setpoints_node.py`` and ``joystick_flight.launch`` to following states. Try to find and understand what's different from SITL files.
+* Now modify ``setpoints_node.py`` and ``joystick_flight.launch`` to the following states. Try to find and understand what's different from code in SITL files.
 
 File ``setpoints_node.py``: 
 
@@ -714,7 +713,7 @@ File ``joystick_flight.launch``:
 
 * Make sure you give permissions to the joystick.
 
-.. warning:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
+.. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
 * Now run in a new terminal your launch file
 
@@ -727,7 +726,7 @@ Joystick control
 
 ``BUTTON 1`` - Arms the quadcopter
 
-``BUTTON 3`` - Switches quadcopterto OFFBOARD flight mode. It should takeoff after this.
+``BUTTON 3`` - Switches quadcopter to OFFBOARD flight mode. It should takeoff after this.
 
 ``BUTTON 2`` - Lands the quadcopter
 

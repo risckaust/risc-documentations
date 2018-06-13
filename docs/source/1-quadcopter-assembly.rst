@@ -201,7 +201,7 @@ Video for your reference
 
 * Now you can install propellers. Note that there are CW and CCW propellers as well.
 
-.. warning:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
+.. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
 
 
 * Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter.
