@@ -42,7 +42,7 @@ Setup Steps
 
 .. code-block:: bash
   
-  ./ubuntu-install.sh
+  ./ubuntu_install.sh
 
 Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
 

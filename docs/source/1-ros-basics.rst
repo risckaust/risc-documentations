@@ -57,7 +57,7 @@ Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP fi
 
 .. code-block:: bash
   
-  ./ubuntu-install.sh # Will take some time to install
+  ./ubuntu_install.sh # Will take some time to install
 
 Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
 
