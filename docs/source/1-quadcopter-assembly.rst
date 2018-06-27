@@ -223,11 +223,13 @@ Flying
 Troubleshooting
 ------
 
-* Motors not rotating while armed and rotates with higher throttle
+* Motors are not rotating while armed and rotates with higher throttle
 
-  - Check PWM min/max in parameters and make sure it’s associated with ESCs
+  - Check ``PWM_MAX`` and ``PWM_MIN`` in parameters and make sure it’s associated with ESCs
 
+* Motor are not rotating or rotating partially.
 
+  - Set ``PWM_RATE`` value to default.
 
 Contributors
 -----
