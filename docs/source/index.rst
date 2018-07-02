@@ -41,7 +41,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
     :hidden:
     :caption: Marine
 
-    4-test
+    4-marine-1
 
 .. toctree::
    :maxdepth: 2
