@@ -38,6 +38,11 @@ Fig\ `[class_simulation] <#class_simulation>`__.
 
    Class diagram of algorithm in ROS
 
+.. image:: ../_static/class_simulation.png
+   :scale: 50 %
+   :alt: Class diagram of algorithm in ROS
+   :align: center
+
 [class_simulation]
 
 Note that only important members and methods of the classes are
