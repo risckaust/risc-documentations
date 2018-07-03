@@ -32,14 +32,11 @@ this project for future reference.
 It’s class diagram is shown as below.
 
 .. figure:: ../_static/class_simulation.png
-   :alt: Class diagram of algorithm in ROS
-
-
-.. image:: ../_static/class_simulation.png
-   :scale: 50 %
+   :scale: 70%
    :align: center
 
 [class_simulation]
+
 
 Note that only important members and methods of the classes are
 presented. Here are three main components:
@@ -107,12 +104,13 @@ explanation. Then we will draw a ROS node graph as
 Fig\ `[simulation_nodes] <#simulation_nodes>`__ to show the relation
 between these components.
 
-.. figure:: pics/simulation_nodes.png
-   :alt: ROS/Gazebo nodes
-
-   ROS/Gazebo nodes
+.. figure:: ../_static/simulation_nodes.png
+   :scale: 70%
+   :align: center
 
 [simulation_nodes]
+
+
 
 -  roslaunch multirov lake.launch: This launch file loads Gazebo world,
    it’s appearance and simulated time. After loading this file, Gazebo
@@ -120,10 +118,10 @@ between these components.
    Gazebo, we also use walls to indicate that as
    `[rov_multi] <#rov_multi>`__.
 
-   .. figure:: pics/ROV_multi.png
-      :alt: x and y directions in Gazebo
+   .. figure:: ../_static/ROV_multi.png
+      :scale: 70%
+      :align: center
 
-      x and y directions in Gazebo
 
    [rov_multi]
 
@@ -148,8 +146,8 @@ between these components.
 -  rosrun multirov resource_publisher_hd: let the movable resource
    controlled by publishing to the topic
    resource_location_from_keyboard. The way to change resource location
-   is rostopic pub /resource_location_from_keoard geometry_msgs/Point
-   "x: 4.0 y: 4.0 z: -30.0" -r 1 and different from the joystick that
+   is ``rostopic pub /resource_location_from_keoard geometry_msgs/Point
+   "x: 4.0 y: 4.0 z: -30.0" -r 1`` and different from the joystick that
    can also change the location of the movable resource, this change
    with a keyboard is instant.
 
@@ -286,25 +284,22 @@ PC from serial port. Related ROS package is at
 https://github.com/luym11/RISCusbl. So the overall architecture is shown
 in Fig\ `[usbl_archi] <#usbl_archi>`__.
 
-.. figure:: pics/usbl_archi.png
-   :alt: USBL localization system
-
-   USBL localization system
+.. figure:: ..static/usbl_archi.png
+   :align:center
+   :scale: 50%
 
 [usbl_archi]
 
 When using this system, please use the specifically made serial port
 reader as Fig\ `[usbl_on_rov] <#usbl_on_rov>`__ for its voltage level.
 
-.. figure:: pics/serial.png
-   :alt: Serial adapter
+.. figure:: ..static/serial.png
+   :scale: 50%
+   :align:center
 
-   Serial adapter
-
-.. figure:: pics/usbl_on_rov.png
-   :alt: Transponder installed BlueROV
-
-   Transponder installed BlueROV
+.. figure:: ..static/usbl_on_rov.png
+   :scale: 50%
+   :align:center
 
 [usbl_on_rov]
 
@@ -326,17 +321,15 @@ system is installed on a DJI matrice 100, with an on-board computer as
 shown in Fig\ `[dji_top] <#dji_top>`__ and
 Fig\ `[dji_down] <#dji_down>`__.
 
-.. figure:: pics/dji_top.png
-   :alt: DJI matrice 100 with localization system
-
-   DJI matrice 100 with localization system
+.. figure:: ..static/dji_top.png
+   :align:center
+   :scale: 50%
 
 [dji_top]
 
-.. figure:: pics/dji_down.png
-   :alt: Close view of camera
-
-   Close view of camera
+.. figure:: ..static/dji_down.png
+   :align:center
+   :scale: 50%
 
 [dji_down]
 
@@ -344,10 +337,9 @@ Then package at https://github.com/luym11/apriltags2_ros is used to
 detect markers. Test indoor and outdoor showed its good performance as
 shown in Fig\ `[marker_out] <#marker_out>`__.
 
-.. figure:: pics/marker_test_out.png
-   :alt: Outdoor test of the markers
-
-   Outdoor test of the markers
+.. figure:: ..static/marker_test_out.png
+   :align:center
+   :scale: 50%
 
 [marker_out]
 
@@ -372,10 +364,9 @@ control loop.
 The overall system architecture is shown in
 Fig\ `[ros_hard] <#ros_hard>`__
 
-.. figure:: pics/ros_hard.png
-   :alt: Hardware system ROS node structure
-
-   Hardware system ROS node structure
+.. figure:: ..static/ros_hard.png
+   :align:center
+   :scale: 50%
 
 [ros_hard]
 
@@ -404,10 +395,9 @@ to close the loop as the architecture graph shows.
 So the network architecture of this system is
 Fig\ `[network] <#network>`__
 
-.. figure:: pics/network.png
-   :alt: Network structure
-
-   Network structure
+.. figure:: ..static/network.png
+   :align:center
+   :scale: 50%
 
 Others
 ------
