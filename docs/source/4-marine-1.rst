@@ -6,8 +6,7 @@ Appendix: RISC AUV System Manual
 Details of RISC AUV system is discussed here, including the structure of
 simulation system, hardware system, localization systems, all ROS
 software packages with illustration, the network structure of the system
-and everything related. This appendix serves as part of RISC lab
-documentation.
+and everything related.
 
 ROS/Gazebo simulation system manual
 -----------------------------------
@@ -30,17 +29,14 @@ and hardware. The user can refer to commit history of this repository
 for detailed development process as I have clear notes while creating
 this project for future reference.
 
-It’s class diagram is shown in
-Fig\ `[class_simulation] <#class_simulation>`__.
+It’s class diagram is shown as below.
 
-.. figure:: pics/class_simulation.png
+.. figure:: ../_static/class_simulation.png
    :alt: Class diagram of algorithm in ROS
 
-   Class diagram of algorithm in ROS
 
 .. image:: ../_static/class_simulation.png
    :scale: 50 %
-   :alt: Class diagram of algorithm in ROS
    :align: center
 
 [class_simulation]
