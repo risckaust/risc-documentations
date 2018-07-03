@@ -119,7 +119,7 @@ between these components.
    `[rov_multi] <#rov_multi>`__.
 
    .. figure:: ../_static/ROV_multi.png
-      :scale: 70%
+      :scale: 50%
       :align: center
 
 
@@ -377,20 +377,24 @@ to close the loop as the architecture graph shows.
 
 -  On ROS master machine
 
-   -  roscore
+.. code-block:: bash
 
-   -  roslaunch bluerov_apps teleop_f310.launch
-
-   -  rosrun image_view image_view image:=/tag_detections_image: to
+      roscore
+      roslaunch bluerov_apps teleop_f310.launch
+      rosrun image_view image_view image:=/tag_detections_image: to
       monitor the view of the camera
 
 -  On Odroid
 
-   -  roslaunch apriltags2_ros rov.launch
+.. code-block:: bash
+
+      roslaunch apriltags2_ros rov.launch
 
 -  On BlueROV
 
-   -  roslaunch bluerov bluerov_r1.launch
+.. code-block:: bash
+
+      roslaunch bluerov bluerov_r1.launch
 
 So the network architecture of this system is
 Fig\ `[network] <#network>`__
