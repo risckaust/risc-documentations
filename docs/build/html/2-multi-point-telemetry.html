@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Multi-point Telemetry &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Appendix: RISC AUV System Manual" href="4-marine-1.html" />
+    <link rel="prev" title="Autostart service after system boot" href="2-auto-service-start-afer-boot.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="4-marine-1.html" title="Appendix: RISC AUV System Manual"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-auto-service-start-afer-boot.html" title="Autostart service after system boot"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="multi-point-telemetry">
+<h1>Multi-point Telemetry<a class="headerlink" href="#multi-point-telemetry" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, the objective is to make the setup which allows to communicate with multiple telemetry modules using a single base telemetry module. The use case is a single telemetry module (e.g. 3DR or RFD900) is connected to ground station that runs QGroundControl that monitors/controls a fleet of drones. Each drone has a single telemetry module. So, it’s one-to-many network.</p>
+<p><strong>We will need the</strong> <a class="reference external" href="https://github.com/RFDesign/SiK/tree/SiK_Multipoint/">SiK_Multipoint</a>.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Install required packages.</p>
+<p>On Mac,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>brew install sdcc
+</pre></div>
+</div>
+<p>On Ubuntu,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt update<span class="p">;</span> sudo apt install sdcc
+</pre></div>
+</div>
+<p>Clone the SiK package and switch to branch</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>cd ~
+mkdir ~/src
+cd ~/src
+git clone <a class="reference external" href="https://github.com/RFDesign/SiK.git">https://github.com/RFDesign/SiK.git</a>
+cd SiK
+git checkout SiK_Multipoint</p>
+<p>Make and install,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> SiK/Firmware
+make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="upload-firmware-to-the-radio">
+<h2>Upload Firmware to the radio<a class="headerlink" href="#upload-firmware-to-the-radio" title="Permalink to this headline">¶</a></h2>
+<p><strong>change the serial port name</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tools/uploader.py --port /dev/tty.usbserial-CHANGETHIS dst/radio~hm_trp.ihx
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you get errors, try to update <cite>pyserial</cite> module</p>
+</div>
+</div>
+<div class="section" id="device-configuration">
+<h2>Device Configuration<a class="headerlink" href="#device-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Start command mode,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>screen /dev/tty.usbserial-CHANGETHIS <span class="m">57600</span> 8N1
+</pre></div>
+</div>
+<p>then type,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>+++
+</pre></div>
+</div>
+<p><strong>Wait one second before you type anything</strong></p>
+<p>To list all editable parameters type,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ATI5
+</pre></div>
+</div>
+<p>To change a paramter use,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ATS&lt;parameternumber&gt;<span class="o">=</span>&lt;value&gt;
+</pre></div>
+</div>
+<p>Make sure you save by typing,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>AT<span class="p">&amp;</span>W
+</pre></div>
+</div>
+<ul class="simple">
+<li>Set <code class="docutils literal notranslate"><span class="pre">MAVLINK=1</span></code></li>
+<li>Set <code class="docutils literal notranslate"><span class="pre">NODECOUNT</span></code> to the number of used telemetry modules</li>
+<li>There must be a base module with <code class="docutils literal notranslate"><span class="pre">NODEID=0</span></code></li>
+<li>Put base node in broadcast mode by setting <code class="docutils literal notranslate"><span class="pre">NODEDESTINATION=65535</span></code></li>
+<li>All other nodes should to talk to base only by setting <code class="docutils literal notranslate"><span class="pre">NODEDESTINATION=0</span></code></li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure that you save parameters after each set using <code class="docutils literal notranslate"><span class="pre">AT&amp;W</span></code>. Otherwise, paramters changes won’t survive restes.</p>
+</div>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/RFDesign/SiK/tree/SiK_Multipoint">https://github.com/RFDesign/SiK/tree/SiK_Multipoint</a></li>
+<li><a class="reference external" href="http://dev.px4.io/en/data_links/sik_radio.html">http://dev.px4.io/en/data_links/sik_radio.html</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Multi-point Telemetry</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#upload-firmware-to-the-radio">Upload Firmware to the radio</a></li>
+<li><a class="reference internal" href="#device-configuration">Device Configuration</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-auto-service-start-afer-boot.html"
+                        title="previous chapter">Autostart service after system boot</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="4-marine-1.html"
+                        title="next chapter">Appendix: RISC AUV System Manual</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-multi-point-telemetry.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="4-marine-1.html" title="Appendix: RISC AUV System Manual"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-auto-service-start-afer-boot.html" title="Autostart service after system boot"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

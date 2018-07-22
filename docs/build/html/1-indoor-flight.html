@@ -1,0 +1,712 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Indoor flying &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Companion Computers Setup" href="2-companion-computers-setup.html" />
+    <link rel="prev" title="Quadcopter Assembly" href="1-quadcopter-assembly.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-companion-computers-setup.html" title="Companion Computers Setup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-quadcopter-assembly.html" title="Quadcopter Assembly"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="indoor-flying">
+<h1>Indoor flying<a class="headerlink" href="#indoor-flying" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="system-architecture">
+<h2>System Architecture<a class="headerlink" href="#system-architecture" title="Permalink to this headline">¶</a></h2>
+<p>In order to start flying the quadcopter indoor, we need the position and orientation feedback for this.</p>
+<p>This section will guide you how to use OptiTrack Motion Capture System, how to stream position and orientation data to ROS, and feed it to your flight controller. Finally you will be able to fly your drone inside the arena.</p>
+<a class="reference internal image-reference" href="_images/sys_arch2.png"><img alt="_images/sys_arch2.png" class="align-center" src="_images/sys_arch2.png" style="width: 745.1999999999999px; height: 462.59999999999997px;" /></a>
+<p>The overall systems has following main elements:</p>
+<ul class="simple">
+<li>OptiTrack Motion Capture System</li>
+<li>Object to be tracker, eg. quadcopter, ground vehicles.</li>
+<li>Controller</li>
+</ul>
+<p>Let’s discuss each element in details</p>
+<div class="section" id="motion-capture-system">
+<h3>Motion capture system<a class="headerlink" href="#motion-capture-system" title="Permalink to this headline">¶</a></h3>
+<p>OptiTrack motion capture system (Mocap hereinafter) works as follows. The overhead cameras send out pulsed infrared light using the attached infrared LEDs, which will then be reflected by markers on the object and detected by the OptiTrack cameras. Knowing the position of those markers in perspective of several cameras, the actual 3D position of the markers in the room can be calculated using triangulation. Simply Mocap provides high precision indoor local position and orientation estimation. Position is meters and orientation is in quaternion, which can be converted Euler angles in radians. In RISC lab we use twenty <strong>Prime17w</strong> cameras that are installed in the flying arena.</p>
+<p>All cameras are connected to a single Mocap PC through network switches. Motive Optical motion capture software is installed on this PC.</p>
+</div>
+<div class="section" id="controller">
+<h3>Controller<a class="headerlink" href="#controller" title="Permalink to this headline">¶</a></h3>
+<p>Controllers are PCs or single board computer (SBC) which are used to control the objects in the flying arena. When a PC is used to control an object, this referred as <strong>OFFBOARD</strong> control. Also a controller can be a flight controller that runs an autopilot firmware to control a vehicle (e.g. quadcopter).</p>
+<p>A companion computer is referred to SBC that is connected to a flight controller. Usually, SBC is used to perform more sophisticated/high computations that the flight controller can not. In other words, the flight controller is designed for low-level tasks, e.g. attitude control, motor driving, sensor data acquisition. However, the companion computer is used for high-level-control e.g. path planning, optimization.</p>
+</div>
+</div>
+<div class="section" id="motion-capture-setup-optitrack">
+<h2>Motion Capture Setup: OptiTrack<a class="headerlink" href="#motion-capture-setup-optitrack" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="camera-calibration">
+<h3>Camera calibration<a class="headerlink" href="#camera-calibration" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that you remove any markers from the captured area and Area-C before performing calibration.</p>
+<p>Make sure that you use clean markers on the Wanding stick.</p>
+<p>The calibration involves three main steps</p>
+<ul class="simple">
+<li>Sample collections using the Wanding stick</li>
+<li>Ground setting using the L-shape tool</li>
+<li>Ground refinement</li>
+</ul>
+<p>Follow <a class="reference external" href="http://wiki.optitrack.com/index.php?title=Calibration">this guide</a> in order to perform the calibration.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is recommended to perform camera calibration on a weekly basis, or every couple of weeks.</p>
+</div>
+<p>Calibration video:</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/cNZaFEghTBU?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+<div class="section" id="motive-setup">
+<h3>Motive setup<a class="headerlink" href="#motive-setup" title="Permalink to this headline">¶</a></h3>
+<p>In this section, we mainly want to learn how to</p>
+<ul class="simple">
+<li>Create rigid bodies that represent objects to be tracked (e.g. quadcopter)</li>
+<li>Make an appropriate marker setup</li>
+</ul>
+<p>Make sure that you have clean markers. Markers should not be placed in symmetric shape. Markers should not be close to each other.</p>
+<p>Read <a class="reference external" href="http://wiki.optitrack.com/index.php?title=Markers">this guide</a> for detailed markers setup.</p>
+<p>Follow <a class="reference external" href="http://wiki.optitrack.com/index.php?title=Rigid_Body_Tracking">this guide</a> to create rigid bodies.</p>
+</div>
+</div>
+<div class="section" id="optitrack-interface-to-ros">
+<span id="optitrack-interface"></span><h2>OptiTrack Interface to ROS<a class="headerlink" href="#optitrack-interface-to-ros" title="Permalink to this headline">¶</a></h2>
+<p>Getting positions of objects in the observable OptiTrack space to ROS works as follows.</p>
+<div class="section" id="required-hardware">
+<h3>Required Hardware<a class="headerlink" href="#required-hardware" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Mocap machine. Runs Motive Motion Capture Software.</li>
+<li>Optitrack Motion Capture System</li>
+<li>WiFi router (5GHz recommended)</li>
+<li>A Linux based computer, normal PC or on-board embedded computer like ODROID XU4 will work. The Linux computer should be connected to the router either via Ethernet cable or WiFi connection.</li>
+</ul>
+</div>
+<div class="section" id="required-software">
+<h3>Required Software<a class="headerlink" href="#required-software" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Motive. It allows you to calibrate your OptiTrack system, stream tracking information to external entities.</li>
+<li>ROS Kinetic installed on your Linux computer.</li>
+<li>The package <a class="reference external" href="http://wiki.ros.org/vrpn_client_ros">vrpn_client_ros</a> for ROS to receive the tracking data from the Mocap computer.</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="method-1-pc">
+<h4>Method 1. PC<a class="headerlink" href="#method-1-pc" title="Permalink to this headline">¶</a></h4>
+<p>Install <a class="reference external" href="http://wiki.ros.org/vrpn_client_ros">vrpn_client_ros</a> using following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-vrpn-client-ros -y
+</pre></div>
+</div>
+<p>Configure your IP address to be manual with the following values:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>IP: 192.168.0.xxx (The *xxx* value shouldn&#39;t conflict with existing IP addresses)
+Subnet Mask: 255.255.255.0
+Gateway: 192.168.0.1
+DNS Server: 8.8.8.8
+</pre></div>
+</div>
+<p>Check <a class="reference external" href="https://www.youtube.com/watch?v=o9fJWDoX4nE">this video</a> to set static IP on Ubuntu.</p>
+</div>
+<div class="section" id="method-2-odroid-xu4">
+<h4>Method 2. Odroid XU4<a class="headerlink" href="#method-2-odroid-xu4" title="Permalink to this headline">¶</a></h4>
+<p>Download <a class="reference external" href="https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0">Ubuntu 16 with ROS Kinetic minimal</a> or <a class="reference external" href="https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0">Ubuntu 16 Full with GUI</a>. It’s highly recommended to use minimal image.</p>
+<p>Flash image with <a class="reference external" href="https://etcher.io/">Etcher</a> to <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287">ODROID XU4 eMMC</a>.</p>
+<p>No need to install <a class="reference external" href="http://wiki.ros.org/vrpn_client_ros">vrpn_client_ros</a> package as it’s already included. Now connect your ODROID XU4 to monitor using HDMI cable. You will also need a keyboard.</p>
+<p>After powering the ODROID you will prompt to enter username and password. It’s all <code class="docutils literal notranslate"><span class="pre">odroid</span></code>. Plug the <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141630348024">WiFi Module 4</a> to the ODROID’s USB port.</p>
+<p>Check the WiFi card number by typing following command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifconfig -a
+</pre></div>
+</div>
+<p>To set a static IP address open <code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code> file for editing by following command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo nano /etc/network/interfaces
+</pre></div>
+</div>
+<p>Modify the file so it matches your WiFi network. It should look similar to this.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>auto wlan0 <span class="c1"># The following will auto-start connection after boot</span>
+allow-hotplug wlan0 <span class="c1"># wlan0 WiFi card number</span>
+iface wlan0 inet static
+address <span class="m">192</span>.168.0.xxx <span class="c1"># Choose a static IP, usually you change the last number only for different devices</span>
+netmask <span class="m">255</span>.255.255.0
+broadcast <span class="m">192</span>.168.0.255
+gateway <span class="m">192</span>.168.0.1 <span class="c1"># Your router IP address</span>
+dns-nameservers <span class="m">8</span>.8.8.8
+wpa-ssid <span class="s2">&quot;RISC-AreaC&quot;</span> <span class="c1"># WiFi name</span>
+wpa-psk <span class="s2">&quot;risc3720&quot;</span> <span class="c1"># WiFi password</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mocap-computer-settings">
+<h4>Mocap computer settings<a class="headerlink" href="#mocap-computer-settings" title="Permalink to this headline">¶</a></h4>
+<p>In Motive, choose <strong>View &gt; Data Streaming</strong> from menu bar. Check the boxes <code class="docutils literal notranslate"><span class="pre">Broadcast</span> <span class="pre">Frame</span> <span class="pre">Data</span></code> in <strong>OptiTrack Streaming Engine</strong> and <strong>VRPN Streaming Engine</strong> sections. Create a rigid body by selecting markers of interest. Refer to picture below.</p>
+<a class="reference internal image-reference" href="_images/capture1.png"><img alt="_images/capture1.png" class="align-center" src="_images/capture1.png" style="width: 650.0px; height: 391.5px;" /></a>
+<p>Make sure you either turn off the Windows Firewall or create outbound rules for the VRPN port (recommended).</p>
+<p>Right click on the body created, choose <strong>Properties</strong> and rename it such that there is no spaces in the name.</p>
+<a class="reference internal image-reference" href="_images/capture2.png"><img alt="_images/capture2.png" class="align-center" src="_images/capture2.png" style="width: 650.5px; height: 375.0px;" /></a>
+</div>
+</div>
+<div class="section" id="streaming-mocap-data">
+<span id="stream-mocap-data"></span><h3>Streaming MOCAP Data<a class="headerlink" href="#streaming-mocap-data" title="Permalink to this headline">¶</a></h3>
+<p>Check the IP address assigned to the Mocap machine, in our case it’s <strong>192.168.0.101</strong></p>
+<p>In your ROS machine (PC or ODROID), where you want to get tracking data, run the <code class="docutils literal notranslate"><span class="pre">vrpn_client_ros</span></code> node as follows</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch vrpn_client_ros sample.launch server:<span class="o">=</span><span class="m">192</span>.168.0.101
+</pre></div>
+</div>
+<p>Now you should be able to receive Mocap data under topic <code class="docutils literal notranslate"><span class="pre">/vrpn_client_node/&lt;rigid_body_name&gt;/pose</span></code>.</p>
+<p>Open new terminal (<strong>CTRL + ALT + F2</strong> on ODROID XU4) and try following command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> vrpn_client_node/&lt;rigid_body_name&gt;/pose
+</pre></div>
+</div>
+<p>You should get similar to this. More information on message type <a class="reference external" href="http://docs.ros.org/api/geometry_msgs/html/msg/PoseStamped.html">here</a>.</p>
+<a class="reference internal image-reference" href="_images/capture4.png"><img alt="_images/capture4.png" class="align-center" src="_images/capture4.png" style="width: 385.2px; height: 209.4px;" /></a>
+</div>
+</div>
+<div class="section" id="feeding-mocap-data-to-pixhawk">
+<h2>Feeding MOCAP data to Pixhawk<a class="headerlink" href="#feeding-mocap-data-to-pixhawk" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/mocap-ros.png"><img alt="_images/mocap-ros.png" class="align-center" src="_images/mocap-ros.png" style="width: 685.1999999999999px; height: 393.59999999999997px;" /></a>
+<div class="section" id="intro">
+<h3>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h3>
+<p>This tutorial shows you how to feed MOCAP data to Pixhawk that is connected to an ODROID, or an on-board linux computer. This will allow Pixhawk to have indoor position and heading information for position stabilization.</p>
+</div>
+<div class="section" id="hardware-requirements">
+<h3>Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Pixhawk or similar controller that runs PX4 firmware</li>
+<li>ODROID (we will assume XU4)</li>
+<li>Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using <strong>Pixhawk 2</strong>, then connect the serial cable to <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code> port. If you are using <strong>MindPX</strong> flight controller, just use a USB to micro-USB cable and connect it to <strong>USB/OBC</strong> port.</li>
+<li>OptiTrack PC</li>
+<li>WiFi router (5GHz is recommended)</li>
+</ul>
+</div>
+<div class="section" id="software-requirements">
+<h3>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Linux Ubuntu 16 installed on ODROID XU4. A minimal image is recommended for faster executions.</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">A ready image for your eyes is available in <a class="reference external" href="https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0">here</a>. This image has all the required software that is needed in this tutorial. You can use <a class="reference external" href="https://etcher.io/">Etcher</a> to flash your eMMC card with the provided <code class="docutils literal notranslate"><span class="pre">.img</span></code> file</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space.</p>
+</div>
+<ul class="simple">
+<li>ROS <a class="reference external" href="http://wiki.ros.org/kinetic/Installation/Ubuntu">Kinetic</a> installed on ODROID XU4. The above image already includes this</li>
+<li><code class="docutils literal notranslate"><span class="pre">MAVROS</span></code> package: <a class="reference external" href="https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb">Binary installation</a>. Again, the above image includes this</li>
+<li>Install <code class="docutils literal notranslate"><span class="pre">vrpn_client_ros</span></code> <a class="reference external" href="http://wiki.ros.org/vrpn_client_ros">package</a>. You can use the following command to install the package (assuming <strong>ROS Kinetic</strong> is used).</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-vrpn-client-ros -y
+</pre></div>
+</div>
+<p>Again, this is included in the provided image</p>
+<p>Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, <code class="docutils literal notranslate"><span class="pre">EKF2</span></code> (default) an extended Kalman filter, and <code class="docutils literal notranslate"><span class="pre">LPE</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">LPE</span></code> estimator supports mocap data directly. <code class="docutils literal notranslate"><span class="pre">EKF2</span></code> (recommended for this tutorial), however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.</p>
+</div>
+<div class="section" id="setting-ekf2-estimator-for-mocap-fusion">
+<h3>Setting EKF2 Estimator for MOCAP Fusion<a class="headerlink" href="#setting-ekf2-estimator-for-mocap-fusion" title="Permalink to this headline">¶</a></h3>
+<p>First choose <code class="docutils literal notranslate"><span class="pre">EKF2</span></code> as your estimator from the <code class="docutils literal notranslate"><span class="pre">System</span></code> tab</p>
+<a class="reference internal image-reference" href="_images/ekf2_est.png"><img alt="_images/ekf2_est.png" class="align-center" src="_images/ekf2_est.png" style="width: 1040.0px; height: 763.0px;" /></a>
+<p>Also make sure the you set the baudrate correctly <code class="docutils literal notranslate"><span class="pre">SYS_COMPANION</span></code></p>
+<p>In the <code class="docutils literal notranslate"><span class="pre">EKF2</span></code> parameters tab, set <code class="docutils literal notranslate"><span class="pre">EKF2_AID_MASK</span></code> to <strong>not</strong> use GPS, and use vision position and yaw.</p>
+<a class="reference internal image-reference" href="_images/ekf2_mask.png"><img alt="_images/ekf2_mask.png" class="align-center" src="_images/ekf2_mask.png" style="width: 345.0px; height: 410.0px;" /></a>
+<p>There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read <a class="reference external" href="https://dev.px4.io/en/tutorials/tuning_the_ecl_ekf.html">this wiki</a></p>
+<a class="reference internal image-reference" href="_images/ekf2_delay.png"><img alt="_images/ekf2_delay.png" class="align-center" src="_images/ekf2_delay.png" style="width: 998.0px; height: 425.0px;" /></a>
+<p>Choose the height mode to be vision</p>
+<a class="reference internal image-reference" href="_images/ekf2_hight_mode.png"><img alt="_images/ekf2_hight_mode.png" class="align-center" src="_images/ekf2_hight_mode.png" style="width: 809.0px; height: 87.0px;" /></a>
+<p>Set the position of the center of the markers (that define the rigid body in the mocap system) with respect to the center of the flight controller. +x points forward, +y right, +z down</p>
+<a class="reference internal image-reference" href="_images/marker_pos.png"><img alt="_images/marker_pos.png" class="align-center" src="_images/marker_pos.png" style="width: 725.0px; height: 176.0px;" /></a>
+</div>
+<div class="section" id="setting-lpe-estimator-for-mocap-fusion">
+<h3>Setting LPE Estimator for MOCAP Fusion<a class="headerlink" href="#setting-lpe-estimator-for-mocap-fusion" title="Permalink to this headline">¶</a></h3>
+<p>You will need to set some parameters on Pixhawk as follows</p>
+<p>Select <code class="docutils literal notranslate"><span class="pre">LPE</span></code> as your estimator. You can change that from the <code class="docutils literal notranslate"><span class="pre">System</span></code> tab in <code class="docutils literal notranslate"><span class="pre">QGroundControl</span></code>.</p>
+<p>You will also need to use the highest baud rate for the serial connection. See below picture.</p>
+<a class="reference internal image-reference" href="_images/systems_tab.png"><img alt="_images/systems_tab.png" class="align-center" src="_images/systems_tab.png" style="width: 1439.0px; height: 783.0px;" /></a>
+<p>Use heading from mocap. Adjust the <code class="docutils literal notranslate"><span class="pre">ATT_EXT_HDG_M</span></code> parameter as follows. Restart might needed to activate LPE parameters in QGroundControl.</p>
+<a class="reference internal image-reference" href="_images/heading.png"><img alt="_images/heading.png" class="align-center" src="_images/heading.png" style="width: 1440.0px; height: 455.0px;" /></a>
+<p>You will need to set the <code class="docutils literal notranslate"><span class="pre">LPE_FUSION</span></code> parameter to <strong>not</strong> to use GPS and <strong>not</strong> to use barometer, since most likely your mocap altitude is highly accurate. See following picture.</p>
+<a class="reference internal image-reference" href="_images/lpe_fusion.jpg"><img alt="_images/lpe_fusion.jpg" class="align-center" src="_images/lpe_fusion.jpg" style="width: 1289.5px; height: 482.0px;" /></a>
+<p>Also, disable any altitude sensor e.g. LIDAR</p>
+<a class="reference internal image-reference" href="_images/sensors.png"><img alt="_images/sensors.png" class="align-center" src="_images/sensors.png" style="width: 1440.0px; height: 786.0px;" /></a>
+<p>Now Restart Pixhawk</p>
+</div>
+<div class="section" id="getting-mocap-data-into-px4">
+<h3>Getting MOCAP data into PX4<a class="headerlink" href="#getting-mocap-data-into-px4" title="Permalink to this headline">¶</a></h3>
+<p>Assuming your <code class="docutils literal notranslate"><span class="pre">vrpn_client_node</span></code> is still running from <a class="reference internal" href="#optitrack-interface"><span class="std std-ref">OptiTrack Interface to ROS</span></a> on your ODROID, we will republish it to another topic by <code class="docutils literal notranslate"><span class="pre">relay</span></code> command.</p>
+<p>You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2/F3/F4)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mavros px4.launch fcu_url:<span class="o">=</span>/dev/ttyUSB0:921600 gcs_url:<span class="o">=</span>udp://@192.168.0.119:14550
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ttyUSB0</span></code> should match the serial port ID in your ODROID. <code class="docutils literal notranslate"><span class="pre">gcs_url:=udp://&#64;192.168.0.119:14550</span></code> is used to allow you to receive data to <code class="docutils literal notranslate"><span class="pre">QGroundControl</span></code> on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs <code class="docutils literal notranslate"><span class="pre">QGroundControl</span></code>.</p>
+<p>Relay the Mocap data to the flight controller</p>
+<ul class="simple">
+<li>If you are using <strong>LPE</strong></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun topic_tools relay /vrpn_client_node/&lt;rigid_body_name&gt;/pose /mavros/mocap/pose
+</pre></div>
+</div>
+<ul class="simple">
+<li>If you use <strong>EKF2</strong></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun topic_tools relay /vrpn_client_node/&lt;rigid_body_name&gt;/pose /mavros/vision_pose/pose
+</pre></div>
+</div>
+<p>Check in <strong>QGroundControl</strong> that you got some message which means Mocap data is received by Pixhawk.</p>
+<p>Now you are ready to use position hold/offboard modes.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">It is very important that you align the forward direction of your drone (robot) with the x-axis of your Mocap when you first define a rigid body. You can find the x-axis direction in the Mocap software, Motive.</p>
+</div>
+</div>
+<div class="section" id="checking-ekf2-consistency-via-log-files">
+<h3>Checking EKF2 Consistency via  Log Files<a class="headerlink" href="#checking-ekf2-consistency-via-log-files" title="Permalink to this headline">¶</a></h3>
+<p>It’s important to make sure that EKF2 estimator provides accurate enough estimates of the states for your flight controller to perform well. A quick way to debug that is through the log files.</p>
+<p>The default log file format in PX4 is <code class="docutils literal notranslate"><span class="pre">Ulog</span></code>. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm. You can change it, so it logs after you power controller.</p>
+<ul class="simple">
+<li>Use QGC to download <code class="docutils literal notranslate"><span class="pre">Ulog</span></code> file you wish to analyze</li>
+<li>Download the <a class="reference external" href="https://pixhawk.org/dev/flightplot">FlightPlot</a> software to open your logs.</li>
+<li>Plot the fields <code class="docutils literal notranslate"><span class="pre">ekf2_innovations_0.vel_pos_innov[3]</span></code>, <code class="docutils literal notranslate"><span class="pre">ekf2_innovations_0.vel_pos_innov[4]</span></code>, <code class="docutils literal notranslate"><span class="pre">ekf2_innovations_0.vel_pos_innov[5]</span></code></li>
+</ul>
+<p>Those are the innovations on the x/y/z position estimates reported by the <code class="docutils literal notranslate"><span class="pre">EKF2</span></code>. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then <code class="docutils literal notranslate"><span class="pre">EKF2</span></code> is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the <code class="docutils literal notranslate"><span class="pre">EKF2_&lt;sensor&gt;_DELAY</span></code> parameters that affect the position estimates. For example, if you are using Mocap, then you will need to adjust <code class="docutils literal notranslate"><span class="pre">EKF2_EV_DELAY</span></code>. It should be decreased if you are feeding Mocap data at high rate.</p>
+<a class="reference internal image-reference" href="_images/log_ekf2_innov.png"><img alt="_images/log_ekf2_innov.png" class="align-center" src="_images/log_ekf2_innov.png" style="width: 909.0px; height: 677.0px;" /></a>
+</div>
+</div>
+<div class="section" id="flying">
+<h2>Flying<a class="headerlink" href="#flying" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3>Intro<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Now it’s time to fly your drone in the cage!</p>
+<p>We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_raw/local</span></code> node. Finally MAVROS will send setpoints to autopilot (real flight controller on your drone).</p>
+</div>
+<div class="section" id="setup-a-ros-network">
+<h3>Setup a ROS Network<a class="headerlink" href="#setup-a-ros-network" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>First let’s set PC running Linux to be ROS Master by editing <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file. Open terminal and open <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file for editing.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gedit ~/.bashrc
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add following lines to the end of the file. Both IP adresses are the same and represents IP address of the PC.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ROS_MASTER_URI</span><span class="o">=</span>http://192.168.0.119:11311
+<span class="nb">export</span> <span class="nv">ROS_HOSTNAME</span><span class="o">=</span><span class="m">192</span>.168.0.119
+</pre></div>
+</div>
+<p>Make sure you <strong>source</strong> the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file after this.</p>
+<ul class="simple">
+<li>Log into a ODROID to get access to a command-line over a network.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh odroid@192.168.0.116
+</pre></div>
+</div>
+<p>It will prompt to enter password, if you use minimal image provided then it’s <strong>odroid</strong>.</p>
+<ul class="simple">
+<li>We need to edit <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file on ODROID as well.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano .bashrc
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add the following lines to the end of the file. First IP address belongs to PC, and the second one to ODROID.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ROS_MASTER_URI</span><span class="o">=</span>http://192.168.0.119:11311
+<span class="nb">export</span> <span class="nv">ROS_HOSTNAME</span><span class="o">=</span><span class="m">192</span>.168.0.116
+</pre></div>
+</div>
+<p>To save file, press Alt+X, press Y, hit Enter. Source the <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> file.</p>
+</div>
+<div class="section" id="odroid-commands">
+<h3>ODROID commands<a class="headerlink" href="#odroid-commands" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Run on ODROID <code class="docutils literal notranslate"><span class="pre">vrpn_client_ros</span></code> as follows (repeated here for your convenience):</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch vrpn_client_ros sample.launch server:<span class="o">=</span><span class="m">192</span>.168.0.101
+</pre></div>
+</div>
+<ul class="simple">
+<li>Open another tab, log into ODROID again and run MAVROS:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mavros px4.launch fcu_url:<span class="o">=</span>/dev/ttyUSB0:921600 gcs_url:<span class="o">=</span>udp://@192.168.0.119:14550
+</pre></div>
+</div>
+</div>
+<div class="section" id="linux-pc-commands">
+<h3>Linux PC commands<a class="headerlink" href="#linux-pc-commands" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>On Linux PC open new tab, relay positions from Mocap to MAVROS (assuming you are using <strong>EKF2</strong>).</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun topic_tools relay /vrpn_client_node/&lt;rigid_body_name&gt;/pose /mavros/vision_pose/pose
+</pre></div>
+</div>
+<p>It’s important at this stage to check if setpoints are published to <code class="docutils literal notranslate"><span class="pre">/mavros/vision_pose/pose</span></code> by <strong>rostopic echo</strong>. If you see setpoints are published then move to next step.</p>
+<ul class="simple">
+<li>Now modify <code class="docutils literal notranslate"><span class="pre">setpoints_node.py</span></code> and <code class="docutils literal notranslate"><span class="pre">joystick_flight.launch</span></code> to the following states. Try to find and understand what’s different from code in SITL files.</li>
+</ul>
+<p>File <code class="docutils literal notranslate"><span class="pre">setpoints_node.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># ROS python API</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="c1"># Joy message structure</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">Joy</span>
+<span class="c1"># 3D point &amp; Stamped Pose msgs</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PoseStamped</span>
+<span class="c1"># import all mavros messages and services</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.msg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Flight modes class</span>
+<span class="c1"># Flight modes are activated using ROS services</span>
+<span class="k">class</span> <span class="nc">fcuModes</span><span class="p">:</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">pass</span>
+
+        <span class="k">def</span> <span class="nf">setArm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">armService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">CommandBool</span><span class="p">)</span>
+                        <span class="n">armService</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;Service arming call failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setDisarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">armService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">CommandBool</span><span class="p">)</span>
+                        <span class="n">armService</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;Service disarming call failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setStabilizedMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+                        <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;STABILIZED&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Stabilized Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setOffboardMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+                        <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;OFFBOARD&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Offboard Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setAltitudeMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+                        <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;ALTCTL&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Altitude Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setPositionMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+                        <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;POSCTL&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Position Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+        <span class="k">def</span> <span class="nf">setAutoLandMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                        <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+                        <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;AUTO.LAND&#39;</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+                        <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Autoland Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+<span class="c1"># Main class: Converts joystick commands to position setpoints</span>
+<span class="k">class</span> <span class="nc">Controller</span><span class="p">:</span>
+        <span class="c1"># initialization method</span>
+        <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="c1"># Drone state</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+                <span class="c1"># Instantiate a setpoints message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sp</span>         <span class="o">=</span> <span class="n">PositionTarget</span><span class="p">()</span>
+                <span class="c1"># set the flag to use position setpoints and yaw angle</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">type_mask</span>    <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;010111111000&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="c1"># LOCAL_NED</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">coordinate_frame</span><span class="o">=</span> <span class="mi">1</span>
+
+                <span class="c1"># We will fly at a fixed altitude for now</span>
+                <span class="c1"># Altitude setpoint, [meters]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ALT_SP</span>        <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># update the setpoint message with the required altitude</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ALT_SP</span>
+
+                <span class="c1"># Instantiate a joystick message</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span>        <span class="o">=</span> <span class="n">Joy</span><span class="p">()</span>
+                <span class="c1"># initialize</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+                <span class="c1"># Step size for position update</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+                <span class="c1"># Fence. We will assume a square fence for now</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">FENCE_LIMIT</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+                <span class="c1"># A Message for the current local position of the drone</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">modes</span> <span class="o">=</span> <span class="n">fcuModes</span><span class="p">()</span>
+
+        <span class="c1"># Callbacks</span>
+
+        <span class="c1">## local position callback</span>
+        <span class="k">def</span> <span class="nf">posCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>
+
+        <span class="c1">## joystick callback</span>
+        <span class="k">def</span> <span class="nf">joyCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+        <span class="c1"># If button 1 on joystick is pressed</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="o">.</span><span class="n">setArm</span><span class="p">()</span>
+
+        <span class="c1"># If button 2 on joystick is pressed</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="o">.</span><span class="n">setAutoLandMode</span><span class="p">()</span>
+
+        <span class="c1"># If button 3 on joystick is pressed</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="o">.</span><span class="n">setOffboardMode</span><span class="p">()</span>
+
+        <span class="c1"># If button 11 on joystick is pressed</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">buttons</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modes</span><span class="o">.</span><span class="n">setDisarm</span><span class="p">()</span>
+
+
+        <span class="c1">## Drone State callback</span>
+        <span class="k">def</span> <span class="nf">stateCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">msg</span>
+
+        <span class="c1">## Update setpoint message</span>
+        <span class="k">def</span> <span class="nf">updateSp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># negative one might be changed if direction is reverse</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span><span class="o">*</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span><span class="o">*</span><span class="n">y</span>
+
+
+<span class="c1"># Main function</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+        <span class="c1"># Initiate node</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;setpoints_node&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># Flight mode object</span>
+
+        <span class="c1"># controller object</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">()</span>
+
+        <span class="c1"># ROS loop rate, [Hz]</span>
+        <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mf">20.0</span><span class="p">)</span>
+
+        <span class="c1"># Subscribe to drone state</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;mavros/state&#39;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">stateCb</span><span class="p">)</span>
+
+        <span class="c1"># Subscribe to drone&#39;s local position</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;mavros/local_position/pose&#39;</span><span class="p">,</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">posCb</span><span class="p">)</span>
+        <span class="c1"># subscribe to joystick topic</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;joy&#39;</span><span class="p">,</span> <span class="n">Joy</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">joyCb</span><span class="p">)</span>
+
+        <span class="c1"># Setpoint publisher</span>
+        <span class="n">sp_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;mavros/setpoint_raw/local&#39;</span><span class="p">,</span> <span class="n">PositionTarget</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Some lines deleted from SITL code</span>
+
+        <span class="c1"># We need to send few setpoint messages, then activate OFFBOARD mode, to take effect</span>
+        <span class="n">k</span><span class="o">=</span><span class="mi">0</span>
+        <span class="k">while</span> <span class="n">k</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">:</span>
+                <span class="n">sp_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">sp</span><span class="p">)</span>
+                <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+
+        <span class="c1"># Activate OFFBOARD mode</span>
+        <span class="n">cnt</span><span class="o">.</span><span class="n">modes</span><span class="o">.</span><span class="n">setOffboardMode</span><span class="p">()</span>
+
+        <span class="c1"># ROS main loop</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+                <span class="n">cnt</span><span class="o">.</span><span class="n">updateSp</span><span class="p">()</span>
+                <span class="n">sp_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">sp</span><span class="p">)</span>
+                <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+                <span class="n">main</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+                <span class="k">pass</span>
+</pre></div>
+</div>
+<p>File <code class="docutils literal notranslate"><span class="pre">joystick_flight.launch</span></code>:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;joy_dev&quot;</span> <span class="na">default=</span><span class="s">&quot;/dev/input/js0&quot;</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;joy&quot;</span> <span class="na">type=</span><span class="s">&quot;joy_node&quot;</span> <span class="na">name=</span><span class="s">&quot;joy_node&quot;</span>  <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;dev&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg joy_dev)&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/node&gt;</span>
+        <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;mypackage&quot;</span> <span class="na">type=</span><span class="s">&quot;setpoints_node.py&quot;</span> <span class="na">name=</span><span class="s">&quot;setpoints_node&quot;</span>  <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Make sure you give permissions to the joystick.</li>
+</ul>
+<div class="admonition danger">
+<p class="first admonition-title">Danger</p>
+<p class="last">Keep the transmitter nearby to engage the <code class="docutils literal notranslate"><span class="pre">Kill</span> <span class="pre">Switch</span></code> trigger in case something will go wrong.</p>
+</div>
+<ul class="simple">
+<li>Now run in a new terminal your launch file</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mypackage joystick_flight.launch
+</pre></div>
+</div>
+</div>
+<div class="section" id="joystick-control">
+<h3>Joystick control<a class="headerlink" href="#joystick-control" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">BUTTON</span> <span class="pre">1</span></code> - Arms the quadcopter</p>
+<p><code class="docutils literal notranslate"><span class="pre">BUTTON</span> <span class="pre">3</span></code> - Switches quadcopter to OFFBOARD flight mode. It should takeoff after this.</p>
+<p><code class="docutils literal notranslate"><span class="pre">BUTTON</span> <span class="pre">2</span></code> - Lands the quadcopter</p>
+<p><code class="docutils literal notranslate"><span class="pre">BUTTON</span> <span class="pre">11</span></code> - Disarms the quadcopter</p>
+<p>Enjoy your flight.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Indoor flying</a><ul>
+<li><a class="reference internal" href="#system-architecture">System Architecture</a><ul>
+<li><a class="reference internal" href="#motion-capture-system">Motion capture system</a></li>
+<li><a class="reference internal" href="#controller">Controller</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#motion-capture-setup-optitrack">Motion Capture Setup: OptiTrack</a><ul>
+<li><a class="reference internal" href="#camera-calibration">Camera calibration</a></li>
+<li><a class="reference internal" href="#motive-setup">Motive setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#optitrack-interface-to-ros">OptiTrack Interface to ROS</a><ul>
+<li><a class="reference internal" href="#required-hardware">Required Hardware</a></li>
+<li><a class="reference internal" href="#required-software">Required Software</a></li>
+<li><a class="reference internal" href="#installation">Installation</a><ul>
+<li><a class="reference internal" href="#method-1-pc">Method 1. PC</a></li>
+<li><a class="reference internal" href="#method-2-odroid-xu4">Method 2. Odroid XU4</a></li>
+<li><a class="reference internal" href="#mocap-computer-settings">Mocap computer settings</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#streaming-mocap-data">Streaming MOCAP Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#feeding-mocap-data-to-pixhawk">Feeding MOCAP data to Pixhawk</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
+<li><a class="reference internal" href="#software-requirements">Software Requirements</a></li>
+<li><a class="reference internal" href="#setting-ekf2-estimator-for-mocap-fusion">Setting EKF2 Estimator for MOCAP Fusion</a></li>
+<li><a class="reference internal" href="#setting-lpe-estimator-for-mocap-fusion">Setting LPE Estimator for MOCAP Fusion</a></li>
+<li><a class="reference internal" href="#getting-mocap-data-into-px4">Getting MOCAP data into PX4</a></li>
+<li><a class="reference internal" href="#checking-ekf2-consistency-via-log-files">Checking EKF2 Consistency via  Log Files</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#flying">Flying</a><ul>
+<li><a class="reference internal" href="#id7">Intro</a></li>
+<li><a class="reference internal" href="#setup-a-ros-network">Setup a ROS Network</a></li>
+<li><a class="reference internal" href="#odroid-commands">ODROID commands</a></li>
+<li><a class="reference internal" href="#linux-pc-commands">Linux PC commands</a></li>
+<li><a class="reference internal" href="#joystick-control">Joystick control</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-quadcopter-assembly.html"
+                        title="previous chapter">Quadcopter Assembly</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-companion-computers-setup.html"
+                        title="next chapter">Companion Computers Setup</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/1-indoor-flight.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-companion-computers-setup.html" title="Companion Computers Setup"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-quadcopter-assembly.html" title="Quadcopter Assembly"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

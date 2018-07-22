@@ -1,0 +1,151 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Autostart service after system boot &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="autostart-service-after-system-boot">
+<h1>Autostart service after system boot<a class="headerlink" href="#autostart-service-after-system-boot" title="Permalink to this headline">¶</a></h1>
+<p>Sometimes, It is more convenient to run ROS launch files automatically after robot’s computer boots up. For example, if you are working with multiple drones in a swarm, it is painful to log into each drone and run mavros manually. So, to solve this issue, we can run mavros automatically after system boots. This tutorial shows you one way on how to run ROS launch file after system starts.</p>
+<div class="section" id="create-a-simple-systemd-service">
+<h2>Create a simple systemd service<a class="headerlink" href="#create-a-simple-systemd-service" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="use-case-auto-start-mavros-node">
+<h3>Use case: auto start MAVROS node<a class="headerlink" href="#use-case-auto-start-mavros-node" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Create a shell script and type the commands that you would execute in a normal terminal. Fro example,</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir ~/scripts
+<span class="nb">cd</span> ~/scripts
+touch startup_launch.sh
+chmod +x startup_launch.sh
+</pre></div>
+</div>
+<p>Type the following in the <code class="docutils literal notranslate"><span class="pre">startup_launch.sh</span></code> file (you can use the <code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">startup_launch.sh</span></code> command)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">source</span> /opt/ros/kinetic/setup.bash
+<span class="nb">source</span> /home/<span class="nv">$USER</span>/catkin_ws/devel/setup.bash
+roslaunch mavros px4.launch
+</pre></div>
+</div>
+<ul class="simple">
+<li>Create <code class="docutils literal notranslate"><span class="pre">mavros.service</span></code> file in <code class="docutils literal notranslate"><span class="pre">/lib/systemd/system</span></code></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /lib/systemd/system
+sudo nano mavros.service
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add the following contents:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>Unit<span class="o">]</span>
+<span class="nv">Description</span><span class="o">=</span>mavros
+
+<span class="o">[</span>Service<span class="o">]</span>
+<span class="nv">Type</span><span class="o">=</span>forking
+<span class="nv">ExecStart</span><span class="o">=</span>/home/odroid/scripts/startup_launch.sh
+<span class="nv">Restart</span><span class="o">=</span>on-failure
+
+<span class="o">[</span>Install<span class="o">]</span>
+<span class="nv">WantedBy</span><span class="o">=</span>multi-user.target
+</pre></div>
+</div>
+<p>Save and exit by hitting <code class="docutils literal notranslate"><span class="pre">CTRL+x</span></code>, then <code class="docutils literal notranslate"><span class="pre">Y</span></code>, then <code class="docutils literal notranslate"><span class="pre">[ENTER]</span></code></p>
+<p>Then run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl daemon-reload
+</pre></div>
+</div>
+<p>And enable it on boot:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl <span class="nb">enable</span> mavros.service
+</pre></div>
+</div>
+<p>Then, reboot and <code class="docutils literal notranslate"><span class="pre">px4.launch</span></code> should be executed after boot.</p>
+<p>To disable a service,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo systemctl disble mavros.service
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Autostart service after system boot</a><ul>
+<li><a class="reference internal" href="#create-a-simple-systemd-service">Create a simple systemd service</a><ul>
+<li><a class="reference internal" href="#use-case-auto-start-mavros-node">Use case: auto start MAVROS node</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-auto-service-start-afer-boot.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

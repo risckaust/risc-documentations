@@ -1,0 +1,274 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Setup HIL with PX4 &amp; V-REP &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Appendix: RISC AUV System Manual" href="4-marine-1.html" />
+    <link rel="prev" title="MATLAB Pixhawk Communication" href="2-matlab-pixhawk.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="4-marine-1.html" title="Appendix: RISC AUV System Manual"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-matlab-pixhawk.html" title="MATLAB Pixhawk Communication"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="setup-hil-with-px4-v-rep">
+<h1>Setup HIL with PX4 &amp; V-REP<a class="headerlink" href="#setup-hil-with-px4-v-rep" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This is an old attempt to do hardware-in-the-loop simulation with VREP simulator and is deprecated. The current ongoing work is to make HIL with Gazebo via a MAVROS plugin. See following link. HIL with Gazebo via a <a class="reference external" href="https://github.com/mavlink/mavros/pull/684">MAVROS plugin in progress</a>.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Machine with Ubuntu 14.04 LTS installed</li>
+<li><a class="reference external" href="http://wiki.ros.org/indigo/Installation/Ubuntu">ROS Indigo</a> installed</li>
+<li>CATKIN workspace</li>
+<li><a class="reference external" href="http://www.coppeliarobotics.com/downloads.html">V-REP</a> installed</li>
+<li>V-REP HIL scene: can be found in the <code class="docutils literal notranslate"><span class="pre">catkin_ws/src/v_repExtRosInterface/vrep_hil</span></code>  folder after you run the setup <code class="docutils literal notranslate"><span class="pre">.sh</span></code> script.</li>
+<li>Pixhawk loaded with PX4 HIL <a class="reference external" href="https://github.com/PX4/Firmware/releases/tag/v1.4.4)">firmware</a>.</li>
+<li>Customized .params file for appropriate Pixhawk parameters configurations: can be found in the <code class="docutils literal notranslate"><span class="pre">catkin_ws/src/v_repExtRosInterface/vrep_hil</span></code>  folder after you run the setup .sh script</li>
+<li>Setup script <code class="docutils literal notranslate"><span class="pre">vrep_px4_hil_setup.sh</span></code> (see the code below)</li>
+<li>Internet connection</li>
+</ul>
+</div>
+<div class="section" id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h2>
+<p>Prepare the setup file as described in the below section.</p>
+<p>Open a new terminal, navigate to the setup file, and define the setup variables: <code class="docutils literal notranslate"><span class="pre">VREP_ROOT</span></code> is the VREP main folder’s path, <code class="docutils literal notranslate"><span class="pre">ROS_WORKSPACE</span></code> is the path to your catkin workspace. Finally, run the setup script (see the code below). <strong>Make sure you have internet connection and root access via</strong> <code class="docutils literal notranslate"><span class="pre">sudo</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># export VREP_ROOT=path/to/vrep/folder</span>
+<span class="c1"># export ROS_WORKSPACE=path/to/catkin/workspace</span>
+./vrep_px4_hil_setup.sh
+</pre></div>
+</div>
+<p>Once the installation is successful, connect Pixhawk via USB. Run <code class="docutils literal notranslate"><span class="pre">mavros</span></code> to connect to Pixhawk,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mavros px4.launch fcu_url:<span class="o">=</span>/dev/ttyACM0:115200 gcs_url:<span class="o">=</span>udp://@192.168.1.135
+</pre></div>
+</div>
+<p>You may need to adjust <code class="docutils literal notranslate"><span class="pre">fcu_url</span></code> address <code class="docutils literal notranslate"><span class="pre">/dev/ttyACM0:115200</span></code> and <code class="docutils literal notranslate"><span class="pre">gcs_url</span></code> address <code class="docutils literal notranslate"><span class="pre">udp://&#64;192.168.1.135</span></code> according to your setup.</p>
+<p>In another terminal, run V-REP:  Navigate to VREP main folder, then execute</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># cd /vrep/folder</span>
+./vrep.sh
+</pre></div>
+</div>
+<p>Load the <code class="docutils literal notranslate"><span class="pre">px4_hil.ttt</span></code> scene, and run it. You should see the main LED on Pixhawk go green. It means it’s able to get xyz data (fake GPS).</p>
+</div>
+<div class="section" id="setup-shell-script">
+<h2>Setup Shell Script<a class="headerlink" href="#setup-shell-script" title="Permalink to this headline">¶</a></h2>
+<p>You can create the setup file by copying the following shell code to a file, and then, run it. Make sure it has <code class="docutils literal notranslate"><span class="pre">.sh</span></code> extension, and make it executable : <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">&lt;filename.sh&gt;</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="c1"># Check if required environment variables are set properly</span>
+<span class="k">if</span> <span class="o">[</span> ! -v ROS_WORKSPACE <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;!!!! ERROR: ROS_WORKSPACE is unset&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;set it using: export ROS_WORKSPACE=path/to/workspace/folder&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;press &#39;ENTER&#39; to exit.....&quot;</span>
+    <span class="nb">read</span> x
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -v VREP_ROOT <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;!!!! ERROR: VREP_ROOT is unset&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;set it using: export VREP_ROOT=path/to/VREP/folder&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;press &#39;ENTER&#39; to exit.....&quot;</span>
+    <span class="nb">read</span> x
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">ROS_WORKSPACE1</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$ROS_WORKSPACE</span> <span class="p">|</span> tr -d <span class="s1">&#39;\r&#39;</span><span class="k">)</span>
+<span class="nv">VREP_ROOT1</span><span class="o">=</span><span class="k">$(</span><span class="nb">echo</span> <span class="nv">$VREP_ROOT</span> <span class="p">|</span> tr -d <span class="s1">&#39;\r&#39;</span><span class="k">)</span>
+
+<span class="c1"># Clean ros_ws: build/devel/logs directories</span>
+<span class="nb">cd</span> <span class="nv">$ROS_WORKSPACE1</span>
+rm -r -f devel/
+rm -r -f build/
+rm -r -f logs/
+
+<span class="c1"># Initialize catkin workspace</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$ROS_WORKSPACE1</span><span class="s2">&quot;</span>
+catkin init
+<span class="nb">cd</span> src
+rm .rosinstall
+<span class="nb">cd</span> ..
+wstool init src
+
+<span class="c1"># Remove old vrep ros interface package`</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="nv">$ROS_WORKSPACE1</span><span class="s2">/src&quot;</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;v_repExtRosInterface&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    rm -r -f <span class="s2">&quot;</span><span class="nv">$ROS_WORKSPACE1</span><span class="s2">/src/v_repExtRosInterface&quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># Remove old mavros package</span>
+<span class="c1"># remove mavros if installed by apt-get</span>
+sudo apt-get remove ros-indigo-mavros
+sudo apt-get remove ros-indigo-mavros-extras
+sudo apt-get remove ros-indigo-mavros-msgs
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;mavros&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    rm -r -f mavros
+<span class="k">fi</span>
+
+<span class="c1"># Remove mavlink package</span>
+<span class="c1"># remove mavlink if installed by apt-get</span>
+sudo apt-get remove ros-indigo-mavlink
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;mavlink&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    rm -r -f mavlink
+<span class="k">fi</span>
+
+<span class="c1"># Create Python-packages folder,</span>
+<span class="nb">cd</span> ~
+<span class="c1"># check if directory exists</span>
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&quot;python-packages&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    mkdir -p <span class="s2">&quot;python-packages/src&quot;</span>
+<span class="k">fi</span>
+
+<span class="c1"># Get some required python packages</span>
+sudo apt-get update
+sudo apt-get install python-tempita python-catkin-tools python-rosinstall-generator python-pip -y
+sudo pip install future
+
+<span class="c1"># Clone fresh vrep ros interface package</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src&quot;</span>
+git clone https://github.com/mzahana/v_repExtRosInterface.git
+<span class="c1"># Copy some V-REP packages from V-REP folder</span>
+cp -R <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span><span class="s2">/programming/ros_packages/vrep_common/&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src/&quot;</span>
+cp -R <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span><span class="s2">/programming/ros_packages/vrep_joy/&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src/&quot;</span>
+cp -R <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span><span class="s2">/programming/ros_packages/vrep_plugin/&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src/&quot;</span>
+cp -R <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span><span class="s2">/programming/ros_packages/vrep_plugin_skeleton/&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src/&quot;</span>
+cp -R <span class="s2">&quot;</span><span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span><span class="s2">/programming/ros_packages/vrep_skeleton_msg_and_srv/&quot;</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/src/&quot;</span>
+
+<span class="c1"># Get fresh mavros package</span>
+git clone https://github.com/mzahana/mavros.git
+<span class="c1"># checkout the px4_hil_plugins branch</span>
+<span class="nb">cd</span> mavros
+git checkout  px4_hil_plugins
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Get fresh mavlink package</span>
+rosinstall_generator --rosdistro kinetic mavlink <span class="p">|</span> tee /tmp/mavros.rosinstall
+wstool merge -t src /tmp/mavros.rosinstall
+wstool update -t src -j4
+rosdep install --from-paths src --ignore-src -y
+
+<span class="c1"># Get supporting package for vrep ros interface</span>
+<span class="nb">cd</span> ~/python-packages
+<span class="c1"># Remove old package if exists</span>
+<span class="k">if</span> <span class="o">[</span> -d <span class="s2">&quot;v_repStubsGen&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    rm -r -f v_repStubsGen
+<span class="k">fi</span>
+
+<span class="c1"># Get a fresh copy of the supporting python package</span>
+git clone https://github.com/fferri/v_repStubsGen.git
+<span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:~/python-packages
+
+<span class="c1"># Build ros/catkin workspace</span>
+<span class="c1">#VERBOSE=1 catkin build -v -p1 -j1 --no-status</span>
+<span class="c1">#catkin build -p1 -j1</span>
+<span class="nb">cd</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">&quot;</span>
+catkin build
+
+<span class="c1"># clone built libs to V-REP folder</span>
+cp -r <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/devel/lib/libv_repExtRosInterface.so&quot;</span> <span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span>
+cp -r <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/devel/lib/libv_repExtRos.so&quot;</span> <span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span>
+cp -r <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/devel/lib/libv_repExtRosSkeleton.so&quot;</span> <span class="si">${</span><span class="nv">VREP_ROOT1</span><span class="si">}</span>
+<span class="c1">#cp -r $ROS_WORKSPACE/src/ros_bubble_rob/bin/rosBubbleRob ~/V-REP_PRO_EDU_V3_3_2_64_Linux/</span>
+<span class="c1">#cp -r $ROS_WORKSPACE/src/ros_bubble_rob2/bin/rosBubbleRob2 ~/V-REP_PRO_EDU_V3_3_2_64_Linux/</span>
+
+<span class="nb">source</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">ROS_WORKSPACE1</span><span class="si">}</span><span class="s2">/devel/setup.bash&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setup HIL with PX4 &amp; V-REP</a><ul>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#setup">Setup</a></li>
+<li><a class="reference internal" href="#setup-shell-script">Setup Shell Script</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-matlab-pixhawk.html"
+                        title="previous chapter">MATLAB Pixhawk Communication</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="4-marine-1.html"
+                        title="next chapter">Appendix: RISC AUV System Manual</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-hil-px4-vrep.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="4-marine-1.html" title="Appendix: RISC AUV System Manual"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-matlab-pixhawk.html" title="MATLAB Pixhawk Communication"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

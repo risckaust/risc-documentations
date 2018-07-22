@@ -1,0 +1,190 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ODROID to MATLAB Stream &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MATLAB Pixhawk Communication" href="2-matlab-pixhawk.html" />
+    <link rel="prev" title="Running MAVROS after system boot" href="2-running-mavros-after-boot.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-matlab-pixhawk.html" title="MATLAB Pixhawk Communication"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-running-mavros-after-boot.html" title="Running MAVROS after system boot"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="odroid-to-matlab-stream">
+<h1>ODROID to MATLAB Stream<a class="headerlink" href="#odroid-to-matlab-stream" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>Required:</p>
+<ul class="simple">
+<li>ODROID with OpenCV installed.</li>
+<li>Computer with OpenCV installed in default locations.</li>
+<li>MATLAB with associated compiler e.g. XCode(Mac OS)/Visual Studio or Microsoft SDK (for Windows)</li>
+<li>WiFi network (Access Point)</li>
+<li><a class="reference external" href="https://github.com/mzahana/Image_Live_Stream">Streaming ODROID application and MATLAB receiving application</a>.</li>
+</ul>
+</div>
+<div class="section" id="odroid-setup">
+<h2>ODROID setup<a class="headerlink" href="#odroid-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setup-opencv">
+<h3>Setup OpenCV<a class="headerlink" href="#setup-opencv" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that your odroid is connected to internet.</p>
+<p>Open a terminal window, and run the following command,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get -y install libopencv-dev
+
+sudo apt-get -y install build-essential cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-streaming-app">
+<h3>Setup streaming app<a class="headerlink" href="#setup-streaming-app" title="Permalink to this headline">¶</a></h3>
+<p>Create a clean directory and navigate to it e.g.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/Desktop
+mkdir imgstream
+<span class="nb">cd</span> imgstream
+</pre></div>
+</div>
+<p>Clone the streaming app from Github</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/mzahana/Image_Live_Stream.git
+<span class="nb">cd</span> Image_Live_Stream
+</pre></div>
+</div>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">stream_cpp</span></code> folder, and compile the app</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> opencv_stream/stream_cpp
+cmake . <span class="p">&amp;</span> make
+</pre></div>
+</div>
+<p>If all goes well, then two executable files should be generated: <code class="docutils literal notranslate"><span class="pre">sender</span></code> and <code class="docutils literal notranslate"><span class="pre">receiver</span></code>. Otherwise, make sure that you installed OpenCV properly in the default locations.</p>
+<p>To stream images over network, use the <code class="docutils literal notranslate"><span class="pre">sender</span></code> app after you connect a camera to ODROID. To use the <code class="docutils literal notranslate"><span class="pre">sender</span></code> app, use the following command in a terminal, inside the <code class="docutils literal notranslate"><span class="pre">stream_cpp</span></code> folder,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./sender <span class="m">192</span>.168.1.100 <span class="m">10000</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">192.168.1.100</span></code> is the IP of machine running MATLAB (the host machine) (which should be on the same network as the ODROID’s). <code class="docutils literal notranslate"><span class="pre">10000</span></code> is the port that MATLAB is listening on. Use appropriate IP and port that match the host ones.</p>
+</div>
+</div>
+<div class="section" id="matlab-setup">
+<h2>MATLAB setup<a class="headerlink" href="#matlab-setup" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="on-macos">
+<h3>On MacOS<a class="headerlink" href="#on-macos" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that you installed <a class="reference external" href="https://developer.apple.com/xcode/">XCode</a> on your Mac OS.</p>
+<p>Make sure that you associat your MATLAB with XCode compiler (Google it). Run <code class="docutils literal notranslate"><span class="pre">mex</span> <span class="pre">-setup</span></code> in MATLAB command line for more information.</p>
+<p>Navigate to the <code class="docutils literal notranslate"><span class="pre">Image_Live_Stream</span></code> folder that you  downloaded from Github.</p>
+<p>Run the <code class="docutils literal notranslate"><span class="pre">setup.m</span></code> file</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="n">setup</span>
+</pre></div>
+</div>
+<p>If all goes well, you are ready to receive live stream of images from ODROID.</p>
+<p>Look at the <code class="docutils literal notranslate"><span class="pre">testScript.m</span></code> file to see how you can use the <code class="docutils literal notranslate"><span class="pre">ImgStream</span></code> class to establish the connection, and receive image data.</p>
+</div>
+<div class="section" id="on-windows">
+<h3>On Windows<a class="headerlink" href="#on-windows" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that you install OpenCV 2.4.13 on your Windows. Follow <a class="reference external" href="https://www.youtube.com/watch?v=tHX3MLzwF6Q">this video</a>. It is assumed that you installed the OpenCV folder in <code class="docutils literal notranslate"><span class="pre">C:\</span></code></p>
+<p>Make sure that your MATLAB is associated with compiler. Run <code class="docutils literal notranslate"><span class="pre">mex</span> <span class="pre">-setup</span></code> in MATLAB command line for more information.</p>
+<p>In MATLAB, run the <code class="docutils literal notranslate"><span class="pre">setup.m</span></code> file.</p>
+<p>If all goes well, you are ready to receive image stream. Look at the test script to get familiar on how to use the <code class="docutils literal notranslate"><span class="pre">ImgStream</span></code> Class.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ODROID to MATLAB Stream</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#odroid-setup">ODROID setup</a><ul>
+<li><a class="reference internal" href="#setup-opencv">Setup OpenCV</a></li>
+<li><a class="reference internal" href="#setup-streaming-app">Setup streaming app</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#matlab-setup">MATLAB setup</a><ul>
+<li><a class="reference internal" href="#on-macos">On MacOS</a></li>
+<li><a class="reference internal" href="#on-windows">On Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-running-mavros-after-boot.html"
+                        title="previous chapter">Running MAVROS after system boot</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-matlab-pixhawk.html"
+                        title="next chapter">MATLAB Pixhawk Communication</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-odroid-to-matlab.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-matlab-pixhawk.html" title="MATLAB Pixhawk Communication"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-running-mavros-after-boot.html" title="Running MAVROS after system boot"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

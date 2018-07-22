@@ -1,0 +1,497 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Software in the Loop Joystick Flight &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quadcopter Assembly" href="1-quadcopter-assembly.html" />
+    <link rel="prev" title="3D Modeling" href="1-3d-modeling.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="1-quadcopter-assembly.html" title="Quadcopter Assembly"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-3d-modeling.html" title="3D Modeling"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="software-in-the-loop-joystick-flight">
+<h1>Software in the Loop Joystick Flight<a class="headerlink" href="#software-in-the-loop-joystick-flight" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial explains the steps required to fly a simulated quadcopter in the Gazebo simulator using a real joystick. The following diagram shows how the system components work together.</p>
+<a class="reference internal image-reference" href="_images/sitl_diagram.png"><img alt="_images/sitl_diagram.png" class="align-center" src="_images/sitl_diagram.png" style="width: 836.0px; height: 251.0px;" /></a>
+<div class="section" id="hardware-requirements">
+<h2>Hardware Requirements<a class="headerlink" href="#hardware-requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Desktop Linux Machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed</li>
+<li>Joystick</li>
+</ul>
+<a class="reference internal image-reference" href="_images/joystick.png"><img alt="_images/joystick.png" class="align-center" src="_images/joystick.png" style="width: 187.5px; height: 143.0px;" /></a>
+</div>
+<div class="section" id="software-requirements">
+<h2>Software Requirements<a class="headerlink" href="#software-requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Ubuntu 16.04</strong></li>
+<li><strong>ROS Kinetic</strong> (full desktop installation)</li>
+<li><strong>Gazebo 7</strong>: will be automatically installed with ROS</li>
+<li><strong>PX4 firmware</strong> installation on Linux: Autopilot software which includes the software-in-the-loop firmware</li>
+<li><strong>MAVROS</strong> package: Autopilot ROS interface</li>
+<li><strong>Joy</strong> package: Joystick ROS interface</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In this tutorial, it is assumed that the reader is familiar with basic Linux commands, ROS Basics.</p>
+</div>
+</div>
+<div class="section" id="setup-steps">
+<h2>Setup Steps<a class="headerlink" href="#setup-steps" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Download this <a class="reference external" href="https://github.com/luym11/initial_settings/archive/master.zip">ZIP file</a>, and extract <code class="docutils literal notranslate"><span class="pre">.sh</span></code> files to your home folder and run by command.</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./ubuntu_install.sh
+</pre></div>
+</div>
+<p>Then copy commands line by line from <code class="docutils literal notranslate"><span class="pre">ws.sh</span></code> and run them one by one in a terminal.</p>
+<p>This will setup all permissions and development environment which includes the software-in-the-loop simulation.</p>
+<ul class="simple">
+<li>Install <code class="docutils literal notranslate"><span class="pre">QGroundControl</span></code> from <a class="reference external" href="https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux">here</a>. Use the AppImage option.</li>
+</ul>
+</div>
+<div class="section" id="testing-sitl-with-gazebo-no-ros">
+<h2>Testing SITL with Gazebo (No ROS)<a class="headerlink" href="#testing-sitl-with-gazebo-no-ros" title="Permalink to this headline">¶</a></h2>
+<p>In this step, we will validate that the PX4 SITL app and Gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/src/Firmware
+make posix_sitl_default gazebo
+</pre></div>
+</div>
+<p>After sometime, you should be able to see an Iris model loaded in Gazebo, and the <code class="docutils literal notranslate"><span class="pre">pxh&gt;</span></code> command line in the terminal. Just hit ENTER couple of times if you don’t see the <code class="docutils literal notranslate"><span class="pre">pxh&gt;</span></code> command line, and it should appear.</p>
+<p>To takeoff/land the quadcopter, execute the following commands in the terminal</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pxh&gt; commander takeoff
+pxh&gt; commander land
+</pre></div>
+</div>
+<p>If the previous actions succeed the the installation is OK. Next, we will run ROS and a MAVROS node which will allow us to interface the autopilot with ROS.</p>
+</div>
+<div class="section" id="interfacing-with-ros">
+<h2>Interfacing with ROS<a class="headerlink" href="#interfacing-with-ros" title="Permalink to this headline">¶</a></h2>
+<p>Now, you are ready to launch Gazebo+PX4 SITL app+ROS+MAVROS. To do that, execute the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch px4 mavros_posix_sitl.launch fcu_url:<span class="o">=</span><span class="s2">&quot;udp://:14540@127.0.0.1:14557&quot;</span>
+</pre></div>
+</div>
+<p>You should be able to see <code class="docutils literal notranslate"><span class="pre">/mavros</span></code> topics using <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">list</span></code> in a new terminal. Also if you execute <code class="docutils literal notranslate"><span class="pre">rosnode</span> <span class="pre">list</span></code> in a new terminal, you should see</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rosnode list
+/gazebo
+/mavros
+/rosout
+</pre></div>
+</div>
+<p>To double check that MAVROS node is connected properly to the PX4 SITL app, try to <code class="docutils literal notranslate"><span class="pre">echo</span></code> some topics _e.g._</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> /mavros/state
+</pre></div>
+</div>
+<p>Which will show if the mavros node is connected to the PX4 SITL app or not.</p>
+<p>Now, you can monitor the drone’s states and control it via a MAVROS node.</p>
+<ul class="simple">
+<li>As mentioned, in this tutorial, we are going to learn one basic way of controlling the quadcopter’s position via a joystick.</li>
+<li>There is a flight mode in PX4 autopilot which is called <strong>OFFBOARD</strong> mode. This mode allows the autopilot to accept specific external commands such as position, velocity, and attitude setpoints. You cannot mix between different setpoints _e.g._ velocity setpoints in x/y and position in z.</li>
+<li>A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer those setpoints to the autopilot to execute.</li>
+<li>If the autopilot’s flight mode is <strong>OFFBOARD</strong>, the autopilot will accept the received setpoints and execute them.</li>
+<li>We will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the mavros node will send it to the autopilot.</li>
+<li>The setpoint topic that we will use in this tutorial is <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_raw/local</span></code>. This topic accepts both position and velocity setpoints according to a specific flag. Next, we will create our custom simple ROS package in which we create a simple ROS node that listens to joystic commands from a ROS topic. Then, it will convert joystic commands to position setpoints which will be published to the <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_raw/local</span></code> topic. Finally, MAVROS will take the position set points and send them to the autopilot.</li>
+</ul>
+<p>You might be asking, how are we going to get the joystick commands? The next section explains that.</p>
+</div>
+<div class="section" id="joystick-package-installation-usage">
+<h2>Joystick Package Installation &amp; Usage<a class="headerlink" href="#joystick-package-installation-usage" title="Permalink to this headline">¶</a></h2>
+<p>A package named <code class="docutils literal notranslate"><span class="pre">joy</span></code> is going to be used to interface a joystick to ROS. To install that package, simply execute the following command in the terminal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-joy
+</pre></div>
+</div>
+<p>You will need to setup permissions before you can use your joystick.</p>
+<ul class="simple">
+<li>Plug a joystick</li>
+<li>Check if Linux recognizes your joystick</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls /dev/input/
+</pre></div>
+</div>
+<p>You will get an output similar to the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>by-id    event0  event2  event4  event6  event8  mouse0  mouse2  uinput
+by-path  event1  event3  event5  event7  js0     mice    mouse1
+</pre></div>
+</div>
+<p>As you can see, the joystick device is referred to as <code class="docutils literal notranslate"><span class="pre">jsX</span></code> where <code class="docutils literal notranslate"><span class="pre">X</span></code> is the number of the joystick device.</p>
+<p>Let’s make the joystick accessible to the joy ROS node.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls -l /dev/input/jsX
+</pre></div>
+</div>
+<p>You will see something similar to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>crw-rw-XX- <span class="m">1</span> root dialout <span class="m">188</span>, <span class="m">0</span> <span class="m">2009</span>-08-14 <span class="m">12</span>:04 /dev/input/jsX
+</pre></div>
+</div>
+<p>If XX is <code class="docutils literal notranslate"><span class="pre">rw</span></code>: the js device is configured properly. If XX is <code class="docutils literal notranslate"><span class="pre">--</span></code>: the js device is not configured properly and you need to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo chmod a+rw /dev/input/jsX
+</pre></div>
+</div>
+<p>Test the <code class="docutils literal notranslate"><span class="pre">joy</span></code> node. First, start <code class="docutils literal notranslate"><span class="pre">roscore</span></code> in a terminal. In another terminal,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the joystick device address</span>
+rosparam <span class="nb">set</span> joy_node/dev <span class="s2">&quot;/dev/input/js0&quot;</span>
+<span class="c1"># run the joy node</span>
+rosrun joy joy_node
+</pre></div>
+</div>
+<p>In another terminal, echo the <code class="docutils literal notranslate"><span class="pre">joy</span></code> topic and move the joystick to see the topic changes</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> /joy
+</pre></div>
+</div>
+<p>You should see an output similar to the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>header:
+seq: <span class="m">699</span>
+stamp:
+  secs: <span class="m">1505985329</span>
+  nsecs: <span class="m">399636113</span>
+frame_id: <span class="s1">&#39;&#39;</span>
+axes: <span class="o">[</span>-0.0, -0.0, -0.8263657689094543<span class="o">]</span>
+buttons: <span class="o">[</span><span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span>, <span class="m">0</span><span class="o">]</span>
+</pre></div>
+</div>
+<p>Now, let’s write a custom node that reads joystick’s commands and convert them to position setpoints to control the quadcopter’s poisiton in Gazebo.</p>
+</div>
+<div class="section" id="custom-setpoint-node">
+<h2>Custom Setpoint Node<a class="headerlink" href="#custom-setpoint-node" title="Permalink to this headline">¶</a></h2>
+<p><strong>Now, it’s time for some coding!</strong> You will write a ROS node in Python that listens to the <code class="docutils literal notranslate"><span class="pre">/joy</span></code> topic that is published by the <code class="docutils literal notranslate"><span class="pre">joy</span></code> node, and converts the joystick commands to xyz position setpoints. Then, it will publish the calculated position setpoints into <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_raw/local</span></code></p>
+<p>Publishing to <code class="docutils literal notranslate"><span class="pre">/mavros/setpoint_raw/local</span></code> topic is not enough to get the autopilot to track the setpoints. It has to be in <strong>OFFBOARD</strong> mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to <strong>remember</strong> that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publishing setpoints. <strong>If you don’t publish setpoints at more than 2Hz, it will go into a failsafe mode</strong>.</p>
+<p>First, create your custom ROS package. The code is commented so you can get an idea of what each part does.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src
+catkin_create_pkg mypackage std_msgs mavros_msgs roscpp rospy
+<span class="nb">cd</span> mypackage
+<span class="c1"># usually python scripts (nodes) are placed in a folder called scripts</span>
+mkdir scripts
+<span class="nb">cd</span> scripts
+gedit setpoints_node.py
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="c1"># ROS python API</span>
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="c1"># Joy message structure</span>
+<span class="kn">from</span> <span class="nn">sensor_msgs.msg</span> <span class="kn">import</span> <span class="n">Joy</span>
+<span class="c1"># 3D point &amp; Stamped Pose msgs</span>
+<span class="kn">from</span> <span class="nn">geometry_msgs.msg</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">PoseStamped</span>
+<span class="c1"># import all mavros messages and services</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.msg</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">mavros_msgs.srv</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Flight modes class</span>
+<span class="c1"># Flight modes are activated using ROS services</span>
+<span class="k">class</span> <span class="nc">fcuModes</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">setArm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">armService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">CommandBool</span><span class="p">)</span>
+            <span class="n">armService</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;Service arming call failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setDisarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">armService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/cmd/arming&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">CommandBool</span><span class="p">)</span>
+            <span class="n">armService</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;Service disarming call failed: </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setStabilizedMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+            <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;STABILIZED&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Stabilized Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setOffboardMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+            <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;OFFBOARD&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Offboard Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setAltitudeMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+            <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;ALTCTL&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Altitude Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setPositionMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+            <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;POSCTL&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Position Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+    <span class="k">def</span> <span class="nf">setAutoLandMode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rospy</span><span class="o">.</span><span class="n">wait_for_service</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">flightModeService</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceProxy</span><span class="p">(</span><span class="s1">&#39;mavros/set_mode&#39;</span><span class="p">,</span> <span class="n">mavros_msgs</span><span class="o">.</span><span class="n">srv</span><span class="o">.</span><span class="n">SetMode</span><span class="p">)</span>
+            <span class="n">flightModeService</span><span class="p">(</span><span class="n">custom_mode</span><span class="o">=</span><span class="s1">&#39;AUTO.LAND&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ServiceException</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+              <span class="k">print</span> <span class="s2">&quot;service set_mode call failed: </span><span class="si">%s</span><span class="s2">. Autoland Mode could not be set.&quot;</span><span class="o">%</span><span class="n">e</span>
+
+<span class="c1"># Main class: Converts joystick commands to position setpoints</span>
+<span class="k">class</span> <span class="nc">Controller</span><span class="p">:</span>
+    <span class="c1"># initialization method</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Drone state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">()</span>
+        <span class="c1"># Instantiate a setpoints message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span>         <span class="o">=</span> <span class="n">PositionTarget</span><span class="p">()</span>
+        <span class="c1"># set the flag to use position setpoints and yaw angle</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">type_mask</span>    <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;010111111000&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># LOCAL_NED</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">coordinate_frame</span><span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># We will fly at a fixed altitude for now</span>
+        <span class="c1"># Altitude setpoint, [meters]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ALT_SP</span>        <span class="o">=</span> <span class="mf">3.0</span>
+        <span class="c1"># update the setpoint message with the required altitude</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ALT_SP</span>
+
+        <span class="c1"># Instantiate a joystick message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span>        <span class="o">=</span> <span class="n">Joy</span><span class="p">()</span>
+        <span class="c1"># initialize</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+        <span class="c1"># Step size for position update</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+        <span class="c1"># Fence. We will assume a square fence for now</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FENCE_LIMIT</span> <span class="o">=</span> <span class="mf">5.0</span>
+
+        <span class="c1"># A Message for the current local position of the drone</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="c1"># Callbacks</span>
+
+    <span class="c1">## local position callback</span>
+    <span class="k">def</span> <span class="nf">posCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pose</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">z</span>
+
+    <span class="c1">## joystick callback</span>
+    <span class="k">def</span> <span class="nf">joyCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="c1">## Drone State callback</span>
+    <span class="k">def</span> <span class="nf">stateCb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">msg</span>
+
+    <span class="c1">## Update setpoint message</span>
+    <span class="k">def</span> <span class="nf">updateSp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">joy_msg</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span><span class="o">*</span><span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sp</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">STEP_SIZE</span><span class="o">*</span><span class="n">y</span>
+
+<span class="c1"># Main function</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+
+    <span class="c1"># initiate node</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;setpoint_node&#39;</span><span class="p">,</span> <span class="n">anonymous</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c1"># flight mode object</span>
+    <span class="n">modes</span> <span class="o">=</span> <span class="n">fcuModes</span><span class="p">()</span>
+    <span class="c1"># controller object</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="n">Controller</span><span class="p">()</span>
+
+    <span class="c1"># ROS loop rate, [Hz]</span>
+    <span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mf">20.0</span><span class="p">)</span>
+
+    <span class="c1"># Subscribe to drone state</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;mavros/state&#39;</span><span class="p">,</span> <span class="n">State</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">stateCb</span><span class="p">)</span>
+
+    <span class="c1"># Subscribe to drone&#39;s local position</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;mavros/local_position/pose&#39;</span><span class="p">,</span> <span class="n">PoseStamped</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">posCb</span><span class="p">)</span>
+    <span class="c1"># subscribe to joystick topic</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;joy&#39;</span><span class="p">,</span> <span class="n">Joy</span><span class="p">,</span> <span class="n">cnt</span><span class="o">.</span><span class="n">joyCb</span><span class="p">)</span>
+
+    <span class="c1"># Setpoint publisher</span>
+    <span class="n">sp_pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;mavros/setpoint_raw/local&#39;</span><span class="p">,</span> <span class="n">PositionTarget</span><span class="p">,</span> <span class="n">queue_size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+    <span class="c1"># Make sure the drone is armed</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">cnt</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">armed</span><span class="p">:</span>
+        <span class="n">modes</span><span class="o">.</span><span class="n">setArm</span><span class="p">()</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+    <span class="c1"># We need to send few setpoint messages, then activate OFFBOARD mode, to take effect</span>
+    <span class="n">k</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">while</span> <span class="n">k</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">:</span>
+        <span class="n">sp_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">sp</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span>
+
+    <span class="c1"># activate OFFBOARD mode</span>
+    <span class="n">modes</span><span class="o">.</span><span class="n">setOffboardMode</span><span class="p">()</span>
+
+    <span class="c1"># ROS main loop</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="n">cnt</span><span class="o">.</span><span class="n">updateSp</span><span class="p">()</span>
+        <span class="n">sp_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">cnt</span><span class="o">.</span><span class="n">sp</span><span class="p">)</span>
+        <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">()</span>
+    <span class="k">except</span> <span class="n">rospy</span><span class="o">.</span><span class="n">ROSInterruptException</span><span class="p">:</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Make the python file an executable,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod +x setpoints_node.py
+</pre></div>
+</div>
+<p>Make a <strong>launch</strong> folder. We will create a ROS launch file to run everything at once.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src/mypackage
+mkdir launch
+<span class="nb">cd</span> launch
+gedit joystick_flight.launch
+</pre></div>
+</div>
+<p>Copy the following content to new created launch file.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;joy_dev&quot;</span> <span class="na">default=</span><span class="s">&quot;/dev/input/js0&quot;</span><span class="nt">/&gt;</span>
+
+    <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">default=</span><span class="s">&quot;udp://:14540@127.0.0.1:14557&quot;</span> <span class="nt">/&gt;</span>
+
+
+    <span class="nt">&lt;include</span> <span class="na">file=</span><span class="s">&quot;$(find px4)/launch/mavros_posix_sitl.launch&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;arg</span> <span class="na">name=</span><span class="s">&quot;fcu_url&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg fcu_url)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/include&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;joy&quot;</span> <span class="na">type=</span><span class="s">&quot;joy_node&quot;</span> <span class="na">name=</span><span class="s">&quot;joy_node&quot;</span>  <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;dev&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="na">value=</span><span class="s">&quot;$(arg joy_dev)&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/node&gt;</span>
+
+    <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;mypackage&quot;</span> <span class="na">type=</span><span class="s">&quot;setpoints_node.py&quot;</span> <span class="na">name=</span><span class="s">&quot;setpoints_node&quot;</span>  <span class="na">required=</span><span class="s">&quot;true&quot;</span> <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;/node&gt;</span>
+
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>In a fresh terminal, you can run the whole system by executing</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch mypackage joystick_flight.launch
+</pre></div>
+</div>
+<p>Now, you should see a quadcopter in Gazebo flying at a fixed height and responding to your joystick commands.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Always make sure that you have joystick permissions configured properly.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Software in the Loop Joystick Flight</a><ul>
+<li><a class="reference internal" href="#hardware-requirements">Hardware Requirements</a></li>
+<li><a class="reference internal" href="#software-requirements">Software Requirements</a></li>
+<li><a class="reference internal" href="#setup-steps">Setup Steps</a></li>
+<li><a class="reference internal" href="#testing-sitl-with-gazebo-no-ros">Testing SITL with Gazebo (No ROS)</a></li>
+<li><a class="reference internal" href="#interfacing-with-ros">Interfacing with ROS</a></li>
+<li><a class="reference internal" href="#joystick-package-installation-usage">Joystick Package Installation &amp; Usage</a></li>
+<li><a class="reference internal" href="#custom-setpoint-node">Custom Setpoint Node</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-3d-modeling.html"
+                        title="previous chapter">3D Modeling</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="1-quadcopter-assembly.html"
+                        title="next chapter">Quadcopter Assembly</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/1-flight-gazebo.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="1-quadcopter-assembly.html" title="Quadcopter Assembly"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-3d-modeling.html" title="3D Modeling"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

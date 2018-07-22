@@ -1,0 +1,324 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Quadcopter Assembly &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Indoor flying" href="1-indoor-flight.html" />
+    <link rel="prev" title="Software in the Loop Joystick Flight" href="1-flight-gazebo.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="1-indoor-flight.html" title="Indoor flying"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-flight-gazebo.html" title="Software in the Loop Joystick Flight"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="quadcopter-assembly">
+<h1>Quadcopter Assembly<a class="headerlink" href="#quadcopter-assembly" title="Permalink to this headline">¶</a></h1>
+<p>Please find all components on Area-C shelves.</p>
+<div class="section" id="basic-principles">
+<h2>Basic principles<a class="headerlink" href="#basic-principles" title="Permalink to this headline">¶</a></h2>
+<p>Feel free to place the components anywhere on the frame but take care of wires. Refer to quadcopters we already have in the lab. Carefully choose zipties, shrinking tubes, double sided tapes or soldering for different situations. Generally, for fixing motor wires we use zipties. Shrinking tubes are for permanent connection between wires when soldering.</p>
+</div>
+<div class="section" id="preliminaries">
+<h2>Preliminaries<a class="headerlink" href="#preliminaries" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial assumes you have the following skills:</p>
+<ul class="simple">
+<li><a class="reference internal" href="1-ros-basics.html"><span class="doc">ROS Basics</span></a> or <a class="reference external" href="http://www.rsl.ethz.ch/education-students/lectures/ros.html">ETHZ Online Course</a>. There are <a class="reference external" href="https://github.com/luym11/ros_practise">solutions</a> to ETHZ exercises available on Github.</li>
+<li>Soldering, if not, please refer to basic skill <a class="reference external" href="https://www.youtube.com/watch?v=BLfXXRfRIzY">video</a>.</li>
+<li>Basic knowledge about LiPo batteries. Answer the following questions. You may read <a class="reference external" href="https://rogershobbycenter.com/lipoguide/">this article</a>.<ul>
+<li>What do 3s, 4s mean?</li>
+<li>What does 20c mean?</li>
+<li>What does 1400mAh mean?</li>
+<li>What are the parameters of your battery?</li>
+<li>How to charge LiPo battery? How to measure it voltage using battery meter?</li>
+<li>What’s the minimum voltage to use a LiPo on the quadcopter?</li>
+</ul>
+</li>
+<li>Basic knowledge about motors. Answer the following questions. You may refer to <a class="reference external" href="https://www.dronetrest.com/t/brushless-motors-how-they-work-and-what-the-numbers-mean/564">this article</a>.<ul>
+<li>Different types of motors. We are using brushless motor for quadcopters.</li>
+<li>What does KV2200 means? What will be changed if KV number grows?</li>
+<li>What are the parameters of your motors?</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="hardware-assembly">
+<h2>Hardware assembly<a class="headerlink" href="#hardware-assembly" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="introduction">
+<h3>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h3>
+<p>You will need</p>
+<ul class="simple">
+<li>Quadcopter frame. 250 frame will be a good start. The value 250 means the motor to motor diameter, as shown below.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/quad-diam.png"><img alt="_images/quad-diam.png" class="align-center" src="_images/quad-diam.png" style="width: 386.0px; height: 313.0px;" /></a>
+<ul class="simple">
+<li>Power distribution board to distribute power from a battery to 4 ESCs.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/distro-power.jpg"><img alt="_images/distro-power.jpg" class="align-center" src="_images/distro-power.jpg" style="width: 282.5px; height: 207.0px;" /></a>
+<ul class="simple">
+<li>Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available <a class="reference external" href="https://docs.px4.io/en/flight_controller/pixhawk_series.html">here</a>.</li>
+<li>Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer tri-blades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>There are 2 types of format that manufacturers use.</p>
+<p>L x P x B or LLPP x B where L- length, P – pitch, B – number of blades.</p>
+<p>For example 6×4.5 (also known as 6045) propellers are 6 inch long and has a pitch of 4.5 inch. Another example, 5x4x3 (sometimes 5040×3) is a 3-blade 5″ propeller that has a pitch of 4 inch. “BN” indicates Bullnose props.</p>
+<p class="last">Sometimes you might see <strong>R</strong> or <strong>C</strong> after the size numbers, such as 5x3R. <strong>R</strong> indicates the rotation of the propeller, which stands for “reversed”. It should be mounted on a motor that spins clockwise. <strong>C</strong> is the opposite, should be used with motors that spins counter-clockwise.</p>
+</div>
+<ul class="simple">
+<li>Electronic speed controller (ESC) controls and regulates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/esc.jpg"><img alt="_images/esc.jpg" class="align-center" src="_images/esc.jpg" style="width: 400.0px; height: 300.0px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn).</p>
+</div>
+<ul class="simple">
+<li>Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware. Spektrum and DSM receivers must connect to a SPKT/DSM input. PPM-Sum and S.BUS receivers must connect directly to the RC ground, power and signal pins (typically labeled <strong>RC</strong> or <strong>RCIN</strong>)</li>
+</ul>
+<p>The most popular form of remote control unit (transmitter) for UAVs is shown below. It has separate control sticks for controlling roll/pitch and for throttle/yaw as shown</p>
+<a class="reference internal image-reference" href="_images/rc_basic_commands.png"><img alt="_images/rc_basic_commands.png" class="align-center" src="_images/rc_basic_commands.png" style="width: 652.8px; height: 283.8px;" /></a>
+<ul class="simple">
+<li>UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid (in case you are using it). A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/ubec.jpg"><img alt="_images/ubec.jpg" class="align-center" src="_images/ubec.jpg" style="width: 400.0px; height: 400.0px;" /></a>
+<ul class="simple">
+<li>Power module. It is the best way to provide power for flight controller unit. It has voltage and current sensors that allows autopilot to estimate remaining battery charge precisely. Usually it comes with every autopilot controller as a default kit. Check official documentations to match right power module to a selected flight controller.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/power_module.jpg"><img alt="_images/power_module.jpg" class="align-center" src="_images/power_module.jpg" style="width: 300.0px; height: 120.0px;" /></a>
+<ul class="simple">
+<li>LiPo battery. Assuming you know what is the balancer, cell count and voltage, capacity and C-rating.</li>
+</ul>
+</div>
+<div class="section" id="assembly-process">
+<h3>Assembly process<a class="headerlink" href="#assembly-process" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Assemble the frame. Attach the power distribution board to it.</li>
+<li>Mount the motors to the frame. Mind CW and CCW directions. They should be mounted as follows. We usually use <strong>X</strong> configuration.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/quad_1.jpg"><img alt="_images/quad_1.jpg" class="align-center" src="_images/quad_1.jpg" style="width: 585.0px; height: 277.2px;" /></a>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Do not install propellers now.</p>
+</div>
+<ul>
+<li><p class="first">Connect ESCs to motors and plug ESCs to power distribution board. As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.</p>
+</li>
+<li><p class="first">Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.</p>
+</li>
+<li><p class="first">Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. To mount the controller to the frame, use thick double side tape to damp the vibrations.</p>
+</li>
+<li><p class="first">Plug cable from power module to <code class="docutils literal notranslate"><span class="pre">POWER</span></code> port of your flight controller.</p>
+</li>
+<li><p class="first">Plug buzzer and switch to their corresponding ports on flight controller.</p>
+</li>
+<li><p class="first">Connect each of your ESCs servo cables to the corresponding <strong>MAIN OUT</strong> output, eg. motor 1 to <strong>MAIN OUT</strong> port 1.</p>
+</li>
+<li><p class="first">Binding process depends on the receiver you use:</p>
+<ul>
+<li><p class="first">FrSky X8R, refer to <a class="reference external" href="https://www.frsky-rc.com/wp-content/uploads/2017/07/Manual/X8R.pdf">this document</a></p>
+</li>
+<li><p class="first">Spektrum receiver with autobind</p>
+<ol class="arabic simple">
+<li>With the transmitter off, power on the receiver.</li>
+<li>The receiver will attempt to connect to the last transmitter it was bound to.</li>
+<li>If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED. If it doesn’t, press <strong>Spektrum Bind</strong> button in <strong>Radio</strong> tab.</li>
+<li>Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.</li>
+<li>When the receiver binds the orange LED turns solid.</li>
+</ol>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.</p>
+</div>
+</li>
+<li><p class="first">Spektrum receiver without autobind</p>
+<ol class="arabic simple">
+<li>Use <a class="reference external" href="https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000">AR8000 8ch DSMX Receiver</a>.</li>
+<li>Insert the bind plug in the <code class="docutils literal notranslate"><span class="pre">BATT/BIND</span></code> port on the AR8000 receiver and connect RC receiver to AR8000 receiver.</li>
+<li>Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.</li>
+<li>Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).</li>
+<li>Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.</li>
+<li>Remove the bind plug from the <code class="docutils literal notranslate"><span class="pre">BATT/BIND</span></code> port on the receiver before you power off the transmitter.</li>
+<li>Remove the RC receiver from AR8000, and connect it to Pixhawk via port <code class="docutils literal notranslate"><span class="pre">SPKT/DSM</span></code>.</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p class="first">Plug the battery and check 4 ESCs has static green LED lighted up. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.</p>
+</li>
+<li><p class="first">For this stage there’s no need to install Odroid.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="calibration-process">
+<h2>Calibration process<a class="headerlink" href="#calibration-process" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Download <code class="docutils literal notranslate"><span class="pre">QGroundControl</span></code> on your computer and open it.</li>
+<li><a class="reference external" href="https://docs.px4.io/en/config/firmware.html">Install PX4 firmware</a>.</li>
+<li>Set the airframe, eg. Generic 250 Frame. Follow steps from this <a class="reference external" href="https://docs.px4.io/en/config/airframe.html">page</a>.</li>
+<li>Calibrate <a class="reference external" href="https://docs.px4.io/en/config/flight_controller_orientation.html">Sensor orientation</a> if any, <a class="reference external" href="https://docs.px4.io/en/config/compass.html">Compass</a>, <a class="reference external" href="https://docs.px4.io/en/config/accelerometer.html">Accelerometer</a>, and <a class="reference external" href="https://docs.px4.io/en/config/level_horizon_calibration.html">Level Horizon</a>.</li>
+</ul>
+<p>Video for your reference</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><ul class="simple">
+<li>Before you can calibrate the radio system the receiver and transmitter must be connected/bound. Follow the steps from this <a class="reference external" href="https://docs.px4.io/en/config/radio.html">page</a>.</li>
+<li>In <code class="docutils literal notranslate"><span class="pre">Flight</span> <span class="pre">Modes</span></code> tab set:<ul>
+<li><strong>Modes: Channel 6 (maybe marked as FLAP/GYRO)</strong></li>
+<li><strong>Mode 1: Position</strong>. When sticks are released the vehicle will stop (and hold position against wind drift).</li>
+<li><strong>Mode 4: Altitude</strong>. Climb and drop are controlled to have a maximum rate.</li>
+<li><strong>Mode 6: Manual</strong>.</li>
+<li><strong>Kill switch: Channel 5</strong>. Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.</li>
+</ul>
+</li>
+</ul>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If you set everything right, you will see changes in <strong>Flight Mode Settings</strong> section highlighted as yellow. Also, moving sticks, dials and switches will be reported in <strong>Channel Monitor</strong> section.</p>
+</div>
+<ul class="simple">
+<li>In <code class="docutils literal notranslate"><span class="pre">Power</span> <span class="pre">tab</span></code> write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this <a class="reference external" href="https://docs.px4.io/en/config/battery.html">page</a> and <a class="reference external" href="https://docs.px4.io/en/advanced_config/esc_calibration.html">here</a>.</li>
+<li>Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.</li>
+<li>Now you can install propellers. Note that there are CW and CCW propellers as well.</li>
+</ul>
+<div class="admonition danger">
+<p class="first admonition-title">Danger</p>
+<p class="last">After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!</p>
+</div>
+<ul class="simple">
+<li>Follow this <a class="reference external" href="https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html">guide</a> to perform <strong>PID</strong> tuning for your quadcopter.</li>
+</ul>
+</div>
+<div class="section" id="flying">
+<h2>Flying<a class="headerlink" href="#flying" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Read <a class="reference external" href="https://docs.px4.io/en/flying/first_flight_guidelines.html">First Flight Guidelines</a> and <a class="reference external" href="https://docs.px4.io/en/flying/basic_flying.html">Flying 101</a>.</li>
+<li>Make sure you switch <strong>Kill switch</strong> to off. Select <strong>Manual</strong> as your flight mode.</li>
+<li>Check the battery level, make sure it’s enough to perform your first flight.</li>
+<li>Put the quadcopter in the cage and arm. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Always check the battery before flying</p>
+</div>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Motors are not rotating while armed and rotates with higher throttle<ul>
+<li>Check <code class="docutils literal notranslate"><span class="pre">PWM_MAX</span></code> and <code class="docutils literal notranslate"><span class="pre">PWM_MIN</span></code> in parameters and make sure it’s associated with ESCs</li>
+</ul>
+</li>
+<li>Motor are not rotating or rotating partially.<ul>
+<li>Set <code class="docutils literal notranslate"><span class="pre">PWM_RATE</span></code> value to default.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>Main contributor is <a class="reference external" href="https://github.com/luym11">Yimeng Lu</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Quadcopter Assembly</a><ul>
+<li><a class="reference internal" href="#basic-principles">Basic principles</a></li>
+<li><a class="reference internal" href="#preliminaries">Preliminaries</a></li>
+<li><a class="reference internal" href="#hardware-assembly">Hardware assembly</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#assembly-process">Assembly process</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#calibration-process">Calibration process</a></li>
+<li><a class="reference internal" href="#flying">Flying</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-flight-gazebo.html"
+                        title="previous chapter">Software in the Loop Joystick Flight</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="1-indoor-flight.html"
+                        title="next chapter">Indoor flying</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/1-quadcopter-assembly.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="1-indoor-flight.html" title="Indoor flying"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-flight-gazebo.html" title="Software in the Loop Joystick Flight"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>
