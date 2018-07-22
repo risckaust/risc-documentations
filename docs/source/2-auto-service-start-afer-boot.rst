@@ -17,13 +17,13 @@ Use case: auto start MAVROS node
 	touch startup_launch.sh
 	chmod +x startup_launch.sh
 
-Type the following in the ``startup_launch.sh`` file (you can use the ``nano startup_launch.sh`` command)
+Type the following in the ``startup_launch.sh`` file (you can use the ``nano startup_launch.sh`` command). It is assumed that the username is ``odroid``
 
 .. code-block:: bash
 
 	#!/bin/bash
 	source /opt/ros/kinetic/setup.bash
-	source /home/$USER/catkin_ws/devel/setup.bash
+	source /home/odroid/catkin_ws/devel/setup.bash
 	roslaunch mavros px4.launch
 
 
@@ -70,4 +70,4 @@ To disable a service,
 
 .. code-block:: bash
 
-	sudo systemctl disble mavros.service
+	sudo systemctl disable mavros.service
