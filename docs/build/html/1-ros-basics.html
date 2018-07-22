@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ROS Basics &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ROS Navigation" href="1-ros-navigation.html" />
+    <link rel="prev" title="RISC Lab Documentation" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="1-ros-navigation.html" title="ROS Navigation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="RISC Lab Documentation"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ros-basics">
+<h1>ROS Basics<a class="headerlink" href="#ros-basics" title="Permalink to this headline">¶</a></h1>
+<a class="reference internal image-reference" href="_images/cover_photo.png"><img alt="_images/cover_photo.png" class="align-center" src="_images/cover_photo.png" style="width: 236.0px; height: 287.0px;" /></a>
+<div class="section" id="main-objectives-of-this-tutorial">
+<h2>Main Objectives of this Tutorial<a class="headerlink" href="#main-objectives-of-this-tutorial" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>The objective of this course is to give you the basic tools and knowledge to be able to understand and create any basic ROS related project. You will be able to <strong>move robots, read their sensor data, make the robots perform intelligent tasks, see visual representations of complex data such as laser scans and debug errors in the programs.</strong></li>
+<li>The course will allow you to <strong>understand packages that others have done</strong>. So you can take ROS code made by others and understand what is happening and how to modify it for your own purposes</li>
+<li>This course can serve as an introduction to be able to understand the ROS documentation of complex ROS packages for object recognition, text to speech, navigation and all the other areas where has ROS developed code.</li>
+</ol>
+<p>What is presented in this document is the main ROS concepts that are the core of ROS. These are the most important concepts that you have to master. Once you master them, the rest of ROS can follow easily.</p>
+<p>Along the parts of this course, you will learn:</p>
+<ul class="simple">
+<li>How <strong>ROS Basic Structure</strong> works.</li>
+<li>What are <strong>ROS Topics</strong> and how to use them.</li>
+<li>What are <strong>ROS Services</strong> and how to use them.</li>
+<li>What are <strong>ROS Actions</strong> and how to use them.</li>
+<li>How to use <strong>ROS Debugging Tools</strong> for finding errors in your programs (especially Rviz).</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We will use <strong>Python</strong> as the programming language in all the course exercises</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last"><strong>DO NOT SKIP EXERCISES</strong>. Exercises are the core of this tutorial (remember, practice, practice, practice). If you avoid them, you will be missing the whole thing.</p>
+</div>
+</div>
+<div class="section" id="basic-concepts">
+<h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="what-is-ros">
+<h3>What is ROS?<a class="headerlink" href="#what-is-ros" title="Permalink to this headline">¶</a></h3>
+<p>ROS is a software framework for writing robot software. The main aim of ROS is to reuse the robotic software across the globe. ROS consists of a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms.</p>
+<p>Official definition on ROS WiKi is:</p>
+<div class="line-block">
+<div class="line">ROS is an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers. ROS is similar in some respects to ‘robot frameworks, such as Player, YARP, Orocos, CARMEN, Orca, MOOS, and Microsoft Robotics Studio.</div>
+</div>
+</div>
+<div class="section" id="system-setup">
+<h3>System Setup<a class="headerlink" href="#system-setup" title="Permalink to this headline">¶</a></h3>
+<p>Assuming you have workstation with installed Ubuntu 16.04, download this <a class="reference external" href="https://github.com/luym11/initial_settings/archive/master.zip">ZIP file</a>, and extract two <code class="docutils literal notranslate"><span class="pre">.sh</span></code> files to your home folder and run by following command. This will install ROS, and many other tools and dependencies you will need in the future.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">To bring up a terminal window press <code class="docutils literal notranslate"><span class="pre">CTRL+ALT+T</span></code></p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./ubuntu_install.sh <span class="c1"># Will take some time to install</span>
+</pre></div>
+</div>
+<p>Then copy commands line by line from <code class="docutils literal notranslate"><span class="pre">ws.sh</span></code> and run them one by one in a terminal.</p>
+<p>In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.</p>
+<div class="section" id="install-turtlebot-packages">
+<h4>Install TurtleBot packages<a class="headerlink" href="#install-turtlebot-packages" title="Permalink to this headline">¶</a></h4>
+<p>During this tutorial, you will work with a simulated robot called <strong>TurtleBot</strong>, to apply the concepts of ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for position estimation.</p>
+<a class="reference internal image-reference" href="_images/kobuki.jpg"><img alt="_images/kobuki.jpg" class="align-center" src="_images/kobuki.jpg" style="width: 264.0px; height: 294.0px;" /></a>
+<p>For reference see <a class="reference external" href="http://wiki.ros.org/Robots/TurtleBot">Turtlebot wiki page</a>.</p>
+<p>Open application called <strong>Terminator</strong>, it’s highly recommended to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-turtlebot-gazebo -y
+</pre></div>
+</div>
+<p>After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo turtlebot_world.launch
+</pre></div>
+</div>
+<p>You should get something similar to the following.</p>
+<a class="reference internal image-reference" href="_images/turtlebot-gazebo.png"><img alt="_images/turtlebot-gazebo.png" class="align-center" src="_images/turtlebot-gazebo.png" style="width: 766.0px; height: 419.0px;" /></a>
+</div>
+</div>
+<div class="section" id="move-the-robot">
+<h3>Move the robot<a class="headerlink" href="#move-the-robot" title="Permalink to this headline">¶</a></h3>
+<p>How can you move the Turtlebot?</p>
+<p>The easiest way is by executing an existing ROS program to control the robot. A ROS program is executed by using some special files called <strong>launch files</strong>.
+Since a previously-made ROS program already exists that allows you to move the robot using the keyboard, let’s launch that ROS program to teleoperate the robot.</p>
+<p>Execute in a separate terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_teleop keyboard_teleop.launch
+</pre></div>
+</div>
+<p>Read the instructions on the screen to know which keys to use to move the robot around, and start moving the robot!</p>
+<p>Try it!! When you’re done, you can <code class="docutils literal notranslate"><span class="pre">Ctrl+C</span></code> to stop the execution of the program.</p>
+<p>So, you used a command called <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code>. What is that command?</p>
+<p><code class="docutils literal notranslate"><span class="pre">roslaunch</span></code>  is the command used to launch a ROS program. It’s structure goes as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch &lt;package_name&gt; &lt;launch_file&gt;
+</pre></div>
+</div>
+<p>As you can see, that command has two parameters: the first one is <strong>the name of the package</strong> that contains the launch file, and the second one is <strong>the name of the launch file</strong> itself (which is stored inside the package).</p>
+<p>Now, what is a package?!</p>
+</div>
+<div class="section" id="what-is-a-package">
+<h3>What is a package?<a class="headerlink" href="#what-is-a-package" title="Permalink to this headline">¶</a></h3>
+<p>ROS uses <strong>packages</strong> to organize its programs. You can think of a package as <strong>all the files that a specific ROS program contains</strong>; all its cpp files, python files, configuration files, compilation files, launch files, and parameters files.
+All those files in the package are organized with the following structure:</p>
+<ul class="simple">
+<li><strong>launch</strong> folder: Contains launch files</li>
+<li><strong>src</strong> folder: Source files (cpp, python)</li>
+<li><strong>CMakeLists.txt</strong>: List of cmake rules for compilation</li>
+<li><strong>package.xml</strong>: Package information and dependencies</li>
+</ul>
+<p>To go to any ROS package, ROS gives you a command named <code class="docutils literal notranslate"><span class="pre">roscd</span></code>. When typing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd &lt;package_name&gt;
+</pre></div>
+</div>
+<p>It will take you to the path where the package <em>package_name</em> is located.</p>
+<p><strong>Example</strong>: navigate to the <code class="docutils literal notranslate"><span class="pre">turtlebot_teleop</span></code> package, and check that it has that structure.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd turtlebot_teleop
+ls
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">roscd</span></code> is a command which will get you to a ROS package location. <code class="docutils literal notranslate"><span class="pre">ls</span></code> is a command that lists the content of a folder.</p>
+<ul class="simple">
+<li>Every ROS program that you want to execute is organized in a package.</li>
+<li>Every ROS program that you create will have to be organized in a package.</li>
+<li>Packages are the main organization system of ROS programs.</li>
+</ul>
+</div>
+<div class="section" id="what-is-a-launch-file">
+<h3>What is a launch file ?<a class="headerlink" href="#what-is-a-launch-file" title="Permalink to this headline">¶</a></h3>
+<p>We’ve seen that ROS uses launch files in order to execute programs. But… how do they work? Let’s have a look.</p>
+<p>lets  have a look at a launch file. Open the launch folder inside the <code class="docutils literal notranslate"><span class="pre">turtlebot_teleop</span></code> package and check the <code class="docutils literal notranslate"><span class="pre">keyboard_teleop.launch</span></code> file.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd turtlebot_teleop
+<span class="nb">cd</span> launch
+cat keyboard_teleop.launch
+</pre></div>
+</div>
+<p>You will see:</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="c">&lt;!-- turtlebot_teleop_key already has its own built in velocity smoother --&gt;</span>
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;turtlebot_teleop&quot;</span> <span class="na">type=</span><span class="s">&quot;turtlebot_teleop_key&quot;</span> <span class="na">name=</span><span class="s">&quot;turtlebot_teleop_keyboard&quot;</span>  <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;scale_linear&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;scale_angular&quot;</span> <span class="na">value=</span><span class="s">&quot;1.5&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;turtlebot_teleop_keyboard/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;cmd_vel_mux/input/teleop&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<p>In the launch file, you have some extra tags for setting parameters and remaps. For now, don’t worry about those tags and focus on the node tag.</p>
+<p>All launch files are contained within a <code class="docutils literal notranslate"><span class="pre">&lt;launch&gt;</span></code> tag. Inside that tag, you can see a <code class="docutils literal notranslate"><span class="pre">&lt;node&gt;</span></code> tag, where we specify the following parameters:</p>
+<ul class="simple">
+<li>pkg=”<code class="docutils literal notranslate"><span class="pre">package_name</span></code>”: Name of the package that contains the code of the ROS program to execute</li>
+<li>type=”<code class="docutils literal notranslate"><span class="pre">python_file_name.py</span></code>” : Name of the program file that we want to execute</li>
+<li>name=”<code class="docutils literal notranslate"><span class="pre">node_name</span></code>” : Name of the ROS node that will launch our Python file</li>
+<li>output=”<code class="docutils literal notranslate"><span class="pre">type_of_output</span></code>” : Through which channel you will print the output of the Python file</li>
+</ul>
+</div>
+<div class="section" id="create-a-package">
+<h3>Create a package<a class="headerlink" href="#create-a-package" title="Permalink to this headline">¶</a></h3>
+<p>Until now we’ve been checking the structure of an already-built package. But now, lets create one ourselves.
+When we want to create packages, we need to work in a very specific ROS workspace, which is known as the <strong>catkin workspace</strong>. The <strong>catkin workspace</strong> is the directory in your hard disk where your own ROS packages must reside in order to be usable by ROS. Usually, the catkin workspace directory is called <em>catkin_ws</em>.</p>
+<ul class="simple">
+<li>catkin_ws</li>
+</ul>
+<p>Usually, the <em>catkin_ws</em> is created in the <em>home</em> folder of your user account. We’ve already created and initialized catkin workspace for you.</p>
+<p>Go to the <em>src</em> folder inside <em>catkin_ws</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws/src
+</pre></div>
+</div>
+<p>The <em>src</em> directory is the folder which holds created packages. Those could be your own packages, or packages that you copied from other sources e.g. <em>Github</em> repository.</p>
+<p>In order for the ROS system to recognize the packages in your <em>catkin_ws</em>, it needs to be on the ROS file path. ROS file path is an Ubuntu environment variable that holds the paths to ROS packages. To add our catkin_ws to the ROS file path follow the following instructions.</p>
+<p>First, build (compile) your workspace. It’s OK to build the catkin_ws even if it has no packages. After the build process, some new folders will appear inside your catkin_ws. One of the folders, called <cite>catkin_ws/devel</cite> contains a setup file which will be used to add the path of the catkin_ws to the ROS file path. Build the <em>catkin_ws</em> using the <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code> inside the <em>catkin_ws</em>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># navigate to the catkin_ws</span>
+<span class="nb">cd</span> ~/catkin_ws
+<span class="c1"># build</span>
+catkin build
+</pre></div>
+</div>
+<p>Now, let’s add the <em>catkin_ws</em> path. Execute the following command while being inside <em>catkin_ws</em></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span> devel/setup.bash
+</pre></div>
+</div>
+<p>This will  add the <em>catkin_ws</em> path in the current terminal session. Once you close the terminal window, it forgets it! So, you will have to do it again each time you open a terminal in order for ROS to recognize your workspace! Yah, I know, that sucks! But no worries, there is a solution. You can automate the execution of the above command each time you open a terminal window. To do that, you want to add the above command to a special file called <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code> that is located inside your home folder.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># go to the home folder</span>
+<span class="nb">cd</span> ~
+<span class="c1"># open the .bashrc file</span>
+nano .bashrc
+</pre></div>
+</div>
+<p>add the command <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">~/catkin_ws/devel/setup.bash</span></code> to the end of <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>. Then, hit <code class="docutils literal notranslate"><span class="pre">CTRL+x</span></code>, then, <code class="docutils literal notranslate"><span class="pre">y</span></code>, to save the changes to the file.</p>
+<p>Now, lets create a package.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Remember to create ROS packages inside the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder</p>
+</div>
+<p>Create a package</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin_create_pkg my_package rospy
+</pre></div>
+</div>
+<p>This will create, inside our <code class="docutils literal notranslate"><span class="pre">src</span></code>, directory a new package with some files in it. We’ll check this later. Now, let’s see how this command is built:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin_create_pkg &lt;package_name&gt; &lt;package_dependecies&gt;
+</pre></div>
+</div>
+<p>The <strong>package_name</strong> is the name of the package you want to create, and the <strong>package_dependencies</strong> are the names of other ROS packages that your package depends on.</p>
+<p>Now, re-build your catkin_ws and source it as above.</p>
+<p>In order to check that our package has been created successfully, we can use some ROS commands related to packages. For example, let’s type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rospack list
+rospack list <span class="p">|</span> grep my_package
+roscd my_package
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">rospack</span> <span class="pre">list</span></code>: Gives you a list with all of the packages in your ROS system.
+<code class="docutils literal notranslate"><span class="pre">rospack</span> <span class="pre">list</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">my_package</span></code>: Filters, from all of the packages located in the ROS system, the package named <em>my_package</em>.
+<code class="docutils literal notranslate"><span class="pre">roscd</span> <span class="pre">my_package</span></code>: Takes you to the location in the Hard Drive of the package, named <em>my_package</em>.</p>
+</div>
+<div class="section" id="your-first-ros-program">
+<h3>Your First ROS Program<a class="headerlink" href="#your-first-ros-program" title="Permalink to this headline">¶</a></h3>
+<p>At this point, you should have your first package created… but now you need to do something with it! Let’s do our first ROS program!</p>
+<ol class="arabic simple">
+<li>Create in the <code class="docutils literal notranslate"><span class="pre">src</span></code> directory in <code class="docutils literal notranslate"><span class="pre">my_package</span></code> a python file that will be executed. For this exercise, just copy this simple python code <code class="docutils literal notranslate"><span class="pre">simple.py</span></code> below.</li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+<span class="c1"># The previous line will ensure the interpreter used is the first one on your environment&#39;s $PATH. Every Python file needs to start with this line at the top.</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span> <span class="c1"># Import the rospy, which is a Python library for ROS.</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;simple_node&#39;</span><span class="p">)</span> <span class="c1"># Initiate a node called ObiWan</span>
+
+<span class="k">print</span> <span class="s2">&quot;Help me body, you are my only hope&quot;</span> <span class="c1"># A simple Python print</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>Save the file. You will need to make this file executable by using the <code class="docutils literal notranslate"><span class="pre">chmod</span></code> linux command as follows.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># navigate to the src folder inside my_package</span>
+roscd my_package/src
+<span class="c1"># make the python file executable</span>
+chmod +x simple.py
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li>Create a <code class="docutils literal notranslate"><span class="pre">launch</span></code> directory inside the package named <code class="docutils literal notranslate"><span class="pre">my_package</span></code></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd my_package
+<span class="c1"># the following command creates a directory</span>
+mkdir launch
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li>Create a new launch file inside that launch directory</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>gedit launch/my_package_launch_file.launch
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li>Fill this launch file as we’ve previously seen in the launch file of the <code class="docutils literal notranslate"><span class="pre">turtlebot_teleop</span></code> package,</li>
+</ol>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+  <span class="c">&lt;!-- turtlebot_teleop_key already has its own built in velocity smoother --&gt;</span>
+  <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;turtlebot_teleop&quot;</span> <span class="na">type=</span><span class="s">&quot;turtlebot_teleop_key&quot;</span> <span class="na">name=</span><span class="s">&quot;turtlebot_teleop_keyboard&quot;</span>  <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;scale_linear&quot;</span> <span class="na">value=</span><span class="s">&quot;0.5&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;param</span> <span class="na">name=</span><span class="s">&quot;scale_angular&quot;</span> <span class="na">value=</span><span class="s">&quot;1.5&quot;</span> <span class="na">type=</span><span class="s">&quot;double&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;remap</span> <span class="na">from=</span><span class="s">&quot;turtlebot_teleop_keyboard/cmd_vel&quot;</span> <span class="na">to=</span><span class="s">&quot;cmd_vel_mux/input/teleop&quot;</span><span class="nt">/&gt;</span>
+  <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li>Modify the launch file to run your ROS program <code class="docutils literal notranslate"><span class="pre">simple.py</span></code></li>
+</ol>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;launch&gt;</span>
+ <span class="c">&lt;!-- run simple.py from my_package --&gt;</span>
+ <span class="nt">&lt;node</span> <span class="na">pkg=</span><span class="s">&quot;my_package&quot;</span> <span class="na">type=</span><span class="s">&quot;simple.py&quot;</span> <span class="na">name=</span><span class="s">&quot;simple_node&quot;</span>  <span class="na">output=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;/node&gt;</span>
+<span class="nt">&lt;/launch&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li>Finally, execute the <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code> command in the terminal in order to launch your program.</li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch my_package my_package_launch_file.launch
+</pre></div>
+</div>
+<p>You should see the print statement</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Help me body, you are my only hope
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">Usually, when we add ROS program to a package, we re-build the <em>catkin_ws</em> and source it. However, since we are working with <code class="docutils literal notranslate"><span class="pre">Python</span></code>, we will not need to do that for now, because a Python code does not need to compile. If you write a <code class="docutils literal notranslate"><span class="pre">C++</span></code> ROS program, then, you will need to re-build your <em>catkin_ws</em>.</p>
+</div>
+</div>
+<div class="section" id="ros-nodes">
+<h3>ROS Nodes<a class="headerlink" href="#ros-nodes" title="Permalink to this headline">¶</a></h3>
+<p>You’ve initiated a node in the previous code but… what’s a node? ROS nodes are basically programs made in ROS. The ROS command to see what nodes are actually running in a computer is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosnode list
+</pre></div>
+</div>
+<p>Type the previous command in a new terminal and look for the node you’ve just initiated <code class="docutils literal notranslate"><span class="pre">simple_node</span></code>.</p>
+<p>You can’t find it? I know you can’t. That’s because the node is killed when the Python program ends. Let’s change that.</p>
+<p>Update your Python file <code class="docutils literal notranslate"><span class="pre">simple.py</span></code> with the following code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s2">&quot;simple_node&quot;</span><span class="p">)</span>
+<span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>               <span class="c1"># We create a Rate object of 2Hz</span>
+<span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>     <span class="c1"># Endless loop until Ctrl + C</span>
+   <span class="k">print</span> <span class="s2">&quot;Help me body, you are my only hope&quot;</span>
+   <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>                    <span class="c1"># We sleep the needed time to maintain the Rate fixed above</span>
+
+<span class="c1"># This program creates an endless loop that repeats itself 2 times per second (2Hz) until somebody presses Ctrl + C in the Shell</span>
+</pre></div>
+</div>
+<p>Launch your program again using the <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code> command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch my_package my_package_launch_file.launch
+</pre></div>
+</div>
+<p>Now try again in another terminal window:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosnode list
+</pre></div>
+</div>
+<p>Can you now see your node? You should be!</p>
+<p>In order to see information about our node, we can use the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosnode info /simple_node
+</pre></div>
+</div>
+<p>This command will show us information about all the connections that our Node has.</p>
+</div>
+<div class="section" id="parameters-server">
+<h3>Parameters Server<a class="headerlink" href="#parameters-server" title="Permalink to this headline">¶</a></h3>
+<p>A Parameter Server is a dictionary that ROS uses to store parameters. These parameters can be used by nodes at runtime and are normally used for static data, such as configuration parameters.</p>
+<p>To get a list of these parameters, you can type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosparam list
+</pre></div>
+</div>
+<p>To get a value of a particular parameter, you can type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosparam get &lt;parameter_name&gt;
+</pre></div>
+</div>
+<p>And to set a value to a parameter, you can type:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosparam <span class="nb">set</span> &lt;parameter_name&gt; &lt;value&gt;
+</pre></div>
+</div>
+<p>You can create and delete new parameters for your own use, but do not worry about this right now. You will learn more about this later.</p>
+</div>
+<div class="section" id="roscore">
+<h3>ROSCORE<a class="headerlink" href="#roscore" title="Permalink to this headline">¶</a></h3>
+<p>In order to have all of this working, we need to have a roscore running. The roscore is the main process that manages all of the ROS system. You always need to have a roscore running in order to work with ROS. The command that launches a roscore is:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscore
+</pre></div>
+</div>
+<p>So, this is the first command that should be executed before using other ROS functionalities.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">When you use <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code> to run your ROS nodes, it automatically runs <code class="docutils literal notranslate"><span class="pre">roscore</span></code> if it is not already run.</p>
+</div>
+</div>
+<div class="section" id="environment-variables">
+<h3>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h3>
+<p>ROS uses a set of Linux system environment variables in order to work properly. You can check these variables by typing:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="p">|</span> grep ROS
+</pre></div>
+</div>
+<p>You will get something similar to:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>user ~ $ <span class="nb">export</span> <span class="p">|</span> grep ROS
+<span class="nb">declare</span> -x <span class="nv">ROSLISP_PACKAGE_DIRECTORIES</span><span class="o">=</span><span class="s2">&quot;/home/user/catkin_ws/devel/share/common-lisp&quot;</span>
+<span class="nb">declare</span> -x <span class="nv">ROS_DISTRO</span><span class="o">=</span><span class="s2">&quot;kinetic&quot;</span>
+<span class="nb">declare</span> -x <span class="nv">ROS_ETC_DIR</span><span class="o">=</span><span class="s2">&quot;/opt/ros/kinetic/etc/ros&quot;</span>
+<span class="nb">declare</span> -x <span class="nv">ROS_MASTER_URI</span><span class="o">=</span><span class="s2">&quot;http://localhost:11311&quot;</span>
+<span class="nb">declare</span> -x <span class="nv">ROS_PACKAGE_PATH</span><span class="o">=</span><span class="s2">&quot;/home/user/catkin_ws/src:/opt/ros/kinetic/share:/opt/ros/kinetic/stacks&quot;</span>
+<span class="nb">declare</span> -x <span class="nv">ROS_ROOT</span><span class="o">=</span><span class="s2">&quot;/opt/ros/kinetic/share/ros&quot;</span>
+</pre></div>
+</div>
+<p>The most important variables are the <strong>ROS_MASTER_URI</strong> and the <strong>ROS_PACKAGE_PATH</strong>.</p>
+<p><strong>ROS_MASTER_URI</strong>: Contains the url where the ROS Core is being executed. Usually, your own computer (localhost).
+<strong>ROS_PACKAGE_PATH</strong>: Contains the paths in your Hard Drive where ROS has packages in it.</p>
+</div>
+<div class="section" id="summary">
+<h3>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h3>
+<p>So, now, what is ROS again?</p>
+<p>ROS is basically the framework that allows us to do all that we showed along this chapter. It provides the background to manage all these processes and communications between them… and much, much more!! In this tutorial you’ve just scratched the surface of ROS, the basic concepts. ROS is an extremely powerful tool. If you dive into our courses you’ll learn much more about ROS and you’ll find yourself able to do almost anything with your robots!</p>
+<p>Next we will start to talk about ROS topics, services, actions,and finally some debugging tools.</p>
+</div>
+</div>
+<div class="section" id="ros-topics">
+<h2>ROS Topics<a class="headerlink" href="#ros-topics" title="Permalink to this headline">¶</a></h2>
+<p><strong>What will you learn with this part?</strong></p>
+<ul class="simple">
+<li>What are ROS topics and how to manage them?</li>
+<li>What is subscribers and publisher and how to create them?</li>
+<li>What are topic messages and how they work?</li>
+</ul>
+<p>We will start by learning about  a publisher.</p>
+<div class="section" id="what-is-a-publisher">
+<h3>What is a Publisher?<a class="headerlink" href="#what-is-a-publisher" title="Permalink to this headline">¶</a></h3>
+<p>Let’s create a ROS node that uses a publisher to publish some data. In the <code class="docutils literal notranslate"><span class="pre">src</span></code> folder of your package <code class="docutils literal notranslate"><span class="pre">my_package</span></code>, create the following node, and name it <code class="docutils literal notranslate"><span class="pre">simple_node_publisher.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>                               <span class="c1"># Import the Python library for ROS</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>             <span class="c1"># Import the Int32 message from the std_msgs package</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;topic_publisher&#39;</span><span class="p">)</span>         <span class="c1"># Initiate a Node named &#39;topic_publisher&#39;</span>
+<span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">(</span><span class="s1">&#39;counter&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">)</span>    <span class="c1"># Create a Publisher object, that will publish on the /counter topic</span>
+                                           <span class="c1">#  messages of type Int32</span>
+
+<span class="n">rate</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Rate</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>                       <span class="c1"># Set a publish rate of 2 Hz</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">Int32</span><span class="p">()</span>                            <span class="c1"># Create a var of type Int32</span>
+<span class="n">count</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">0</span>                             <span class="c1"># Initialize &#39;count&#39; variable</span>
+
+<span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>             <span class="c1"># Create a loop that will go until someone stops the program execution</span>
+  <span class="n">pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>                       <span class="c1"># Publish the message within the &#39;count&#39; variable</span>
+  <span class="n">count</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="mi">1</span>                          <span class="c1"># Increment &#39;count&#39; variable</span>
+  <span class="n">rate</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>                             <span class="c1"># Make sure the publish rate maintains at 2 Hz</span>
+</pre></div>
+</div>
+<p>Use what you know about launch files to create a launch file to run this node. Let the launch file name be <code class="docutils literal notranslate"><span class="pre">launch_publisher.launch</span></code>. Run the launch file using <code class="docutils literal notranslate"><span class="pre">roslaunch</span></code></p>
+<p>You have just created a topic named <code class="docutils literal notranslate"><span class="pre">/counter</span></code>, and published through it as an integer that increases indefinitely. Wait! What is a topic?.</p>
+<p><strong>ROS Topic</strong>: A topic is like a pipe. <strong>Nodes use topics to publish information for other nodes</strong> so that they can communicate. You can find out, at any time, the number of topics in the system by doing a <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">list</span></code>. You can also check for a specific topic.</p>
+<p>Now, given that you are still running the node you just created, execute the following command in a new terminal window.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic list <span class="p">|</span> grep  <span class="s1">&#39;/counter&#39;</span>
+</pre></div>
+</div>
+<p>Here, you have just listed all of the topics running right now and filtered with the <strong>grep</strong> command the ones that contain the word <code class="docutils literal notranslate"><span class="pre">/counter</span></code>. If it appears, then the topic is running as it should.</p>
+<p>You can request information about a topic by doing <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">info</span> <span class="pre">&lt;name_of_topic&gt;'</span></code>.</p>
+<p>Now, type</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic info /counter
+</pre></div>
+</div>
+<p>You should get something like this</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Type: std_msgs/Int32
+Publishers:
+ * /topic_publisher <span class="o">(</span>http://ip-172-31-16-133:47971/<span class="o">)</span>
+Subscribers: None
+</pre></div>
+</div>
+<p>The output indicates the type of information published <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code>, the node that is publishing <code class="docutils literal notranslate"><span class="pre">/topic_publisher</span></code>, and if there is a node listening to that info (None in this case).</p>
+<p>Now, let’s check the output of the <code class="docutils literal notranslate"><span class="pre">/counter</span></code> topic</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> /counter
+</pre></div>
+</div>
+<p>You should see a succession of consecutive numbers, similar to the following</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> /counter
+data:
+<span class="m">985</span>
+---
+data:
+<span class="m">986</span>
+---
+data:
+<span class="m">987</span>
+---
+data:
+<span class="m">988</span>
+---
+</pre></div>
+</div>
+<p>So, what has just happened? Go back and take a look at the comments in the last code.</p>
+<p>So basically, what this code does is to <strong>initiate a node and create a publisher that keeps publishing into the ``/counter`` topic a sequence of consecutive integers</strong>.</p>
+<p>Summarizing:</p>
+<ul class="simple">
+<li><strong>A publisher is a node that keeps publishing a message into a topic</strong>. So now… what’s a topic?</li>
+<li><strong>A topic is a channel that acts as a pipe, where other ROS nodes can either publish or read information</strong>. Let’s now see some commands related to topics (some of them you’ve already used).</li>
+<li>To <strong>get a list of available topics</strong> in a ROS system, you have to use the next command:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic list
+</pre></div>
+</div>
+<p>To <strong>read the information that is being published in a topic,</strong> use the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> &lt;topic_name&gt;
+</pre></div>
+</div>
+<p>This command will start printing all of the information that is being published into the topic, which sometimes (ie: when there’s a massive amount of information, or when messages have a very large structure) can be annoying. In this case, you can <strong>read just the last message published into a topic</strong> with the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> &lt;topic_name&gt; -n1
+</pre></div>
+</div>
+<p>To <strong>get information about a certain topic,</strong> use the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic info &lt;topic_name&gt;
+</pre></div>
+</div>
+<p>Finally, you can check the different options that <code class="docutils literal notranslate"><span class="pre">rostopic</span></code> command has by using the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic -h
+</pre></div>
+</div>
+</div>
+<div class="section" id="ros-messages">
+<h3>ROS Messages<a class="headerlink" href="#ros-messages" title="Permalink to this headline">¶</a></h3>
+<p>As you may have noticed, topics handle information through messages. There are many different types of messages.</p>
+<p>In the case of the code you executed before, the message type was an <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code>, but ROS provides a lot of different messages. You can even create your own messages, but it is recommended to use ROS default messages when its possible.</p>
+<p>Messages are defined in <strong>&lt;name&gt;.msg</strong> files, which are located inside a <code class="docutils literal notranslate"><span class="pre">msg</span></code> directory of a package.</p>
+<p>To <strong>get information about a message,</strong> you use the next command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosmsg show &lt;message&gt;
+</pre></div>
+</div>
+<p>For example, let’s try to get information about the <code class="docutils literal notranslate"><span class="pre">std_msgs/Int32</span></code> message. Type the following command and check the output.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosmsg show std_msgs/Int32
+</pre></div>
+</div>
+<p>You should get something like</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>std_msgs/Int32<span class="o">]</span>:
+int32 data
+</pre></div>
+</div>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">Int32</span></code> message has only one variable named <code class="docutils literal notranslate"><span class="pre">data</span></code> of type <code class="docutils literal notranslate"><span class="pre">int32</span></code>. This <code class="docutils literal notranslate"><span class="pre">Int32</span></code> message comes from the package <code class="docutils literal notranslate"><span class="pre">std_msgs</span></code>, and you can find it in its <code class="docutils literal notranslate"><span class="pre">msg</span></code> directory. If you want, you can have a look at the <code class="docutils literal notranslate"><span class="pre">Int32.msg</span></code> file by executing the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd std_msgs/msg
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-move-the-robot">
+<h3>Exercise: Move the Robot<a class="headerlink" href="#exercise-move-the-robot" title="Permalink to this headline">¶</a></h3>
+<p>Now you’re ready to create your own publisher and make the robot move, so let’s go for it!</p>
+<p>Create a launch file that launches the code <code class="docutils literal notranslate"><span class="pre">simple_topic_publisher.py</span></code> (you should have already done that in a previous step)</p>
+<p>Modify the code you used previously to publish data to the <code class="docutils literal notranslate"><span class="pre">cmd_vel_mux/input/teleop</span></code> topic.</p>
+<p>Launch the program and check that the robot moves.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p>First, you need to bring up the robot simulation in Gazebo.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">cmd_vel_mux/input/teleop</span></code> topic is the topic used to move the robot. Do a <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">info</span> <span class="pre">cmd_vel_mux/input/teleop</span></code> in order to get information about this topic, and identify the message it uses. You have to modify the code to use that message.</p>
+<p>In order to fill the Twist message, you need to create an instance of the message. In Python, this is done like this: <code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">=</span> <span class="pre">Twist()</span></code></p>
+<p>In order to know the structure of the Twist messages, you need to use the <code class="docutils literal notranslate"><span class="pre">rosmsg</span> <span class="pre">show</span></code> command, with the type of the message used by the topic <code class="docutils literal notranslate"><span class="pre">cmd_vel_mux/input/teleop</span></code>.</p>
+<p>In this case, the robot uses a differential drive plugin to move. That is, the robot can only move linearly in the <em>x</em> axis, or rotationally in the angular <em>z</em> axis. This means that the only values that you need to fill in the Twist message are the linear x and the angular <em>z</em>.</p>
+<a class="reference internal image-reference" href="_images/xyz-frame.jpg"><img alt="_images/xyz-frame.jpg" class="align-center" src="_images/xyz-frame.jpg" style="width: 150.0px; height: 150.0px;" /></a>
+<p>The magnitudes of the Twist message are in m/s, so it is recommended to use values between 0 and 1. For example, <em>0.5 m/s</em></p>
+<p class="last">Solution to the exercise is available, <strong>but</strong> try to do it yourself and fight for it!</p>
+</div>
+</div>
+<div class="section" id="ros-subscriber">
+<h3>ROS Subscriber<a class="headerlink" href="#ros-subscriber" title="Permalink to this headline">¶</a></h3>
+<p>You’ve learned that a topic is a channel where nodes can either write or read information. You’ve also seen that you can write into a topic using a publisher, so you may be thinking that there should also be some kind of similar tool to read information from a topic. And you’re right! That’s called a subscriber. <strong>A subscriber is a node that reads information from a topic</strong>. Let’s create a subscriber node.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Make sure that you terminated all terminal sessions before you continue</p>
+</div>
+<p>Create a Python node named <code class="docutils literal notranslate"><span class="pre">simple_topic_subscriber.py</span></code> and copy the following code</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">rospy</span>
+<span class="kn">from</span> <span class="nn">std_msgs.msg</span> <span class="kn">import</span> <span class="n">Int32</span>
+
+<span class="k">def</span> <span class="nf">callback</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>                                    <span class="c1"># Define a function called &#39;callback&#39; that receives a parameter</span>
+                                                      <span class="c1"># named &#39;msg&#39;</span>
+
+  <span class="k">print</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>                                      <span class="c1"># Print the value &#39;data&#39; inside the &#39;msg&#39; parameter</span>
+
+<span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;topic_subscriber&#39;</span><span class="p">)</span>                   <span class="c1"># Initiate a Node called &#39;topic_subscriber&#39;</span>
+
+<span class="n">sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">(</span><span class="s1">&#39;/counter&#39;</span><span class="p">,</span> <span class="n">Int32</span><span class="p">,</span> <span class="n">callback</span><span class="p">)</span>   <span class="c1"># Create a Subscriber object that will listen to the /counter</span>
+                                                      <span class="c1"># topic and will cal the &#39;callback&#39; function each time it reads</span>
+                                                      <span class="c1"># something from the topic</span>
+<span class="n">rospy</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>                                          <span class="c1"># Create a loop that will keep the program in execution</span>
+</pre></div>
+</div>
+<p>Save the node.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Don’t forget to give execution permission to the node using <code class="docutils literal notranslate"><span class="pre">chmod</span></code> command</p>
+</div>
+<p>As you did for the publisher node, create a <em>launch</em> file named <code class="docutils literal notranslate"><span class="pre">subscriber_launch.launch</span></code>, in the launch folder, which launches this node.</p>
+<p>Run the launch file using <code class="docutils literal notranslate"><span class="pre">roslaunch</span> <span class="pre">my_package</span> <span class="pre">subscriber_launch.launch</span></code> command</p>
+<p>What’s up? Nothing happened again? Well, that’s not actually true… Let’s do some checks.</p>
+<ul class="simple">
+<li>Go to a new terminal and execute</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic <span class="nb">echo</span> /counter
+</pre></div>
+</div>
+<p>You should see an output like</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>WARNING: no messages received and simulated <span class="nb">time</span> is active.
+Is /clock being published?
+</pre></div>
+</div>
+<p>And what does this mean? This means that nobody is publishing into the <code class="docutils literal notranslate"><span class="pre">/counter</span></code> topic, so there’s no information to be read. Let’s then publish something into the topic and see what happens.</p>
+<p>For that, let’s introduce a new command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic pub &lt;topic_name&gt; &lt;message_type&gt; &lt;value&gt;
+</pre></div>
+</div>
+<p>This command will publish the message you specify with the value you specify, in the topic you specify.</p>
+<p>Open a new terminal window (leave the one with the <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">echo</span></code> opened) and type the next command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic pub /counter std_msgs/Int32 <span class="m">5</span>
+</pre></div>
+</div>
+<p>You will see something similar to the following</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>WARNING: no messages received and simulated <span class="nb">time</span> is active.
+Is /clock being published?
+data:
+<span class="m">5</span>
+---
+</pre></div>
+</div>
+<p>This means that the value you published has been received by your subscriber program (which prints the value on the screen).</p>
+<p>So now, let’s explain what has just happened. You’ve basically created a subscriber node that listens to the <code class="docutils literal notranslate"><span class="pre">/counter</span></code> topic, and each time it reads something, it calls a function that does a print of the msg. Initially, nothing happened since nobody was publishing into the <code class="docutils literal notranslate"><span class="pre">/counter</span></code> topic, but when you executed the <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">pub</span></code> command, you published a message into the <code class="docutils literal notranslate"><span class="pre">/counter</span></code> topic, so the function has printed the number and you could see that message in the <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">echo</span></code> output. Now everything makes sense, right? I hope!</p>
+<p>Now let’s do some exercises to put into practice what you’ve learned!</p>
+</div>
+<div class="section" id="exercise-print-robot-s-odometry">
+<h3>Exercise: Print Robot’s Odometry<a class="headerlink" href="#exercise-print-robot-s-odometry" title="Permalink to this headline">¶</a></h3>
+<p>Modify the code in the publisher node in order to print the odometry of the robot.</p>
+<p>The odometry of the robot is published by the robot into the <code class="docutils literal notranslate"><span class="pre">/odom</span></code> topic.</p>
+<p>You will need to figure out what message uses the <code class="docutils literal notranslate"><span class="pre">/odom</span></code> topic, and how the structure of this message is.</p>
+<p>Solution is available, but try yourself and fight for it!</p>
+</div>
+<div class="section" id="exercise-publishing-to-custom-message">
+<h3>Exercise: Publishing to Custom Message<a class="headerlink" href="#exercise-publishing-to-custom-message" title="Permalink to this headline">¶</a></h3>
+<p>Create a python file (e.g. <code class="docutils literal notranslate"><span class="pre">publish_age.py</span></code>) that creates a publisher which publishes the age of the robot, to the previous package.</p>
+<p>For that, you’ll need to create a new message called <code class="docutils literal notranslate"><span class="pre">Age.msg</span></code>. See the detailed description below on how to prepare <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> and <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> for custom topic message compilation.</p>
+<p>Solution is available,**but** try yourself and fight for it!</p>
+</div>
+<div class="section" id="creating-custom-messages">
+<h3>Creating Custom Messages<a class="headerlink" href="#creating-custom-messages" title="Permalink to this headline">¶</a></h3>
+<p>Now you may be wondering… in case I need to publish some data that is not an <code class="docutils literal notranslate"><span class="pre">Int32</span></code>, which type of message should I use? You can use all ROS defined (<code class="docutils literal notranslate"><span class="pre">rosmsg</span> <span class="pre">list</span></code>) messages. But, in case none fit your needs, you can create a new one.</p>
+<p>In order to create a new message, you will need to do the following steps:</p>
+<p>Create a directory named <code class="docutils literal notranslate"><span class="pre">msg</span></code> inside your package, e.g. <code class="docutils literal notranslate"><span class="pre">my_package/msg</span></code></p>
+<p>Inside this directory, create a file named <code class="docutils literal notranslate"><span class="pre">Name_of_your_message.msg</span></code> (more information down)</p>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file (more information down)</p>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> file (more information down)</p>
+<p>Compile</p>
+<p>Use in code</p>
+<p>For example, let’s create a message that indicates age, with years, months, and days.</p>
+<p>Create a directory msg in your package.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd my_package
+mkdir msg
+</pre></div>
+</div>
+<p>Add the <code class="docutils literal notranslate"><span class="pre">Age.msg</span></code> file which must contain this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>float32 years
+float32 months
+float32 days
+</pre></div>
+</div>
+<p>Save it.</p>
+<p>In <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> of your package, you will have to edit four functions.</p>
+<blockquote>
+<div><ul class="simple">
+<li>find_package()</li>
+<li>add_message_files()</li>
+<li>generate_messages()</li>
+<li>catkin_package()</li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">find_package()</span></code></p>
+<p>This is where all the packages required to COMPILE the messages of the topics, services, and actions go. In package.xml, you have to state them as <code class="docutils literal notranslate"><span class="pre">build_depend</span></code>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If you open the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> file in your IDE, you’ll see that almost all of the file is commented. This includes some of the lines you will have to modify. Instead of copying and pasting the lines below, find the equivalents in the file and uncomment them, and then add the parts that are missing.</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find_package<span class="o">(</span>catkin REQUIRED COMPONENTS
+       rospy
+       std_msgs
+       message_generation   <span class="c1"># Add message_generation here, after the other packages</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">catkin_package()</span></code></p>
+<p>State here all of the packages that will be needed by someone that executes something from your package. All of the packages stated here must be in the package.xml as <code class="docutils literal notranslate"><span class="pre">run_depend</span></code>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>catkin_package<span class="o">(</span>
+      CATKIN_DEPENDS rospy message_runtime   <span class="c1"># This will NOT be the only thing here</span>
+<span class="o">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">add_message_files()</span></code></p>
+<p>This function includes all of the messages of this package (in the <code class="docutils literal notranslate"><span class="pre">msg</span></code> folder) to be compiled. The file should look like this.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>add_message_files<span class="o">(</span>
+      FILES
+      Age.msg
+    <span class="o">)</span> <span class="c1"># Don&#39;t Forget to uncomment the parenthesis and add_message_files TOO</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">generate_messages()</span></code></p>
+<p>Here is where the packages needed for the messages compilation are imported.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>generate_messages<span class="o">(</span>
+      DEPENDENCIES
+      std_msgs
+<span class="o">)</span> <span class="c1"># Dont Forget to uncomment here too</span>
+</pre></div>
+</div>
+<p>In summary, this is the minimum expression of what is needed for the <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> to work:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cmake_minimum_required<span class="o">(</span>VERSION <span class="m">2</span>.8.3<span class="o">)</span>
+project<span class="o">(</span>my_package<span class="o">)</span>
+
+
+
+find_package<span class="o">(</span>catkin REQUIRED COMPONENTS
+  std_msgs
+  message_generation
+<span class="o">)</span>
+
+ add_message_files<span class="o">(</span>
+   FILES
+   Age.msg
+ <span class="o">)</span>
+
+ generate_messages<span class="o">(</span>
+   DEPENDENCIES
+   std_msgs
+ <span class="o">)</span>
+
+
+catkin_package<span class="o">(</span>
+  CATKIN_DEPENDS rospy message_runtime
+<span class="o">)</span>
+
+include_directories<span class="o">(</span>
+  <span class="si">${</span><span class="nv">catkin_INCLUDE_DIRS</span><span class="si">}</span>
+<span class="o">)</span>
+<span class="sb">```</span>
+</pre></div>
+</div>
+<p>Modify <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> by adding these 2 lines.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;build_depend&gt;</span>message_generation<span class="nt">&lt;/build_depend&gt;</span>
+<span class="nt">&lt;run_depend&gt;</span>message_runtime<span class="nt">&lt;/run_depend&gt;</span>
+</pre></div>
+</div>
+<p>This is the minimum expression of the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code></p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot;?&gt;</span>
+<span class="nt">&lt;package&gt;</span>
+  <span class="nt">&lt;name&gt;</span>my_package<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;version&gt;</span>0.0.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;description&gt;</span>The my_package package<span class="nt">&lt;/description&gt;</span>
+
+  <span class="nt">&lt;maintainer</span> <span class="na">email=</span><span class="s">&quot;user@todo.todo&quot;</span><span class="nt">&gt;</span>user<span class="nt">&lt;/maintainer&gt;</span>
+
+  <span class="nt">&lt;license&gt;</span>TODO<span class="nt">&lt;/license&gt;</span>
+
+  <span class="nt">&lt;buildtool_depend&gt;</span>catkin<span class="nt">&lt;/buildtool_depend&gt;</span>
+  <span class="nt">&lt;build_depend&gt;</span>rospy<span class="nt">&lt;/build_depend&gt;</span>
+  <span class="nt">&lt;build_depend&gt;</span>message_generation<span class="nt">&lt;/build_depend&gt;</span>
+  <span class="nt">&lt;run_depend&gt;</span>rospy<span class="nt">&lt;/run_depend&gt;</span>
+  <span class="nt">&lt;run_depend&gt;</span>message_runtime<span class="nt">&lt;/run_depend&gt;</span>
+
+  <span class="nt">&lt;export&gt;</span>
+
+  <span class="nt">&lt;/export&gt;</span>
+<span class="nt">&lt;/package&gt;</span>
+</pre></div>
+</div>
+<p>Now you have to compile the msgs. To do this, you have to type in the terminal,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/catkin_ws
+catkin build
+<span class="nb">source</span> devel/setup.bash
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When you compile new messages, there is still an extra step before you can use the messages. You have to type in the terminal, in the <em>catkin_ws</em>: <code class="docutils literal notranslate"><span class="pre">source</span> <span class="pre">devel/setup.bash</span></code>. This executes this bash file that sets, among other things, the newly generated messages created through the <code class="docutils literal notranslate"><span class="pre">catkin</span> <span class="pre">build</span></code>. If you don’t do this, it might give you a python import error, saying it doesn’t find the message generated.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">To verify that your message has been created successfully, type in your terminal <code class="docutils literal notranslate"><span class="pre">rosmsg</span> <span class="pre">show</span> <span class="pre">Age</span></code>. If the structure of the Age message appears, it will mean that your message has been created successfully and it’s ready to be used in your ROS programs.</p>
+</div>
+<p>Execute in a terminal</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosmsg show Age
+</pre></div>
+</div>
+<p>You should get</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>my_package/Age<span class="o">]</span>:
+float32 years
+float32 months
+float32 days
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>There is an issue in ROS that could give you problems when importing msgs from the <code class="docutils literal notranslate"><span class="pre">msg</span></code> directory. <strong>If your package has the same name as the Python file that does the import of the msg</strong>, this will give an error saying that it doesn’t find the msg element. This is due to the way Python works. Therefore, you have to be careful to <strong>not name the Python file exactly the same as its parent package</strong>.</p>
+<p>Example:</p>
+<p>Package name = <code class="docutils literal notranslate"><span class="pre">my_package</span></code></p>
+<p>Python file name = <code class="docutils literal notranslate"><span class="pre">my_package.py</span></code></p>
+<p class="last">This will give an import error because it will try to import the message from the <code class="docutils literal notranslate"><span class="pre">my_package.py</span></code> file, from a directory <code class="docutils literal notranslate"><span class="pre">.msg</span></code> that doesn’t exists.</p>
+</div>
+</div>
+<div class="section" id="project">
+<h3>Project<a class="headerlink" href="#project" title="Permalink to this headline">¶</a></h3>
+<a class="reference internal image-reference" href="_images/topics_mini_project.png"><img alt="_images/topics_mini_project.png" class="align-center" src="_images/topics_mini_project.png" style="width: 381.5px; height: 274.5px;" /></a>
+<p>With all you’ve learned during this course, you’re now able to do a small project to put everything together. Subscribers, Publisher, Messages… you will need to use all of this concepts in order to execute the following mini project!</p>
+<p>In this project, you will create a code to make the robot avoid the wall that is in front of it. To help you achieve this, let’s divide the project down into smaller units:</p>
+<p>Create a Publisher that writes into the <code class="docutils literal notranslate"><span class="pre">cmd_vel_mux/input/teleop</span></code> topic in order to move the robot.</p>
+<p>Create a Subscriber that reads from the <code class="docutils literal notranslate"><span class="pre">/scan</span></code> topic. This is the topic where the laser publishes its data.</p>
+<p>Depending on the readings you receive from the laser’s topic, you’ll have to change the data you’re sending to the <code class="docutils literal notranslate"><span class="pre">cmd_vel_mux/input/teleop</span></code> topic, in order to avoid the wall. This means, use the values of the laser to decide.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The data that is published into the <code class="docutils literal notranslate"><span class="pre">/scan</span></code> topic has a large structure. For this project, you just have to pay attention to the <code class="docutils literal notranslate"><span class="pre">ranges</span></code> array.</p>
+</div>
+<p>To check the laser message type, execute the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosmsg show sensor_msgs/LaserScan
+</pre></div>
+</div>
+<p>You should get</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>std_msgs/Header header
+  uint32 seq
+  <span class="nb">time</span> stamp
+  string frame_id
+float32 angle_min
+float32 angle_max
+float32 angle_increment
+float32 time_increment
+float32 scan_time
+float32 range_min
+float32 range_max
+float32<span class="o">[]</span> ranges &lt;-- Use only this one
+float32<span class="o">[]</span> intensities
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The <code class="docutils literal notranslate"><span class="pre">ranges</span></code> array has a lot of values. The ones that are in the middle of the array represent the distances that the laser is detecting right in front of him. This means that the values in the middle of the array will be the ones that detect the wall. So in order to avoid the wall, you just have to read these values.</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The laser has a range of 30m. When you get readings of values around 30, it means that the laser isn’t detecting anything. If you get a value that is under 30, this will mean that the laser is detecting some kind of obstacle in that direction (the wall).</p>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">The scope of the laser is about 180 degrees from right to left. This means that the values at the beginning and at the end of the <code class="docutils literal notranslate"><span class="pre">ranges</span></code> array will be the ones related to the readings on the sides of the laser (left and right), while the values in the middle of the array will be the ones related to the front of the laser.</p>
+</div>
+<p>So, in the end, you probably will get something like the following:</p>
+<p>The robot moves forward until it detects an obstacle in front of it which is closer than 1 meter, so it begins to turn left in order to avoid it.</p>
+<a class="reference internal image-reference" href="_images/mini_project_1.gif"><img alt="_images/mini_project_1.gif" class="align-center" src="_images/mini_project_1.gif" style="width: 240.0px; height: 135.0px;" /></a>
+<p>The robot keeps turning left and moving forward until it detects that it has an obstacle at the right side which is closer than 1 meter, so it stops and turns left in order to avoid it.</p>
+<a class="reference internal image-reference" href="_images/mini_project_2.gif"><img alt="_images/mini_project_2.gif" class="align-center" src="_images/mini_project_2.gif" style="width: 240.0px; height: 135.0px;" /></a>
+</div>
+</div>
+<div class="section" id="ros-services">
+<h2>ROS Services<a class="headerlink" href="#ros-services" title="Permalink to this headline">¶</a></h2>
+<p><strong>Services</strong> are another way that nodes can communicate with each other. Services allow nodes to send a <strong>request</strong> and receive a <strong>response</strong>.</p>
+<p>As you have seen, ROS topics are means of communications between nodes, but they don’t execute functionalities. They just hold data. Services, however, can provide a specific functionality once they receive a request to do so. For example, a service can provide the number of detected person in an image.</p>
+<p>A service has two parts, <strong>server</strong> and <strong>client</strong></p>
+<p>A service <strong>server</strong> is a ROS program the implements certain functionality. Once it is executed, it will wait for a call from a <strong>client</strong>. Once a call use received, it will execute its functionality and provide a <strong>response</strong>.</p>
+<p>A <strong>client</strong> uses some ROS commands to <strong>request</strong> a service from a service <strong>server</strong></p>
+<a class="reference internal image-reference" href="_images/services.png"><img alt="_images/services.png" class="align-center" src="_images/services.png" style="width: 268.0px; height: 435.0px;" /></a>
+<p>In this part, we are going to use a different simulation setup, a simpler one, called <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code></p>
+<a class="reference internal image-reference" href="_images/turtlesim.png"><img alt="_images/turtlesim.png" class="align-center" src="_images/turtlesim.png" style="width: 270.0px; height: 279.5px;" /></a>
+<p>To install <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-turtlesim
+</pre></div>
+</div>
+<p>To run the <code class="docutils literal notranslate"><span class="pre">turtlesim</span></code> node and control the turtle using keyboard, execute</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># run roscore in a seperate terminal</span>
+roscore
+<span class="c1"># in a separate terminal, run the sim node</span>
+rosrun turtlesim turtlesim_node
+<span class="c1"># in a separate terminal, run the keyboard telep node</span>
+rosrun turtlesim turtle_teleop_key
+</pre></div>
+</div>
+<p>The main ROS command used with services is called <code class="docutils literal notranslate"><span class="pre">rosservice</span></code>. The following some commands that can be used on service topics.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice list         <span class="c1"># print information about active services</span>
+rosservice call         <span class="c1"># call the service with the provided args</span>
+rosservice <span class="nb">type</span>         <span class="c1"># print service type</span>
+rosservice find         <span class="c1"># find services by service type</span>
+rosservice uri          <span class="c1"># print service ROSRPC uri</span>
+</pre></div>
+</div>
+<div class="section" id="command-rosservice-list">
+<h3>Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">list</span></code><a class="headerlink" href="#command-rosservice-list" title="Permalink to this headline">¶</a></h3>
+<p>Now, lets check the available ROS services using the <code class="docutils literal notranslate"><span class="pre">rosservice</span></code> command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice list
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">list</span></code> command shows us that the turtlesim node provides nine services: <code class="docutils literal notranslate"><span class="pre">reset</span></code>, <code class="docutils literal notranslate"><span class="pre">clear</span></code>, <code class="docutils literal notranslate"><span class="pre">spawn</span></code>, <code class="docutils literal notranslate"><span class="pre">kill</span></code>, <code class="docutils literal notranslate"><span class="pre">turtle1/set_pen</span></code>, <code class="docutils literal notranslate"><span class="pre">/turtle1/teleport_absolute</span></code>, <code class="docutils literal notranslate"><span class="pre">/turtle1/teleport_relative</span></code>, <code class="docutils literal notranslate"><span class="pre">turtlesim/get_loggers</span></code>, and <code class="docutils literal notranslate"><span class="pre">turtlesim/set_logger_level</span></code>. There are also two services related to the separate <code class="docutils literal notranslate"><span class="pre">rosout</span></code> node: <code class="docutils literal notranslate"><span class="pre">/rosout/get_loggers</span></code> and <code class="docutils literal notranslate"><span class="pre">/rosout/set_logger_level</span></code>. After executing the previous command, you will get some output like the following:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>/clear
+/kill
+/reset
+/rosout/get_loggers
+/rosout/set_logger_level
+/spawn
+/teleop_turtle/get_loggers
+/teleop_turtle/set_logger_level
+/turtle1/set_pen
+/turtle1/teleport_absolute
+/turtle1/teleport_relative
+/turtlesim/get_loggers
+/turtlesim/set_logger_level
+</pre></div>
+</div>
+<p>Let’s look more closely at the <code class="docutils literal notranslate"><span class="pre">clear</span></code> service using <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">type</span></code>:</p>
+</div>
+<div class="section" id="command-rosservice-type">
+<h3>Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">type</span></code><a class="headerlink" href="#command-rosservice-type" title="Permalink to this headline">¶</a></h3>
+<p>The command can be used as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice <span class="nb">type</span> <span class="o">[</span>service<span class="o">]</span>
+</pre></div>
+</div>
+<p>Let’s try to find the type of <code class="docutils literal notranslate"><span class="pre">clear</span></code> service</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice <span class="nb">type</span> /clear
+</pre></div>
+</div>
+<p>You will get something like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>std_srvs/Empty
+</pre></div>
+</div>
+<p>This service is empty, this means when the service call is made it takes no arguments (i.e. it sends no data when making a <strong>request</strong> and receives no data when receiving a <strong>response</strong>). Let’s call this service using <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span></code>:</p>
+</div>
+<div class="section" id="command-rosservice-call">
+<h3>Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span></code><a class="headerlink" href="#command-rosservice-call" title="Permalink to this headline">¶</a></h3>
+<p>The command can be used as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call <span class="o">[</span>service<span class="o">]</span> <span class="o">[</span>arguments<span class="o">]</span>
+</pre></div>
+</div>
+<p>Here we’ll call with no arguments because the service is of type empty:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /clear
+</pre></div>
+</div>
+<p>This does what we expect, it clears the background of the <code class="docutils literal notranslate"><span class="pre">turtlesim_node</span></code>.</p>
+<a class="reference internal image-reference" href="_images/turtlesim_clear.png"><img alt="_images/turtlesim_clear.png" class="align-center" src="_images/turtlesim_clear.png" style="width: 270.0px; height: 279.5px;" /></a>
+<p>Let’s look at the case where the service has arguments by looking at the information for the service spawn:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice <span class="nb">type</span> /spawn <span class="p">|</span> rossrv show
+</pre></div>
+</div>
+<p>The previous command does two things at once. First, it finds the message type of the service <code class="docutils literal notranslate"><span class="pre">/spawn</span></code> using <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">type</span> <span class="pre">[service]</span></code> command. Then, it shows the message content using the command <code class="docutils literal notranslate"><span class="pre">rossrv</span> <span class="pre">show</span></code>.</p>
+<p>You will get something like:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>float32 x
+float32 y
+float32 theta
+string name
+---
+string name
+</pre></div>
+</div>
+<p>This service <code class="docutils literal notranslate"><span class="pre">/spawn</span></code> lets us spawn a new turtle at a given location and orientation. The name field is optional, so let’s not give our new turtle a name and let turtlesim create one for us.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice call /spawn <span class="m">2</span> <span class="m">2</span> <span class="m">0</span>.2 <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can use the autocomplete feature to get the service msg <em>fields</em> when you use <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span> <span class="pre">[service][args]</span></code> so you don’t have to remember the <code class="docutils literal notranslate"><span class="pre">[args]</span></code> yourself. To do that, just hit <code class="docutils literal notranslate"><span class="pre">TAB</span></code> key twice after you write <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span> <span class="pre">[service]</span></code></p>
+</div>
+<p>After executing the previous command, you will get something like:</p>
+<a class="reference internal image-reference" href="_images/2_turtles.png"><img alt="_images/2_turtles.png" class="align-center" src="_images/2_turtles.png" style="width: 270.0px; height: 279.5px;" /></a>
+<p>Until now, you have called services from the command line. There are three more things that you need to know.</p>
+<ul class="simple">
+<li>Writing a code for ROS service to execute certain functionality</li>
+<li>Writing ROS node that calls a service</li>
+<li>Writing custom service message</li>
+</ul>
+<p>For writing ROS services and clients, I refer you to the following ROS WiKi page for more details.</p>
+<p><a class="reference external" href="http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29">http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29</a></p>
+<p>For writing custom messages, I refer you to the following ROS WiKi page for more details.</p>
+<p><a class="reference external" href="http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv">http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv</a></p>
+</div>
+</div>
+<div class="section" id="remaining-concepts">
+<h2>Remaining concepts<a class="headerlink" href="#remaining-concepts" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ros-action">
+<h3>ROS action<a class="headerlink" href="#ros-action" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="rviz">
+<h3>Rviz<a class="headerlink" href="#rviz" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="rosbag">
+<h3>rosbag<a class="headerlink" href="#rosbag" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="useful-video-tutorials">
+<h2>Useful Video Tutorials<a class="headerlink" href="#useful-video-tutorials" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>ROS: Introduction, Installing ROS, and running the Turtlebot simulator.
+* <a class="reference external" href="https://www.youtube.com/watch?v=9U6GDonGFHw">https://www.youtube.com/watch?v=9U6GDonGFHw</a></li>
+<li>Publishers and subscribers
+* <a class="reference external" href="https://www.youtube.com/watch?v=bJB9tv4ThV4">https://www.youtube.com/watch?v=bJB9tv4ThV4</a></li>
+<li>Python walkthrough of publisher/subscriber lab
+* <a class="reference external" href="https://www.youtube.com/watch?v=DLVyc9hOvk8">https://www.youtube.com/watch?v=DLVyc9hOvk8</a></li>
+<li>To learn more about Nodes and Topics, check the following video:
+* <a class="reference external" href="https://www.youtube.com/watch?v=Yx_vGAt74sk">https://www.youtube.com/watch?v=Yx_vGAt74sk</a>  ​</li>
+</ul>
+</div>
+<div class="section" id="solutions">
+<h2>Solutions<a class="headerlink" href="#solutions" title="Permalink to this headline">¶</a></h2>
+<p>Solutions are available at <a class="reference external" href="https://github.com/risckaust/risc-documentations/tree/master/src/ros-basics">Risc Github page</a>.</p>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>Main contributor is <a class="reference external" href="https://github.com/mzahana">Mohamed Abdelkader</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ROS Basics</a><ul>
+<li><a class="reference internal" href="#main-objectives-of-this-tutorial">Main Objectives of this Tutorial</a></li>
+<li><a class="reference internal" href="#basic-concepts">Basic Concepts</a><ul>
+<li><a class="reference internal" href="#what-is-ros">What is ROS?</a></li>
+<li><a class="reference internal" href="#system-setup">System Setup</a><ul>
+<li><a class="reference internal" href="#install-turtlebot-packages">Install TurtleBot packages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#move-the-robot">Move the robot</a></li>
+<li><a class="reference internal" href="#what-is-a-package">What is a package?</a></li>
+<li><a class="reference internal" href="#what-is-a-launch-file">What is a launch file ?</a></li>
+<li><a class="reference internal" href="#create-a-package">Create a package</a></li>
+<li><a class="reference internal" href="#your-first-ros-program">Your First ROS Program</a></li>
+<li><a class="reference internal" href="#ros-nodes">ROS Nodes</a></li>
+<li><a class="reference internal" href="#parameters-server">Parameters Server</a></li>
+<li><a class="reference internal" href="#roscore">ROSCORE</a></li>
+<li><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ros-topics">ROS Topics</a><ul>
+<li><a class="reference internal" href="#what-is-a-publisher">What is a Publisher?</a></li>
+<li><a class="reference internal" href="#ros-messages">ROS Messages</a></li>
+<li><a class="reference internal" href="#exercise-move-the-robot">Exercise: Move the Robot</a></li>
+<li><a class="reference internal" href="#ros-subscriber">ROS Subscriber</a></li>
+<li><a class="reference internal" href="#exercise-print-robot-s-odometry">Exercise: Print Robot’s Odometry</a></li>
+<li><a class="reference internal" href="#exercise-publishing-to-custom-message">Exercise: Publishing to Custom Message</a></li>
+<li><a class="reference internal" href="#creating-custom-messages">Creating Custom Messages</a></li>
+<li><a class="reference internal" href="#project">Project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ros-services">ROS Services</a><ul>
+<li><a class="reference internal" href="#command-rosservice-list">Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">list</span></code></a></li>
+<li><a class="reference internal" href="#command-rosservice-type">Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">type</span></code></a></li>
+<li><a class="reference internal" href="#command-rosservice-call">Command <code class="docutils literal notranslate"><span class="pre">rosservice</span> <span class="pre">call</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#remaining-concepts">Remaining concepts</a><ul>
+<li><a class="reference internal" href="#ros-action">ROS action</a></li>
+<li><a class="reference internal" href="#rviz">Rviz</a></li>
+<li><a class="reference internal" href="#rosbag">rosbag</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#useful-video-tutorials">Useful Video Tutorials</a></li>
+<li><a class="reference internal" href="#solutions">Solutions</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">RISC Lab Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="1-ros-navigation.html"
+                        title="next chapter">ROS Navigation</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/1-ros-basics.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="1-ros-navigation.html" title="ROS Navigation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="RISC Lab Documentation"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

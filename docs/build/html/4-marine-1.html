@@ -1,0 +1,587 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Appendix: RISC AUV System Manual &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3D Printing" href="3-3d-printing.html" />
+    <link rel="prev" title="Networking" href="2-networking.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="3-3d-printing.html" title="3D Printing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-networking.html" title="Networking"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="appendix-risc-auv-system-manual">
+<span id="appendixa"></span><h1>Appendix: RISC AUV System Manual<a class="headerlink" href="#appendix-risc-auv-system-manual" title="Permalink to this headline">¶</a></h1>
+<p>Details of RISC AUV system is discussed here, including the structure of
+simulation system, hardware system, localization systems, all ROS
+software packages with illustration, the network structure of the system
+and everything related.</p>
+<div class="section" id="ros-gazebo-simulation-system-manual">
+<h2>ROS/Gazebo simulation system manual<a class="headerlink" href="#ros-gazebo-simulation-system-manual" title="Permalink to this headline">¶</a></h2>
+<p>Main functions and operating manual of simulation system is in this
+section.</p>
+<div class="section" id="multirov">
+<h3>MultiROV<a class="headerlink" href="#multirov" title="Permalink to this headline">¶</a></h3>
+<p>MultiROV contains game-theoretical algorithm, protocols to communicate
+with ROS environment, and other essential software components. It is
+created based on the principle of separating algorithm parts and ROS
+parts so that each part can be modified individually. Note that there
+are two branches in this repository. The master branch is for the
+simulator, and the BlueROV branch is for the hardware test. However,
+BlueROV branch is written more cleanly and abandoned many parts that are
+not necessary. So I recommend using BlueROV branch for both simulation
+and hardware. The user can refer to commit history of this repository
+for detailed development process as I have clear notes while creating
+this project for future reference.</p>
+<p>It’s class diagram is shown as below.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/class_simulation.png"><img alt="_images/class_simulation.png" src="_images/class_simulation.png" style="width: 554.4px; height: 247.79999999999998px;" /></a>
+</div>
+<p>[class_simulation]</p>
+<p>Note that only important members and methods of the classes are
+presented. Here are three main components:</p>
+<ul class="simple">
+<li>explore_algo class is the high-level algorithm class, deciding for an
+agent with local information of resources and other agents. It builds
+a heatmap with local resources and a coveragemap( not working as a
+class member but a local variable inside a method) with visible local
+agents. Last two steps of its computation are listed in its methods
+in the class diagram。</li>
+<li>coveragemap class builds the nearby coverage status for an agent with
+local information of other agents. Methods include<ul>
+<li>set_coveragemap(): based on nearby agents to compute coverage
+status</li>
+</ul>
+</li>
+<li>explore_algo_node class has explore_algo as its member to high level
+algorithmic computations. Other subscribers are used to subscribe
+resource locations, agent locations and current direction from Gazebo
+topics. Publisher is used to publish computed command to a controller
+node to send incremental control service for simulation and
+controller node for hardware case. Important methods include:<ul>
+<li>heatmap_update(): function needed for
+resource_location_Callback(), update local heatmap of member ex
+with locations of sensed resources. Note static resource hardcoded
+at (3,4) here but still keeps secret for the agent when it’s out
+of the sensory range.</li>
+<li>resource_location_Callback(): triggered once resource location is
+received from Gazebo/other outside nodes. Update heatmap in ex.</li>
+<li>agent_location_Callback(): triggered once agent location is
+received from Gazebo/other outside nodes. Will execute algorithm
+and send command the controller, either in simulation or in
+hardware.</li>
+<li>current_angle_Callback(): triggered once current is changed and
+related topic is publishing. Will modify a parameter in ex to
+change the utility computation.</li>
+</ul>
+</li>
+</ul>
+<div class="line-block">
+<div class="line">One thing to notice is the way we express commanded directions in this
+setting. We use</div>
+<div class="line">2 5 8</div>
+<div class="line">1 4 7</div>
+<div class="line">0 3 6</div>
+<div class="line">i.e., 4 means stay, 7 means go one step in the x-direction, etc.</div>
+</div>
+</div>
+<div class="section" id="uuv-simulator">
+<h3>UUV simulator<a class="headerlink" href="#uuv-simulator" title="Permalink to this headline">¶</a></h3>
+<p>UUV simulator as mentioned before is an open source software package to
+simulate underwater robots and its working environments. As it’s a big
+complicated package, we will only discuss some issues when using its
+related parts. Notice this package is modified by me so please use the
+version at <a class="reference external" href="https://github.com/luym11/uuv_simulator">https://github.com/luym11/uuv_simulator</a> as it’s the version
+in RISC marine workstation. Also, there are some pre-requirement
+software packages for installing this package, they are installed
+correctly on RISC marine workstation. There will be some instructions
+about this in the last part of this appendix.</p>
+<p>We will structure this part with ROS nodes need to run and related
+explanation. Then we will draw a ROS node graph as
+Fig<a class="reference external" href="#simulation_nodes">[simulation_nodes]</a> to show the relation
+between these components.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/simulation_nodes.png"><img alt="_images/simulation_nodes.png" src="_images/simulation_nodes.png" style="width: 950.5999999999999px; height: 826.0px;" /></a>
+</div>
+<p>[simulation_nodes]</p>
+<ul>
+<li><p class="first">roslaunch multirov lake.launch: This launch file loads Gazebo world,
+it’s appearance and simulated time. After loading this file, Gazebo
+environment will be open. Note that x and y axes are already set in
+Gazebo, we also use walls to indicate that as
+<a class="reference external" href="#rov_multi">[rov_multi]</a>.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/ROV_multi.png"><img alt="_images/ROV_multi.png" src="_images/ROV_multi.png" style="width: 480.0px; height: 270.0px;" /></a>
+</div>
+<p>[rov_multi]</p>
+</li>
+<li><p class="first">roslaunch multiagent_simulation multiagent.launch: this file loads
+AUV models, resource models and corresponding controllers. RViz can
+also be loaded from here. In details, we launched (in terms of
+namespace)</p>
+<ul class="simple">
+<li>rexrov1, 2,3: spawn robot model in Gazebo; publish its states to
+Gazebo; publish its position to ROS topic( using agent_listener
+node running with it); simulated dp controller.</li>
+<li>rexrov0: spawn resource model in Gazebo( originally at (5,5));
+publish its states to Gazebo; joystick node to control it (notice
+agent_listener is not here because the code for resource was
+developed earlier and used another method for publishing the
+location).</li>
+<li>rexrov00: spawn resource model in Gazebo( static at (3,4));
+publish its states to Gazebo.</li>
+</ul>
+</li>
+<li><p class="first">rosrun multirov resource_publisher_hd: let the movable resource
+controlled by publishing to the topic
+resource_location_from_keyboard. The way to change resource location
+is <code class="docutils literal notranslate"><span class="pre">rostopic</span> <span class="pre">pub</span> <span class="pre">/resource_location_from_keoard</span> <span class="pre">geometry_msgs/Point</span>
+<span class="pre">&quot;x:</span> <span class="pre">4.0</span> <span class="pre">y:</span> <span class="pre">4.0</span> <span class="pre">z:</span> <span class="pre">-30.0&quot;</span> <span class="pre">-r</span> <span class="pre">1</span></code> and different from the joystick that
+can also change the location of the movable resource, this change
+with a keyboard is instant.</p>
+</li>
+<li><p class="first">rosrun multirov resource_listener_hd_node: subscribe from above
+publised topic and republish to the topic resource_location. Our
+previous method was a more complicated way of implementing
+agent_listener node by subscribing rexrov0/base_stabilzed and
+republish to our own topic resource_location. Now we move to this
+method for compatibility because in hardware phase we can’t get
+positions from Gazebo neither the existence of related topics. For
+vehicles they can be localized by our method, for virtual targets,
+this is the best way to write this so that it can be used both in
+simulation and hardware. More details can be found in commit comments
+in BlueROV branch.</p>
+</li>
+<li><p class="first">roslaunch multirov explore_environment.launch for three vehicles:
+Executes previous mentioned node explore_algo_node_main and a
+incremental controller which calls the service ns/go_to_incremental.</p>
+</li>
+</ul>
+<p>Also, this package supports useful topics and services, for example:</p>
+<ul class="simple">
+<li>Add current: rosservice call /hydrodynamics/set_current_velocity
+“velocity: 1.0 horizontal_angle: 1.7 vertical_angle: 0.0” and this
+will be published to related topics as if the ROVs have sensor to
+sense it.</li>
+<li>go_to service: command the vehicle to a specific position in Gazebo.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="hardware-system-manual">
+<h2>Hardware system manual<a class="headerlink" href="#hardware-system-manual" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will discuss the hardware implementation phase of
+this project. As this system consists of many parts, we will talk about
+them separately.</p>
+<div class="section" id="bluerov">
+<h3>BlueROV<a class="headerlink" href="#bluerov" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="kit-assembly-and-common-issues">
+<h4>Kit Assembly and common issues<a class="headerlink" href="#kit-assembly-and-common-issues" title="Permalink to this headline">¶</a></h4>
+<p>Please refer to their official website for assembly while noticing
+following points:</p>
+<ul class="simple">
+<li>It’s recommended to test each ESC and motor before sealing the
+enclosure. It will be very hard to change any of them if the ROV is
+fully assembled.</li>
+<li>Fathom-X Topside board always needs to be powered by Mini USB, or it
+will not work.</li>
+<li>Organize the tether wire cleanly and don’t let it twist when doing
+experiments, or much time will be wasted on untangling them.</li>
+<li>When opening the enclosure, remember to remove the penetrator first;
+when closing the enclosure, remember to close the penetrator after
+closing the cap. It’s for water proof sealing purpose.</li>
+<li>Use 7.0Ah, 14.8V batteries in the lab as they last much longer than
+the others.</li>
+<li>Do a vacuum test every time before submerging.</li>
+<li>Motor direction can be reconfigured through QGroundControl software
+and don’t need to change its wires on hardware.</li>
+</ul>
+</div>
+<div class="section" id="network-setup-and-companion-computer">
+<h4>Network setup and companion computer<a class="headerlink" href="#network-setup-and-companion-computer" title="Permalink to this headline">¶</a></h4>
+<p>Here we are using Fathom-X to extend the ethernet longer and communicate
+with the Raspberry Pi inside the BlueROV. BlueROV originally comes with
+a companion Raspberry Pi with a system image that only allows joystick
+control through QGroundControl ground station, which is not what we
+desire. So we reimaged the Raspberry Pi with an Ubuntu Mate system, then
+installed related software packages there, including ROS Kinetic and
+BlueROV ROS package (modified) from
+<a class="reference external" href="https://github.com/luym11/bluerov-ros-pkg">https://github.com/luym11/bluerov-ros-pkg</a>.</p>
+<p>We mainly use two parts of this package. For BlueROVs, we will launch
+bluerov bluerov_r1.launch locally, which loads state publisher, MavROS
+that talks to ArduSub firmware, imu and camera equipped on the ROV. For
+controller from ROS via MavROS (both joystick and codes), we launch
+bluerov_apps teleop_f310.launch on ROS master machine because it needs a
+joystick for emergency operation, change of mode, arm/disarm, etc. This
+modified controller node can additionally take direction_to_go as input
+from ROS topic and control the ROV to go towards that direction with a
+pre-set speed by publishing to rc_override topic as the joystick does.
+Note this also means we can directly publish to this topic to control
+the ROV from the command line.</p>
+<p>Note that for some version of ArduSub firmware, the ROV can not take
+commands from MavROS. For now only ROV1 associated with IP 192.168.0.111
+has the correct version of firmware. This will be checked further.</p>
+<p>For hardware basic testing, we have a water tank in RISC lab. To use it,
+please use the mountain climbing rope attached to both the ROV and the
+beam on top of the tank in case it sinks. Normally testing operation can
+be done by only one person as the ROV will automatically float on the
+surface when disarmed.</p>
+<p>Instead of the network configuration used in their manual which can only
+control one ROV at a time, network interfaces of them are reconfigured
+and connected to RISC marine router with pre-assigned static IP
+addresses. Note that we will connect all the devices through this RISC
+marine router with static IP address. A detailed list will be included
+in the last part.</p>
+<p>Raspberry Pi OS image (software packages configured) used here is stored
+in RISC Google Drive, after flashing, remember to change</p>
+<ul class="simple">
+<li>.bashrc for ROS_IP and ROS_MASTER</li>
+<li>interfaces in etc folder for IP address</li>
+<li>bluerov1.launch for ground station IP and target number which is used
+in accessing multiple ROVs from QGroundControl</li>
+</ul>
+</div>
+</div>
+<div class="section" id="localization-system">
+<h3>Localization system<a class="headerlink" href="#localization-system" title="Permalink to this headline">¶</a></h3>
+<p>As mentioned before, a localization system is essential for both knowing
+the positions of agents and resources. Also it’s needed for waypoint
+feedback control of the ROVs. We will introduce two methods we have so
+far.</p>
+<div class="section" id="tritech-usbl">
+<h4>Tritech USBL<a class="headerlink" href="#tritech-usbl" title="Permalink to this headline">¶</a></h4>
+<p>For USBL method, we use Tritech USBL devices. Transponders will be
+installed on ROV as shown in Fig<a class="reference external" href="#serial">[serial]</a> and powered
+from the battery there. Transceiver is powered by it base controlled by
+software on windows machine and data will be transferred to ROS master
+PC from serial port. Related ROS package is at
+<a class="reference external" href="https://github.com/luym11/RISCusbl">https://github.com/luym11/RISCusbl</a>. So the overall architecture is shown
+in Fig<a class="reference external" href="#usbl_archi">[usbl_archi]</a>.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/usbl_archi.png:align:center"><img alt="..static/usbl_archi.png:align:center" src="..static/usbl_archi.png:align:center" /></a>
+</div>
+<p>[usbl_archi]</p>
+<p>When using this system, please use the specifically made serial port
+reader as Fig<a class="reference external" href="#usbl_on_rov">[usbl_on_rov]</a> for its voltage level.</p>
+<p>[usbl_on_rov]</p>
+</div>
+<div class="section" id="vision-based-system">
+<h4>Vision-based system<a class="headerlink" href="#vision-based-system" title="Permalink to this headline">¶</a></h4>
+<p>As the defects of USBL system mentioned before, we finally used a
+vision-based method for this stage of hardware test. Here we chose to
+use Apriltags to mark the ROVs and use a fisheye camera with related
+packages to give relative locations of each marker. Then we use a ROS
+node called location_bridge to publish these locations to
+agent_locations[ ] topics as we did for Gazebo, thus close the control
+loop.</p>
+<p>First, we need to choose a proper camera and calibrate it. After testing
+different kinds of camera, we finally chose the fisheye camera and
+calibrated it using a ROS camera calibration package. This localization
+system is installed on a DJI matrice 100, with an on-board computer as
+shown in Fig<a class="reference external" href="#dji_top">[dji_top]</a> and
+Fig<a class="reference external" href="#dji_down">[dji_down]</a>.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/dji_top.png:align:center"><img alt="..static/dji_top.png:align:center" src="..static/dji_top.png:align:center" /></a>
+</div>
+<p>[dji_top]</p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/dji_down.png:align:center"><img alt="..static/dji_down.png:align:center" src="..static/dji_down.png:align:center" /></a>
+</div>
+<p>[dji_down]</p>
+<p>Then package at <a class="reference external" href="https://github.com/luym11/apriltags2_ros">https://github.com/luym11/apriltags2_ros</a> is used to
+detect markers. Test indoor and outdoor showed its good performance as
+shown in Fig<a class="reference external" href="#marker_out">[marker_out]</a>.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/marker_test_out.png:align:center"><img alt="..static/marker_test_out.png:align:center" src="..static/marker_test_out.png:align:center" /></a>
+</div>
+<p>[marker_out]</p>
+<p>We used Odroid with WiFi communication to RISC marine router to send
+detected locations to ROS master computer. Three software components are
+running on the odroid:</p>
+<ul class="simple">
+<li>The USB camera node to publish camera image camera</li>
+<li>image_proc package to do image rectification</li>
+<li>Detection code that gives relative location of each marker to the
+center of the camera</li>
+</ul>
+<p>The odroid image is also stored in RISC Google Drive.</p>
+<p>The software running on PC is a location_bridge node, remap these
+coordinates and publish them to agent_locations[ ] topics instead of the
+Gazebo environment. With this architecture, we can create a closed
+control loop.</p>
+<p>The overall system architecture is shown in
+Fig<a class="reference external" href="#ros_hard">[ros_hard]</a></p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/ros_hard.png:align:center"><img alt="..static/ros_hard.png:align:center" src="..static/ros_hard.png:align:center" /></a>
+</div>
+<p>[ros_hard]</p>
+<p>All the commands need to run for one robot open-loop test with this set
+up are as follows, note the algorithm part is not included in the test
+now, but as we have the localization system, there is not too much work
+to close the loop as the architecture graph shows.</p>
+<ul class="simple">
+<li>On ROS master machine</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscore
+roslaunch bluerov_apps teleop_f310.launch
+rosrun image_view image_view image:<span class="o">=</span>/tag_detections_image: to
+monitor the view of the camera
+</pre></div>
+</div>
+<ul class="simple">
+<li>On Odroid</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch apriltags2_ros rov.launch
+</pre></div>
+</div>
+<ul class="simple">
+<li>On BlueROV</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch bluerov bluerov_r1.launch
+</pre></div>
+</div>
+<p>So the network architecture of this system is
+Fig<a class="reference external" href="#network">[network]</a></p>
+<div class="figure">
+<a class="reference internal image-reference" href="..static/network.png:align:center"><img alt="..static/network.png:align:center" src="..static/network.png:align:center" /></a>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="others">
+<h2>Others<a class="headerlink" href="#others" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="data-recording-and-representation">
+<h3>Data recording and representation<a class="headerlink" href="#data-recording-and-representation" title="Permalink to this headline">¶</a></h3>
+<p>It’s recommended to use rosbag and rqt_multiplot to record and represent
+data, respectively.</p>
+</div>
+<div class="section" id="list-of-software-packages-and-os-images">
+<h3>list of software packages and OS images<a class="headerlink" href="#list-of-software-packages-and-os-images" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="software-packages">
+<h4>Software packages<a class="headerlink" href="#software-packages" title="Permalink to this headline">¶</a></h4>
+<p>A list of all software packages used (with hyperlinks). They are all
+host on my account publically on Github. Will be forked to RISC account.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/luym11/multirov">MultiROV</a></li>
+<li><a class="reference external" href="https://github.com/luym11/uuv_simulator">UUV simulator
+(modified)</a></li>
+<li><a class="reference external" href="https://github.com/luym11/bluerov-ros-pkg">BlueROV packages
+(modified)</a></li>
+<li><a class="reference external" href="https://github.com/luym11/apriltags2_ros">Apriltags detection
+package</a></li>
+<li><a class="reference external" href="https://github.com/luym11/RISCusbl">USBL serial reader</a></li>
+</ul>
+</div>
+<div class="section" id="os-images-used">
+<h4>OS images used<a class="headerlink" href="#os-images-used" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>Original OS image for BlueROV (just for archive purpose)</li>
+<li>Ubuntu 16 Mate with ROS, MavROS and BlueROV package: for Raspberry Pi</li>
+<li>Ubuntu 16 Mate with ROS and AprilTag package: for Odroid</li>
+</ul>
+</div>
+</div>
+<div class="section" id="carrying-list-for-outdoor-test">
+<h3>Carrying list for outdoor test<a class="headerlink" href="#carrying-list-for-outdoor-test" title="Permalink to this headline">¶</a></h3>
+<p>As there will always be something forgotten, a list of carryings when
+going outdoor test is created and maintained.</p>
+<ul class="simple">
+<li>School bus key</li>
+<li>DJI Matrice 100, 2 batteries, RC, connection wire with the
+smartphone, attached Odroid (with WiFi stick and batteries) and
+camera, attached camera</li>
+<li>Odroid backup: with WiFi, power cable, a camera with USB cable</li>
+<li>Odroid console cable</li>
+<li>SD card reader</li>
+<li>Tapes</li>
+<li>Battery checker</li>
+<li>Ethernet cables</li>
+<li>ruler</li>
+<li>zip ties</li>
+<li>RISC marine router with battery and power cable</li>
+<li>Apriltag markers</li>
+<li>Linux PC (RISC marine laptop)</li>
+<li>ROVs with tether, Fathom-X power cable, ethernet cable, batteries</li>
+<li>Logitech joystick</li>
+</ul>
+</div>
+<div class="section" id="equipment-list-and-backups">
+<h3>Equipment list and backups<a class="headerlink" href="#equipment-list-and-backups" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Linux ROS Master <a class="reference external" href="mailto:risc&#37;&#52;&#48;192&#46;168&#46;0&#46;195">risc<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>195</a>, risc</li>
+<li>ROV1 <a class="reference external" href="mailto:risc&#37;&#52;&#48;192&#46;168&#46;0&#46;111">risc<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>111</a>, risc; gcs target 1</li>
+<li>ROV2 <a class="reference external" href="mailto:risc&#37;&#52;&#48;192&#46;168&#46;0&#46;112">risc<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>112</a>, risc; gcs target 2</li>
+<li>ROV3 <a class="reference external" href="mailto:risc&#37;&#52;&#48;192&#46;168&#46;0&#46;113">risc<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>113</a>, risc; gcs target 3</li>
+<li>ROV2 Test Pi with a ArduSub installed Pixhawk <a class="reference external" href="mailto:risc&#37;&#52;&#48;192&#46;168&#46;0&#46;112">risc<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>112</a>,
+risc; gcs target 2</li>
+<li>Camera Odroid <a class="reference external" href="mailto:odroid&#37;&#52;&#48;192&#46;168&#46;0&#46;190">odroid<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>190</a>, odroid</li>
+<li>Camera Odroid backup <a class="reference external" href="mailto:odroid&#37;&#52;&#48;192&#46;168&#46;0&#46;180">odroid<span>&#64;</span>192<span>&#46;</span>168<span>&#46;</span>0<span>&#46;</span>180</a>, odroid</li>
+</ul>
+</div>
+<div class="section" id="uuv-dependencies-troubleshoot">
+<h3>UUV dependencies troubleshoot<a class="headerlink" href="#uuv-dependencies-troubleshoot" title="Permalink to this headline">¶</a></h3>
+<p>Look at the log, reinstall essential packages, modify CMakeLists.
+Remember to source the bashrc everytime redo catkin build to make
+changes really effect.</p>
+<div class="section" id="eigen-3-issues">
+<h4>Eigen 3 issues<a class="headerlink" href="#eigen-3-issues" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">Can’t find related CMakeLists</div>
+<div class="line">Change related CMakeLists as</div>
+<div class="line">-find_package(Eigen3 REQUIRED)</div>
+<div class="line">+find_package(PkgConfig)</div>
+<div class="line">+pkg_search_module(Eigen3 REQUIRED eigen3)</div>
+<div class="line">Can’t find eigen/core</div>
+</div>
+<ul class="simple">
+<li>Make a new soft link to src</li>
+<li>modify include_directories(include
+Eigen_INCLUDE_DIRS)</li>
+</ul>
+</div>
+<div class="section" id="other-dependencies">
+<h4>Other dependencies<a class="headerlink" href="#other-dependencies" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">teleop issue</div>
+<div class="line">Rebuild this package from source or use apt-get</div>
+</div>
+</div>
+</div>
+<div class="section" id="others-1">
+<span id="id1"></span><h3>Others<a class="headerlink" href="#others-1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Some version of firmware doesn’t allow offboard mode. In this
+situation, if the vehicle still operates with RC commands, it’s
+mostly through QGroundControl. Notice key settings in these two
+situations are different.</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Appendix: RISC AUV System Manual</a><ul>
+<li><a class="reference internal" href="#ros-gazebo-simulation-system-manual">ROS/Gazebo simulation system manual</a><ul>
+<li><a class="reference internal" href="#multirov">MultiROV</a></li>
+<li><a class="reference internal" href="#uuv-simulator">UUV simulator</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#hardware-system-manual">Hardware system manual</a><ul>
+<li><a class="reference internal" href="#bluerov">BlueROV</a><ul>
+<li><a class="reference internal" href="#kit-assembly-and-common-issues">Kit Assembly and common issues</a></li>
+<li><a class="reference internal" href="#network-setup-and-companion-computer">Network setup and companion computer</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#localization-system">Localization system</a><ul>
+<li><a class="reference internal" href="#tritech-usbl">Tritech USBL</a></li>
+<li><a class="reference internal" href="#vision-based-system">Vision-based system</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#others">Others</a><ul>
+<li><a class="reference internal" href="#data-recording-and-representation">Data recording and representation</a></li>
+<li><a class="reference internal" href="#list-of-software-packages-and-os-images">list of software packages and OS images</a><ul>
+<li><a class="reference internal" href="#software-packages">Software packages</a></li>
+<li><a class="reference internal" href="#os-images-used">OS images used</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#carrying-list-for-outdoor-test">Carrying list for outdoor test</a></li>
+<li><a class="reference internal" href="#equipment-list-and-backups">Equipment list and backups</a></li>
+<li><a class="reference internal" href="#uuv-dependencies-troubleshoot">UUV dependencies troubleshoot</a><ul>
+<li><a class="reference internal" href="#eigen-3-issues">Eigen 3 issues</a></li>
+<li><a class="reference internal" href="#other-dependencies">Other dependencies</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#others-1">Others</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-networking.html"
+                        title="previous chapter">Networking</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="3-3d-printing.html"
+                        title="next chapter">3D Printing</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/4-marine-1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="3-3d-printing.html" title="3D Printing"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-networking.html" title="Networking"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

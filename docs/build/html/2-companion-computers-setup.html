@@ -1,0 +1,286 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Companion Computers Setup &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Pixhawk Interface Setup" href="2-pixhawk-interface-setup.html" />
+    <link rel="prev" title="Indoor flying" href="1-indoor-flight.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-pixhawk-interface-setup.html" title="Pixhawk Interface Setup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-indoor-flight.html" title="Indoor flying"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="companion-computers-setup">
+<h1>Companion Computers Setup<a class="headerlink" href="#companion-computers-setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="odroid-xu4-setup">
+<h2>ODROID XU4 setup<a class="headerlink" href="#odroid-xu4-setup" title="Permalink to this headline">¶</a></h2>
+<a class="reference internal image-reference" href="_images/odroidxu4.jpg"><img alt="_images/odroidxu4.jpg" class="align-center" src="_images/odroidxu4.jpg" style="width: 250.0px; height: 216.5px;" /></a>
+<div class="section" id="list-of-components">
+<h3>List of components<a class="headerlink" href="#list-of-components" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G143452239825">ODROID XU4</a>.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287">16GB (or more) eMMc module</a>.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758">eMMC reader</a>.</li>
+<li><a class="reference external" href="https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&amp;node=516872">Micro-SD reader</a>.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934">USB-UART Module Kit</a>.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369">WiFi Module 3 (2.4Ghz only)</a> good for outdoor use,  or <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389">WiFi Module 5 dual band 2.4/5Ghz</a> good for high-bandwidth.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056">DC plug cable - for onboard/portable power connection</a>.</li>
+<li><a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141637576518">Ethernet cable</a>.</li>
+</ul>
+</div>
+<div class="section" id="setup-ubuntu">
+<h3>Setup Ubuntu<a class="headerlink" href="#setup-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>ODROID XU 4 supports both Ubuntu and Android, see the details on <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php">odroid page</a>.</p>
+<p>Here we will discuss how to setup Ubuntu 16.04LTS</p>
+<div class="section" id="flashing-ubuntu-image">
+<h4>Flashing Ubuntu image<a class="headerlink" href="#flashing-ubuntu-image" title="Permalink to this headline">¶</a></h4>
+<p>You can use either an SD card or <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287">eMMC</a>. eMMC is recommended as it is much faster than SD card, 16GB or more is recommended.</p>
+<p>You can flash either <a class="reference external" href="https://odroid.in/ubuntu_16.04lts">full ubuntu image with GUI</a> or <a class="reference external" href="https://odroid.in/ubuntu_16.04lts">minimal image</a>. Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image to obtain the <code class="docutils literal notranslate"><span class="pre">.img</span></code> image. Then, use <code class="docutils literal notranslate"><span class="pre">Etcher</span></code> to flash it to either SD or eMMC card. You can extract the <code class="docutils literal notranslate"><span class="pre">/xz</span></code> image using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>xz -d /path/to/image.img.xz
+</pre></div>
+</div>
+<p>The previous images are bare images in the sense that you will have to install all required software in this tutorial yourself e.g. ROS, MAVORS, OpenCV, …etc.</p>
+<p>If you want a ready image with most of the required software <em>in this tutorial</em>, you can find a minimal image (no GUI) for your eyes <a class="reference external" href="https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0">here</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Until you setup a WiFi connection, you will need to use an ethernet cable to connect your odroid to internet.</p>
+</div>
+</div>
+<div class="section" id="user-account-setup">
+<h4>User account setup<a class="headerlink" href="#user-account-setup" title="Permalink to this headline">¶</a></h4>
+<p>After a fresh Ubuntu installation, it is recommended to setup a user account for easier handling in the future. The Ubuntu full image (that you download from ODROID repo) already comes with an account called <em>odroid</em>  with default password <em>odroid</em>. However, the minimal image (or sometimes called Ubuntu server) is just a bare bones image, and you will need to do a lot of configuration to get it ready.</p>
+<p>In the minimal image, you can add a user account (call it <em>odroid</em>) using the following commands. You can do this by plugging a screen, keyboard/mouse, or through the <a class="reference external" href="http://www.hardkernel.com/main/products/prdt_info.php?g_code=G134111883934">console cable</a>. If you use the console cable, login using the root account (user: <code class="docutils literal notranslate"><span class="pre">root</span></code>, password: <code class="docutils literal notranslate"><span class="pre">odroid</span></code>). Also make sure that your odroid is connected to the internet via ethernet cable.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>adduser odroid
+adduser odroid sudo
+apt-get update
+apt-get upgrade
+</pre></div>
+</div>
+<p>If you use the minimal image above (that is already pre-configured), skip this step.</p>
+<p>Also, add user to <code class="docutils literal notranslate"><span class="pre">dialout</span></code> group to access serial ports</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo adduser odroid dialout
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">odroid</span></code> is the account/user name.</p>
+</div>
+</div>
+<div class="section" id="network-setup">
+<h3>Network Setup<a class="headerlink" href="#network-setup" title="Permalink to this headline">¶</a></h3>
+<p>It is recommended that you use static IP address if you plan to use ODROID via a WiFi network. This will reduce latency over wifi.</p>
+<p>to set static IP address on full Ubuntu using GUI, check <a class="reference external" href="https://www.youtube.com/watch?v=o9fJWDoX4nE">this video</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You might need to reserve the IP on the router side</p>
+</div>
+<p>To set a static IP address on Ubuntu server (minimal image), do the following.</p>
+<p>Open <code class="docutils literal notranslate"><span class="pre">/etc/network/interfaces</span></code> file for editing.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/network/interfaces
+</pre></div>
+</div>
+<p>Add the following lines</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>auto wlan0
+<span class="c1"># the following will auto-start connection after boot</span>
+allow-hotplug wlan0
+iface wlan0 inet static
+address <span class="m">192</span>.168.0.xxx <span class="c1"># choose a static IP, usually you change the last number only for different devices</span>
+netmask <span class="m">255</span>.255.255.0
+broadcast <span class="m">192</span>.168.0.255
+gateway <span class="m">192</span>.168.0.1 <span class="c1"># your router IP</span>
+dns-nameservers <span class="m">8</span>.8.8.8
+wpa-ssid <span class="s2">&quot;wifi_name&quot;</span>
+wpa-psk <span class="s2">&quot;wifi_password&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You will need modify <code class="docutils literal notranslate"><span class="pre">wlan0</span></code> to match the wifi card number on your odroid once the wifi device is connected. Is possible that it changes when you change the wifi device.</p>
+<p>To check your wifi card number,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ifconfig -a
+</pre></div>
+</div>
+<p class="last">If you use the provided minimal image above (that is already pre-configured), but you will need to adjust the WiFi name and password to match your router access point that you use.</p>
+</div>
+</div>
+<div class="section" id="installing-packages">
+<h3>Installing packages<a class="headerlink" href="#installing-packages" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="install-ros">
+<h4>Install ROS<a class="headerlink" href="#install-ros" title="Permalink to this headline">¶</a></h4>
+<p>To install ROS on ODROID or ARM-based single-board-computer, follow the <a class="reference external" href="http://wiki.ros.org/Installation/UbuntuARM">instructions</a> that is mentioned on the ROS websites. We assume that ROS Kinetic is used.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Install the ROS-Base: (Bare Bones) not the full desktop version</p>
+</div>
+<p>So, when you reach the step to install ROS using <code class="docutils literal notranslate"><span class="pre">apt-get</span></code>, <strong>don’t execute</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-desktop-full
+</pre></div>
+</div>
+<p>Instead, <strong>you execute</strong>,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-ros-base
+</pre></div>
+</div>
+<p>After installing ROS, you can install ROS packages that you need individually either by using <code class="docutils literal notranslate"><span class="pre">apt-get</span></code> or from source.</p>
+</div>
+<div class="section" id="install-mavros">
+<h4>Install MAVROS<a class="headerlink" href="#install-mavros" title="Permalink to this headline">¶</a></h4>
+<p>This package is used to interface MAVLink-based autopilots to ROS.</p>
+<p>We will simply follow the well documented wiki on MAVROS github page. For simplicity, use the binary installation which is enough for most of the use cases.</p>
+</div>
+<div class="section" id="install-opencv">
+<h4>Install OpenCV<a class="headerlink" href="#install-opencv" title="Permalink to this headline">¶</a></h4>
+<p>Apparently, there are different ways to install OpenCV depending on the OpenCV version and your Python version, if you want to use it with Python. There are plenty of tutorial to follow and you can choose the one that suits your requirements. Normal procedures for general Ubuntu can be used. Here, one way is mentioned to install certain opencv version from source.
+Use the following shell commands to install OpenCV,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">### INSTALL OPENCV DEPENDENCIES ###</span>
+sudo apt-get install build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libqt4-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libtbb2 libtbb-dev
+</pre></div>
+</div>
+<p>You can choose your suitable opencv version (check opencv website) and execute the following</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">### GET OPENCV SOURCE ###</span>
+<span class="nb">cd</span> ~
+wget http://sourceforge.net/projects/opencvlibrary/files/opencv-unix/2.4.9/opencv-2.4.9.zip
+unzip opencv-2.4.9.zip
+rm opencv-2.4.9.zip
+<span class="nb">cd</span> opencv-2.4.9
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1">### BUILD AND INSTALL OPENCV ###</span>
+mkdir build
+<span class="nb">cd</span> build
+cmake -DCMAKE_BUILD_TYPE<span class="o">=</span>RELEASE -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr/local -DWITH_OPENGL<span class="o">=</span>ON -DWITH_V4L<span class="o">=</span>ON -DWITH_TBB<span class="o">=</span>ON -DBUILD_TBB<span class="o">=</span>ON -DENABLE_VFPV3<span class="o">=</span>ON -DENABLE_NEON<span class="o">=</span>ON ..
+make
+sudo make install
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="references">
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<p>Here is a <a class="reference external" href="https://www.youtube.com/watch?v=sLLF-Ml2sIo">video</a> for reference which explains how to install OpenCV on ODROID XU4.</p>
+</div>
+</div>
+<div class="section" id="raspberry-pi-setup">
+<h2>Raspberry Pi Setup<a class="headerlink" href="#raspberry-pi-setup" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To be done.</p>
+</div>
+</div>
+<div class="section" id="intel-nuc-setup">
+<h2>Intel NUC setup<a class="headerlink" href="#intel-nuc-setup" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">To be done.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Companion Computers Setup</a><ul>
+<li><a class="reference internal" href="#odroid-xu4-setup">ODROID XU4 setup</a><ul>
+<li><a class="reference internal" href="#list-of-components">List of components</a></li>
+<li><a class="reference internal" href="#setup-ubuntu">Setup Ubuntu</a><ul>
+<li><a class="reference internal" href="#flashing-ubuntu-image">Flashing Ubuntu image</a></li>
+<li><a class="reference internal" href="#user-account-setup">User account setup</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#network-setup">Network Setup</a></li>
+<li><a class="reference internal" href="#installing-packages">Installing packages</a><ul>
+<li><a class="reference internal" href="#install-ros">Install ROS</a></li>
+<li><a class="reference internal" href="#install-mavros">Install MAVROS</a></li>
+<li><a class="reference internal" href="#install-opencv">Install OpenCV</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#raspberry-pi-setup">Raspberry Pi Setup</a></li>
+<li><a class="reference internal" href="#intel-nuc-setup">Intel NUC setup</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-indoor-flight.html"
+                        title="previous chapter">Indoor flying</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-pixhawk-interface-setup.html"
+                        title="next chapter">Pixhawk Interface Setup</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-companion-computers-setup.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-pixhawk-interface-setup.html" title="Pixhawk Interface Setup"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-indoor-flight.html" title="Indoor flying"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

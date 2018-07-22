@@ -1,0 +1,369 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pixhawk Interface Setup &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running MAVROS after system boot" href="2-running-mavros-after-boot.html" />
+    <link rel="prev" title="Companion Computers Setup" href="2-companion-computers-setup.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-running-mavros-after-boot.html" title="Running MAVROS after system boot"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-companion-computers-setup.html" title="Companion Computers Setup"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pixhawk-interface-setup">
+<h1>Pixhawk Interface Setup<a class="headerlink" href="#pixhawk-interface-setup" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="intro">
+<h2>Intro<a class="headerlink" href="#intro" title="Permalink to this headline">¶</a></h2>
+<p>OFFBOARD control means that we would like to be able to send (usually) high-level control commands to <em>Pixahwk</em>. For example, sending position, velocity , or acceleration set-points. Then, <em>Pixhawk</em> will receive those set-points and perform the neccessary low-level control (e.g. attitude/engines control).</p>
+<p>In general, sending high-level commands is done off-board (board here refers to <em>Pixhawk</em>). In other words, an offboard computer is usually used to execute some code to take some high-level decisions. Then, high-level decisions are translated to set-points (e.g. position set-points) which, then, are sent to the <em>Pixhawk</em> to be executed. For example, an offboard computer can be used to do run some image processing algorithm for object tracking. The output of the algorithm is position set-points to tell <em>Pixhawk</em> to move to the direction of the tracked object.</p>
+<p>In general, executing such offboard tasks are not feasible due to the limited resources on <em>Pixhawk</em>. Therefore, more powerful computers are used.</p>
+<p>Offboard computers can be single board computer (or SBC in brief), e.g. <code class="docutils literal notranslate"><span class="pre">ODROID</span> <span class="pre">XU4</span></code>. Or, it can be a fully loaded workstaton, desktop, or laptop.</p>
+<p>In summary, <em>Pixhawk</em> is used as a flight controllers. Whereas, offboard controller are used to execute more sophisticated tasks.</p>
+<p>In this guide, we will learn how to do offboard control from an SBC (ODROID XU4), and from desktop/laptop that runs <em>MATLAB</em>. In both cases, we need to setup the required hardware interface. We will discuss two main interfaces: Serial interface, and WiFi interface. See next sub-sections for details.</p>
+</div>
+<div class="section" id="off-board-serial-interface">
+<h2>Off-board serial interface<a class="headerlink" href="#off-board-serial-interface" title="Permalink to this headline">¶</a></h2>
+<p>Serial interface with Pixhawk can be done using:</p>
+<ul class="simple">
+<li>Radio modules:<ul>
+<li>XBee module</li>
+<li>3DR telemetry module</li>
+</ul>
+</li>
+<li>Wired serial:<ul>
+<li>Direct serial interface</li>
+<li>FTDI/USB</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="wifi-interface-with-esp-07">
+<h2>WiFi Interface with ESP-07<a class="headerlink" href="#wifi-interface-with-esp-07" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial, we are going to use the <code class="docutils literal notranslate"><span class="pre">ESP8266</span></code> WiFi module to communicate with <em>Pixhawk</em> via WiFi.</p>
+<p>Required:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.dx.com/p/esp-07-esp8266-serial-wi-f-wireless-module-w-built-in-antenna-compatible-with-3-3v-5v-for-arduino-400559#.WuHT8J9fi91">ESP-07 ESP8266 Serial Wi-Fi Wireless Transceiver Module</a></li>
+</ul>
+<a class="reference internal image-reference" href="_images/sku_400559_1.jpg"><img alt="_images/sku_400559_1.jpg" class="align-center" src="_images/sku_400559_1.jpg" style="width: 350.0px; height: 350.0px;" /></a>
+<ul class="simple">
+<li><a class="reference external" href="https://www.robotshop.com/en/ftdi-usb-to-ttl-serial-cable-5v.html">FTDI/USB cable</a> to flash firmware.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/ftdi-usb-to-ttl-serial-cable-5v_1.jpg"><img alt="_images/ftdi-usb-to-ttl-serial-cable-5v_1.jpg" class="align-center" src="_images/ftdi-usb-to-ttl-serial-cable-5v_1.jpg" style="width: 450.0px; height: 450.0px;" /></a>
+<p>Connect the FTDI/USB cable to the ESP module. The orange cable (TX) is connected to (RX) pin on the module. Yellow cable (RX) is connected to (TX) pin on the module. Connect the power (red) and ground (black).</p>
+<p>Follow the <a class="reference external" href="https://pixhawk.org/peripherals/8266">this guide</a> to flash and setup the ESP8266.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Use <code class="docutils literal notranslate"><span class="pre">platformio</span> <span class="pre">run</span> <span class="pre">-e</span> <span class="pre">esp01_1m</span> <span class="pre">-t</span> <span class="pre">upload</span></code> to upload the firmware to the board.</p>
+</div>
+<p>Connect the module to the Pixhawk as follows.</p>
+<a class="reference internal image-reference" href="_images/pixhawk_telem_cable.png"><img alt="_images/pixhawk_telem_cable.png" class="align-center" src="_images/pixhawk_telem_cable.png" style="width: 129.0px; height: 262.0px;" /></a>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">You first need to make sure that you configured <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code> port to be used for ESP link with baud 921600. You can do this, by first, connecting to Pixhawk via USB, and modify the <code class="docutils literal notranslate"><span class="pre">SYS_COMP</span></code> parameter in the <em>System</em> tab on the left. Now, you can proceed.</p>
+</div>
+<p>Power-on the Pixhawk with the WiFi module connected to <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code> as mentioned above.</p>
+<p>Search for the <strong>Pixracer</strong> WiFi network. Connect to that network with the password <strong>pixracer</strong>.</p>
+<p>Open QGroundControl and connect using UDP connection.</p>
+<p>Now you are connected to Pixhawk via WiFi. The Wifi Module is in <em>Access point</em> mode by default, and it creates its own WiFi network (<strong>Pixracer</strong>). If you wish to connect to your own local WiFi network, then in QGC, while you are connected to <em>Pixracer</em> network, go to the <strong>WiFi Bridge</strong> tab on the left and choose <em>station mode</em>.</p>
+<p>Write the desired network name and password in the appropriate field.</p>
+<p>Restart Pixhawk, and the WiFi module should try to connect to your local network.</p>
+<p>Now, you can connect your machine to the same local network, then connect to Pixhawk from QGroundControl via UDP.</p>
+</div>
+<div class="section" id="wifi-interface-with-wifly-rn-xv">
+<h2>WiFi Interface with WiFly RN XV<a class="headerlink" href="#wifi-interface-with-wifly-rn-xv" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we learn how to setup a WiFi communication with <em>Pixhawk</em> using the <em>RN-XV WiFly</em> module.</p>
+<p>Requirements:</p>
+<ul class="simple">
+<li><em>Pixhawk</em>: calibrated and ready to fly</li>
+<li>WiFi module [RN-XV WiFly Module - Wire Antenna. Available <a class="reference external" href="https://www.sparkfun.com/products/10822">here</a>.</li>
+<li><a class="reference external" href="https://www.sparkfun.com/products/11812">XBee explorer USB</a> to configure WiFi module via PC</li>
+<li><a class="reference external" href="http://www.robotshop.com/en/droids-xbee-simple-board.html">Xbee breakout board</a> to interface with <em>Pixhawk</em></li>
+</ul>
+<p>In this tutorial, <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code> is going to be used to connect the WiFi module at baud rate 921600. <code class="docutils literal notranslate"><span class="pre">TELEM1</span></code> can be used too, but will require further configuration steps, but you can still use it directly at baud <code class="docutils literal notranslate"><span class="pre">57600</span></code> (which is its default).</p>
+<div class="section" id="pixhawk-telem-setup">
+<h3>Pixhawk TELEM setup<a class="headerlink" href="#pixhawk-telem-setup" title="Permalink to this headline">¶</a></h3>
+<p>To set the baude rate of <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code> to <code class="docutils literal notranslate"><span class="pre">921600</span></code>, connect <em>Pixhawk</em> to <em>QGroundcontrol</em>. Go to the <em>System</em> tab. Change the <code class="docutils literal notranslate"><span class="pre">SYS_COMP</span></code> parameter to use companion with 921600 baudrate. Restart <em>Pixhawk</em> to take effect.</p>
+</div>
+<div class="section" id="wifi-module-setup">
+<h3>WiFi module setup<a class="headerlink" href="#wifi-module-setup" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://dlnmh9ip6v2uc.cloudfront.net/datasheets/Wireless/WiFi/WiFly-RN-UM.pdf">Official Roving Network documentation</a></p>
+<p>Connect the WiFi module to the XBee explorer USB board and connect it to the computer. You will need to use a serial terminal. For Mac, use the Mac terminal. For Windows it is recommended to use <strong>TeraTerm</strong>.</p>
+<p>On a Mac terminal, use the screen command to log into the Wifly</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>screen /dev/tty.usbserial-FTFABC <span class="m">9600</span> 8N1
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">/dev/tty.usbserial-FTFABC</span></code> is the device port on Mac. You can find yours using</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls /dev/tty*
+</pre></div>
+</div>
+<p>After you login, type <strong>$$$</strong> and hit <strong>ENTER</strong></p>
+<p>Type to make sure that the device is operational.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scan
+</pre></div>
+</div>
+<p>If there are networks, it should be listed.</p>
+</div>
+<div class="section" id="serial-setup">
+<h3>Serial setup<a class="headerlink" href="#serial-setup" title="Permalink to this headline">¶</a></h3>
+<p>You can change the serial baudrate by</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> u b <span class="m">57600</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Make sure that you use the new baud rate to connect again to the device via serial port.</p>
+</div>
+</div>
+<div class="section" id="wifi-setup">
+<h3>WiFi setup<a class="headerlink" href="#wifi-setup" title="Permalink to this headline">¶</a></h3>
+<p>Set authentication to WPA2-PSK only:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan auth <span class="m">3</span>
+</pre></div>
+</div>
+<p>Set auto channel scan</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan channel <span class="m">0</span>
+</pre></div>
+</div>
+<p>Tell the module to auto-join the network when powered on:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan join <span class="m">1</span>
+</pre></div>
+</div>
+<p>Set  wireless name, SSID</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan ssid &lt;your wifi ssid&gt;
+</pre></div>
+</div>
+<p>Set WiFi password</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan phrase &lt;password&gt;
+</pre></div>
+</div>
+<p>Enable continous scanning</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> wlan linkmon <span class="m">5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ip-setup">
+<h3>IP setup<a class="headerlink" href="#ip-setup" title="Permalink to this headline">¶</a></h3>
+<p>This guide assumes UDP communication to a ground control station computer on IP <code class="docutils literal notranslate"><span class="pre">192.168.1.100</span></code>, port <code class="docutils literal notranslate"><span class="pre">14550</span></code> (QGroundControl default port).</p>
+<div class="section" id="set-dynamic-ip-recommended">
+<h4>Set dynamic IP (recommended)<a class="headerlink" href="#set-dynamic-ip-recommended" title="Permalink to this headline">¶</a></h4>
+<p>Enable DHCP on each boot (for dynamic IP):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip dhcp <span class="m">1</span>
+</pre></div>
+</div>
+<p>Set IP protocol (UDP &amp; TCP)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip protocol <span class="m">3</span>
+</pre></div>
+</div>
+<p>Set remote port:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip remote <span class="m">14550</span>
+</pre></div>
+</div>
+<p>Set remote hos IP (IP of your PC):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip host <span class="m">192</span>.168.1.100
+</pre></div>
+</div>
+</div>
+<div class="section" id="test-and-save-configurations">
+<h4>Test and save configurations<a class="headerlink" href="#test-and-save-configurations" title="Permalink to this headline">¶</a></h4>
+<p>Join the WiFi</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>join &lt;WiFi ssid&gt;
+</pre></div>
+</div>
+<p>If it connects, it will show:</p>
+<p>Save and reboot</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>save
+reboot
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Make sure that you save your settings, otherwise it will be lost</p>
+</div>
+<p>To check the settings current yon the device,</p>
+<ul class="simple">
+<li>IP settings:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>get ip
+</pre></div>
+</div>
+<ul class="simple">
+<li>WiFi settings:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>get wlan
+</pre></div>
+</div>
+<ul class="simple">
+<li>Serial settings:</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>get u
+</pre></div>
+</div>
+</div>
+<div class="section" id="static-ip">
+<h4>Static IP<a class="headerlink" href="#static-ip" title="Permalink to this headline">¶</a></h4>
+<p>Disable DHCP mode</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip dhcp <span class="m">0</span>
+</pre></div>
+</div>
+<p>Set the WiFi module’s IP address</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip address &lt;choose ip&gt;
+</pre></div>
+</div>
+<p>your IP first 3 numbers (e.g. <code class="docutils literal notranslate"><span class="pre">192.168.1.\*</span></code>) should be the same as your router’s first three numbers</p>
+<p>Set IP gateway (usually this is your router’s IP). You can first set up dynamic IP, and then connect to the WiFi. Then, on the WiFi module command line type <code class="docutils literal notranslate"><span class="pre">get</span> <span class="pre">ip</span></code> to see the <em>gateway</em> and the <em>netmask</em>, and note them down. Set the <em>gateway</em> and <em>netmask</em> as follows,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip gateway &lt;router ip address&gt;
+</pre></div>
+</div>
+<p>Set <em>netmask</em>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip netmask &lt;netmask address&gt;
+</pre></div>
+</div>
+<p>Set local port. You can leave the default (2000)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> ip localport <span class="m">2000</span>
+</pre></div>
+</div>
+<p>Set the remote host IP and remote port as before.</p>
+<p>Save and reboot</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>save
+reboot
+</pre></div>
+</div>
+<p>Make sure that the device can join the WiFi network. Log in to the device using (e.g. <code class="docutils literal notranslate"><span class="pre">screen</span></code> command), and type <strong>$$$</strong>. Then join the network by typing <code class="docutils literal notranslate"><span class="pre">join</span> <span class="pre">&lt;network</span> <span class="pre">ssid&gt;</span></code></p>
+<p>Once successful, you can now go to next step to set higher baud rates.</p>
+</div>
+<div class="section" id="configure-higher-baud-rates">
+<h4>Configure higher baud rates<a class="headerlink" href="#configure-higher-baud-rates" title="Permalink to this headline">¶</a></h4>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">DO NOT set high baud rates while you are on serial (e.g. <code class="docutils literal notranslate"><span class="pre">921600</span></code>), because you will not be able to log in again from the serial console. You can set higher baud rate after you log in to the WiFly module via WiFi, using <code class="docutils literal notranslate"><span class="pre">telnet</span></code> command in Mac OS</p>
+</div>
+<p>First make sure your computer is connected to the same router as the WiFly device. Open a terminal and type,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>telnet &lt;wifly ip address&gt; &lt;wifly localport&gt;
+</pre></div>
+</div>
+<p>then type <code class="docutils literal notranslate"><span class="pre">$$$</span></code>, and hit <strong>ENTER</strong></p>
+<p>Set high baudrate</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">set</span> u b <span class="m">921600</span>
+</pre></div>
+</div>
+<p>Save and reboot</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>save
+reboot
+</pre></div>
+</div>
+<p>Finally, attach the WiFly device to an <a class="reference external" href="https://www.sparkfun.com/products/11373">XBee explorer requlated board</a>, and connect it to <code class="docutils literal notranslate"><span class="pre">TELEM2</span></code>.</p>
+<p>Now you are ready to communicate with the <em>Pixhawk</em> via WiFi!</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Pixhawk Interface Setup</a><ul>
+<li><a class="reference internal" href="#intro">Intro</a></li>
+<li><a class="reference internal" href="#off-board-serial-interface">Off-board serial interface</a></li>
+<li><a class="reference internal" href="#wifi-interface-with-esp-07">WiFi Interface with ESP-07</a></li>
+<li><a class="reference internal" href="#wifi-interface-with-wifly-rn-xv">WiFi Interface with WiFly RN XV</a><ul>
+<li><a class="reference internal" href="#pixhawk-telem-setup">Pixhawk TELEM setup</a></li>
+<li><a class="reference internal" href="#wifi-module-setup">WiFi module setup</a></li>
+<li><a class="reference internal" href="#serial-setup">Serial setup</a></li>
+<li><a class="reference internal" href="#wifi-setup">WiFi setup</a></li>
+<li><a class="reference internal" href="#ip-setup">IP setup</a><ul>
+<li><a class="reference internal" href="#set-dynamic-ip-recommended">Set dynamic IP (recommended)</a></li>
+<li><a class="reference internal" href="#test-and-save-configurations">Test and save configurations</a></li>
+<li><a class="reference internal" href="#static-ip">Static IP</a></li>
+<li><a class="reference internal" href="#configure-higher-baud-rates">Configure higher baud rates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-companion-computers-setup.html"
+                        title="previous chapter">Companion Computers Setup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-running-mavros-after-boot.html"
+                        title="next chapter">Running MAVROS after system boot</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-pixhawk-interface-setup.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-running-mavros-after-boot.html" title="Running MAVROS after system boot"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-companion-computers-setup.html" title="Companion Computers Setup"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

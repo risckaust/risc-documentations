@@ -1,0 +1,239 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>MATLAB Pixhawk Communication &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Setup HIL with PX4 &amp; V-REP" href="2-hil-px4-vrep.html" />
+    <link rel="prev" title="ODROID to MATLAB Stream" href="2-odroid-to-matlab.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="2-hil-px4-vrep.html" title="Setup HIL with PX4 &amp; V-REP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="2-odroid-to-matlab.html" title="ODROID to MATLAB Stream"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="matlab-pixhawk-communication">
+<h1>MATLAB Pixhawk Communication<a class="headerlink" href="#matlab-pixhawk-communication" title="Permalink to this headline">¶</a></h1>
+<p>In this demo you will learn two things</p>
+<ul class="simple">
+<li>Sending high-level commands  from MATLAB to Pixhawk, using <code class="docutils literal notranslate"><span class="pre">MATMAV</span></code></li>
+<li>Getting live stream of images into MATLAB from ODROID which is mounted on a quadcopter.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/demo1.png"><img alt="_images/demo1.png" class="align-center" src="_images/demo1.png" style="width: 658.0px; height: 446.0px;" /></a>
+<p>As you can see from the previous figure, there are 4 main components to setup.</p>
+<ul class="simple">
+<li>Motion capture system.</li>
+<li>Quadcopter with Pixhawk flight controller.</li>
+<li>ODROID: embedded Linux computer.</li>
+<li>MATLAB enviornment.</li>
+</ul>
+<div class="section" id="motion-capture-setup">
+<h2>Motion capture setup<a class="headerlink" href="#motion-capture-setup" title="Permalink to this headline">¶</a></h2>
+<p>Motion capture (or Mocap in short) is used to provide accurate positions and orientations in an indoor environment. The mocap setup we have in the lab is from <em>Optitrack</em> company. You can think of it as GPS system for indoor environment.</p>
+<p>Mocap mainly consists of cameras, network switches, and a PC with a special software. Cameras capture images which contain special <em>reflective markers</em>. Those markers are used to track objects (rigid bodies) they are attached to. Then, images from all cameras are transmitted to the PC software (called <em>Motive</em>) through the network switches, in order to do further image processing.</p>
+<p><em>Motive</em> extracts useful information about captured rigid bodies such as position and orientation. Such information can be further transmitted through network to other PCs for further usage. Rigid bodies are defined by at least 3 reflective markers that are rigidly mounted on the object of interest.</p>
+<p>For this tutorial, it is assumed that the Mocap is already calibrated.</p>
+<p>What we need in this tutorial is to</p>
+<ul class="simple">
+<li>Open <em>Motive</em> project</li>
+<li>Define rigid bodies</li>
+<li>Configure streaming parameters in Motive</li>
+<li>Use the Streaming Application to send mocap info to Pixhawk</li>
+</ul>
+<p><strong>Follow the following steps in order.</strong></p>
+<ul class="simple">
+<li>Open <em>Motive</em> software, and choose <code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Existing</span> <span class="pre">Project</span></code>. Choose a recent project that represents the latest calibration settings.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/startup-screen.PNG"><img alt="_images/startup-screen.PNG" class="align-center" src="_images/startup-screen.PNG" style="width: 194.0px; height: 271.5px;" /></a>
+<a class="reference internal image-reference" href="_images/choose-project.PNG"><img alt="_images/choose-project.PNG" class="align-center" src="_images/choose-project.PNG" style="width: 617.0px; height: 363.0px;" /></a>
+<ul class="simple">
+<li>Close the <code class="docutils literal notranslate"><span class="pre">Camera</span> <span class="pre">Preview</span></code> view, and leave the <code class="docutils literal notranslate"><span class="pre">Perspective</span> <span class="pre">View</span></code> view for 3D viewing of objects.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/motive1.PNG"><img alt="_images/motive1.PNG" class="align-center" src="_images/motive1.PNG" style="width: 796.5px; height: 443.5px;" /></a>
+<ul class="simple">
+<li>Place the object in the cage (e.g. quadcopter) with mounted markers (minimum 3 markers).</li>
+<li>Select markers in the <code class="docutils literal notranslate"><span class="pre">Perspective</span> <span class="pre">View</span></code> and create a rigid body</li>
+</ul>
+<a class="reference internal image-reference" href="_images/createRigidbody.png"><img alt="_images/createRigidbody.png" class="align-center" src="_images/createRigidbody.png" style="width: 595.0px; height: 302.0px;" /></a>
+<ul class="simple">
+<li>You can know your rigid body number from the <code class="docutils literal notranslate"><span class="pre">Rigid</span> <span class="pre">Body</span></code>, after you select the rigid body in the <code class="docutils literal notranslate"><span class="pre">Perspective</span> <span class="pre">View</span></code>.</li>
+<li>Now, activate streaming over network as follows</li>
+</ul>
+<a class="reference internal image-reference" href="_images/motiveStreamTab.PNG"><img alt="_images/motiveStreamTab.PNG" class="align-center" src="_images/motiveStreamTab.PNG" style="width: 793.5px; height: 444.5px;" /></a>
+<ul class="simple">
+<li>Connect the wireless serial module to the Mocap PC (e.g. XBee)</li>
+<li>Open Mocap streaming App.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/mocapstream.PNG"><img alt="_images/mocapstream.PNG" class="align-center" src="_images/mocapstream.PNG" style="width: 236.0px; height: 398.0px;" /></a>
+<ul class="simple">
+<li>Select the proper <em>Vehicle ID</em></li>
+<li>In the <code class="docutils literal notranslate"><span class="pre">Serial</span> <span class="pre">Connection</span></code> tab, select the proper serial port of the communication module from the <code class="docutils literal notranslate"><span class="pre">Port</span> <span class="pre">Name</span></code> drop menu. Set the <code class="docutils literal notranslate"><span class="pre">Baud</span> <span class="pre">Rate</span></code> to <em>57600</em>. Finally, click the <code class="docutils literal notranslate"><span class="pre">Connect</span></code> button. If the connection is successful, it will show a status message in the <code class="docutils literal notranslate"><span class="pre">Port</span> <span class="pre">Status</span></code> field.</li>
+<li>In the <code class="docutils literal notranslate"><span class="pre">Mocap</span> <span class="pre">Connection</span></code> tab, leave the <code class="docutils literal notranslate"><span class="pre">Mocap</span> <span class="pre">IP</span></code> and <code class="docutils literal notranslate"><span class="pre">Client</span> <span class="pre">IP</span></code> to the defaults IPs (<code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code>). Hit the <code class="docutils literal notranslate"><span class="pre">Connect</span></code> button.</li>
+<li>If the connection is successful, you should see the defined rigid bodies in the <code class="docutils literal notranslate"><span class="pre">Received</span> <span class="pre">Bodies</span></code> list box.</li>
+<li>Select the one corresponds to the quadcopter. Then, check the <code class="docutils literal notranslate"><span class="pre">stream</span> <span class="pre">to</span> <span class="pre">Mav</span></code> checkbox.</li>
+<li>Now, your quad should be getting its position and orientation feedback from the Mocap system.</li>
+</ul>
+</div>
+<div class="section" id="quadcopter-setup">
+<h2>Quadcopter setup<a class="headerlink" href="#quadcopter-setup" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial assumes that the quadcopter is setup and equipped with a calibrated Pixhawk (or Pixracer) flight controller.</p>
+<p>In this Demo, the quadcopter is assumed to have an ODROID on-board, two serial communication modules (e.g. XBee). One for the Mocap connection, and the other for MATLAB connection.</p>
+</div>
+<div class="section" id="odroid-setup">
+<h2>ODROID setup<a class="headerlink" href="#odroid-setup" title="Permalink to this headline">¶</a></h2>
+<p>In this Demo, ODROID is used to capture real-time images and stream them over WiFi network to a MATLAB session. The streaming application is assumed to be installed on ODROID and ready to be used. Also, the ODROID is assumed to be setup to connect to a local WiFi network.</p>
+<p>Check <a class="reference external" href="https://github.com/mzahana/Image_Live_Stream">this guide</a> to see how to install the streaming app on ODROID.</p>
+<p>To run the application, follow the following steps in order</p>
+<ul class="simple">
+<li>Connect a compatible camera to ODROID</li>
+<li>Connect a compatible WiFi module to ODROID (use the ODROID WiFi adapter)</li>
+<li>Power on the ODROID</li>
+<li>From your laptop (which is connected to the same local WiFi network as the ODROID), open a terminal and remotely log-in to ODROID</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh odroid@192.168.1.113
+password: odroid
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">odroid</span></code> is the user account name. <code class="docutils literal notranslate"><span class="pre">192.168.1.113</span></code> is the ODROID’s IP address.</p>
+<ul class="simple">
+<li>Navigate to the app folder and run it</li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/Desktop/imgstream/Image_Live_Stream/opencv_stream/stream_cpp
+./sender <span class="m">192</span>.168.1.112 <span class="m">10000</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">192.168.1.112</span></code> is your machine’s IP address. <code class="docutils literal notranslate"><span class="pre">10000</span></code> is the port that is going to be opened in your MATLAB. You can choose another port, but make sure it matches the one used in your MATLAB.</p>
+<ul class="simple">
+<li>Now, the ODROID is sending images to the specified IP and port.</li>
+</ul>
+</div>
+<div class="section" id="matlab-setup">
+<h2>MATLAB setup<a class="headerlink" href="#matlab-setup" title="Permalink to this headline">¶</a></h2>
+<p>In this Demo, MATLAB is used to</p>
+<ul class="simple">
+<li>Communicate with Pixhawk (or Pixracer) in order to send high-level commands. For example, position set-points, velocity set-points, or acceleration set-points. It can also receive feedback information from Pixhawk.</li>
+<li>Receive live-stream of images from ODROID.</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You need to use the MATLAB files associated with this Demo. Please ask for your free copy.</p>
+</div>
+<p>We are going to use two main MATLAB classes in this Demo. One is called <code class="docutils literal notranslate"><span class="pre">MatMav</span></code>, and the other is called <code class="docutils literal notranslate"><span class="pre">ImgStream</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">MatMav</span></code> is a MATLAB class that is used to communicate with Pixhawk. <code class="docutils literal notranslate"><span class="pre">ImgStream</span></code> is a MATLAB class that is use to receive live image stream from ODROID (or any Linux computer) over network.</p>
+<p>Before you use the MATLAB files associated with this demo, you should setup your environment properly.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Before you use the MATLAB files associated with this demo, you should setup your environment properly. Namely, you need to associate your MATLAB with a C/C++ compiler, and install OpenCV.</p>
+</div>
+<p>Please follow the OpenCV installation as follows,</p>
+<ul class="simple">
+<li>For <a class="reference external" href="https://www.youtube.com/watch?v=U49CVY8yOxw">Mac OS</a>.</li>
+<li>For <a class="reference external" href="https://www.youtube.com/watch?v=EcFtefHEEII">Windows</a>.</li>
+</ul>
+<p>Google how to associate your MATLAB with a compiler.</p>
+<ul class="simple">
+<li>Download the MATLAB folder associated with this Demo.</li>
+<li>Open MATLAB and navigate to that folder.</li>
+<li>Run the <code class="docutils literal notranslate"><span class="pre">setup.m</span></code> file.</li>
+</ul>
+<p>If all goes well, you should get the message <code class="docutils literal notranslate"><span class="pre">Setup</span> <span class="pre">is</span> <span class="pre">done</span></code>. Now, you are ready to proceed with the experiment which is implemented in the <code class="docutils literal notranslate"><span class="pre">Demo1.m</span></code> MATLAB file.</p>
+<ul class="simple">
+<li>Check the <code class="docutils literal notranslate"><span class="pre">Demo1.m</span></code> file to get familiar with <code class="docutils literal notranslate"><span class="pre">MatMav</span></code> and <code class="docutils literal notranslate"><span class="pre">ImgStream</span></code> classes.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MATLAB Pixhawk Communication</a><ul>
+<li><a class="reference internal" href="#motion-capture-setup">Motion capture setup</a></li>
+<li><a class="reference internal" href="#quadcopter-setup">Quadcopter setup</a></li>
+<li><a class="reference internal" href="#odroid-setup">ODROID setup</a></li>
+<li><a class="reference internal" href="#matlab-setup">MATLAB setup</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="2-odroid-to-matlab.html"
+                        title="previous chapter">ODROID to MATLAB Stream</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="2-hil-px4-vrep.html"
+                        title="next chapter">Setup HIL with PX4 &amp; V-REP</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/2-matlab-pixhawk.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="2-hil-px4-vrep.html" title="Setup HIL with PX4 &amp; V-REP"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="2-odroid-to-matlab.html" title="ODROID to MATLAB Stream"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>

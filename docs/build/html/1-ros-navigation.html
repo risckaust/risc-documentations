@@ -1,0 +1,321 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>ROS Navigation &#8212; RISC-Docs 0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="3D Modeling" href="1-3d-modeling.html" />
+    <link rel="prev" title="ROS Basics" href="1-ros-basics.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="1-3d-modeling.html" title="3D Modeling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="1-ros-basics.html" title="ROS Basics"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ros-navigation">
+<h1>ROS Navigation<a class="headerlink" href="#ros-navigation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>In this tutorial you will learn how to program a mobile robot using ROS to navigate from point A to point B autonomously while avoiding obstacles.</p>
+<p><strong>You will learn by doing</strong>. Specifically, in each of the three main topics in this tutorial, you will follow the following steps.</p>
+<ul class="simple">
+<li><strong>Running a complete example.</strong> First, for each topic, you will run a set of available ROS programs to perform the tasks discussed in this tutorial in order to get familiar with the tools.</li>
+<li><strong>Analyze examples</strong>. Next, we will dig deeper into the examples and understand how it works.</li>
+<li><strong>Do exercises</strong>. To make sure that you understand and enforce the concepts you learned, a set of exercises are provided for you to solve. Solutions for those exercises are available. <strong>However</strong>,</li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">You will only learn the concepts mentioned here by <strong>practicing</strong>. Remember to practice, practice, and practice ….</p>
+</div>
+<p>In this tutorial, you will work with a simulated robot called <code class="docutils literal notranslate"><span class="pre">TurtleBot</span></code> in the Gazebo simulator.</p>
+</div>
+<div class="section" id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial assumes the following.</p>
+<ul class="simple">
+<li>You are familiar with ROS basics e.g. topics, services, actions, how to write ROS nodes in Python, and ROS command line tools</li>
+<li>ROS Kinetic (Desktop-Full install) is installed on Ubuntu 16.04 LTS
+<a class="reference external" href="http://wiki.ros.org/kinetic/Installation/Ubuntu">http://wiki.ros.org/kinetic/Installation/Ubuntu</a></li>
+<li>Gazebo 7. Comes by default with ROS Kinetic</li>
+<li>A good PC. Recommended i5 with minimum of 8GB RAM</li>
+<li>Basic programing in Python</li>
+</ul>
+</div>
+<div class="section" id="topics-covered">
+<h2>Topics Covered<a class="headerlink" href="#topics-covered" title="Permalink to this headline">¶</a></h2>
+<p>For a robot to navigate autonomously it needs the following.</p>
+<ul class="simple">
+<li>A <strong>map</strong> of the world or the environment of interest. You will learn how to create a map using  laser scans and 2D SLAM ROS programs that are already available. You will also know how use a map that is already available. The ROS package that will be used for mapping is called <code class="docutils literal notranslate"><span class="pre">gmapping</span></code></li>
+</ul>
+<a class="reference internal image-reference" href="_images/ros_map.jpg"><img alt="_images/ros_map.jpg" class="align-center" src="_images/ros_map.jpg" style="width: 640.0px; height: 360.0px;" /></a>
+<ul class="simple">
+<li><strong>Localization</strong>. A robot needs to know where it is inside the map in order to know how to go to a goal location. You will learn how to use a localization algorithm already implemented in ROS to help the robot estimate its location in a given map based on 2D laser scans. The ROS package that will be used for localization is called <cite>AMCL</cite>, Adaptive Monte Carlo Localization.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/ros_amcl.png"><img alt="_images/ros_amcl.png" class="align-center" src="_images/ros_amcl.png" style="width: 960.0px; height: 540.0px;" /></a>
+<ul class="simple">
+<li><strong>Path planing</strong>. This is the process of generating a sequence of points (path) between a start point and a goal point.</li>
+<li><strong>Path following</strong>. This is the process of following the path that is planned while avoiding obstacles. The ROS package that will be used here for navigation is called <cite>move_base</cite></li>
+</ul>
+<a class="reference internal image-reference" href="_images/ros_path_plan.png"><img alt="_images/ros_path_plan.png" class="align-center" src="_images/ros_path_plan.png" style="width: 628.5px; height: 306.5px;" /></a>
+<p>In all the tutorials, you will be using <code class="docutils literal notranslate"><span class="pre">Rviz</span></code> which is a very powerful ROS tool for visualizing the status of your robot, sensor information, map building,  navigation, and debugging.</p>
+</div>
+<div class="section" id="environment-setup">
+<h2>Environment Setup<a class="headerlink" href="#environment-setup" title="Permalink to this headline">¶</a></h2>
+<p>During this tutorial, you will work with a simulated robot called TurtleBot, to apply the concepts of navigation using ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for pose estimation.</p>
+<a class="reference internal image-reference" href="_images/kobuki.jpg"><img alt="_images/kobuki.jpg" class="align-center" src="_images/kobuki.jpg" style="width: 264.0px; height: 294.0px;" /></a>
+<div class="section" id="install-turtlebot-packages">
+<h3>Install TurtleBot packages<a class="headerlink" href="#install-turtlebot-packages" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-turtlebot-gazebo -y
+</pre></div>
+</div>
+<p>After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo turtlebot_world.launch
+</pre></div>
+</div>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">It might take long time if you are opening the previous Gazebo world for the first time. Just be patient.</p>
+</div>
+<p>You should get something similar to the following.</p>
+<a class="reference internal image-reference" href="_images/turtlebot-gazebo.png"><img alt="_images/turtlebot-gazebo.png" class="align-center" src="_images/turtlebot-gazebo.png" style="width: 766.0px; height: 419.0px;" /></a>
+</div>
+</div>
+<div class="section" id="tele-operating-the-robot">
+<h2>Tele-operating the Robot<a class="headerlink" href="#tele-operating-the-robot" title="Permalink to this headline">¶</a></h2>
+<p>You will need to move the robot around somehow in order to build a map of the world in the coming sections. You can move it using a <em>keyboard</em> or a <em>joystick</em>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">turtlebot_teleop</span></code> package provides nodes and launch file to move the robot by either a <em>keyboard</em> or a <em>joystick</em>. There is one <em>launch</em> file for keyboard teleoperation and three <em>launch</em> files for three different joysticks. To navigate to the launch file folder, execute the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roscd turtlebot_teleop/launch
+</pre></div>
+</div>
+<p>To move the robot using a keyboard, execute the corresponding <em>launch</em>  file in a separate terminal, after you launch the TurtleBot’s world.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_teleop keyboard_teleop.launch
+</pre></div>
+</div>
+<p>Use the keys as mentioned on the screen to move the robot.</p>
+<p>To move the robot using a joystick (we will assume Logitech F710 joystick), execute the following.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_teleop logitech.launch
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You you will need to press certain button combination in order to control the robot with the joystick. Read the instruction in the <code class="docutils literal notranslate"><span class="pre">logitech.launch</span></code> file.</p>
+</div>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">Make sure that your joystick is given the required privileges. Use <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">a+rw</span> <span class="pre">/dev/input/jsX</span></code> (<code class="docutils literal notranslate"><span class="pre">X</span></code> is the device number) to give the required privileges to your joystick.</p>
+</div>
+</div>
+<div class="section" id="rviz">
+<h2>Rviz<a class="headerlink" href="#rviz" title="Permalink to this headline">¶</a></h2>
+<p><strong>Rviz</strong> (ROS visualization) is a 3D visualizer for displaying sensor data and state information from ROS.</p>
+<p>We will be using Rviz all the way in this tutorial. Now, let’s see how we can show simple things in Rviz.</p>
+<p><strong>Running Rviz</strong>. Make sure that you launched a turtlebot world. Next, in a separate terminal, run rviz using the following command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun rviz rviz
+</pre></div>
+</div>
+<p><strong>Adding displays.</strong> Next, we will need to add the information that we would like to visualize. This is called <em>Displays</em>. On the left side of Rviz, there is a column called <em>Displays</em>. The first thing we need to adjust is the <strong>Fixed frame</strong> field. Choose the <code class="docutils literal notranslate"><span class="pre">odom</span></code> frame. This is the frame that is created at the initial point of the robot when you launched your turtlebot world, then it becomes fixed for the rest of the simulation. It’s called local fixed frame.</p>
+<p><strong>Adding Robot Model</strong>. To show the robot 3D model, we will need to add a display for that. Click on the <strong>Add</strong> button in the lower left corner of the <em>Displays</em> column. Then, choose <strong>RobotModel</strong>. You should see the robot model in the middle screen.</p>
+<a class="reference internal image-reference" href="_images/rviz_robotmodel.png"><img alt="_images/rviz_robotmodel.png" class="align-center" src="_images/rviz_robotmodel.png" style="width: 600.0px; height: 388.0px;" /></a>
+<p><strong>Adding a display for laser scans</strong>. To show what the laser scanner detects on the robots, you can add a <code class="docutils literal notranslate"><span class="pre">LaserScan</span></code> display. After adding the display, you will need to specify the topic that has the laser scans reading. In this case it is called <code class="docutils literal notranslate"><span class="pre">/scan</span></code></p>
+<p>See following snapshots to know what to expect your rviz configs to be like.</p>
+<a class="reference internal image-reference" href="_images/rviz_addDisplay.png"><img alt="_images/rviz_addDisplay.png" class="align-center" src="_images/rviz_addDisplay.png" style="width: 250.0px; height: 280.5px;" /></a>
+<a class="reference internal image-reference" href="_images/rviz_laser.png"><img alt="_images/rviz_laser.png" class="align-center" src="_images/rviz_laser.png" style="width: 600.0px; height: 388.0px;" /></a>
+<p>Now, you have a basic idea on how to use Rviz to visualize your robots states. Later, we will also use it to visualize the map we built or while we are building it, paths we want to navigate, and how to use it to set goal waypoints.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If you close Rviz, you will loose the displays and the configs you made. You can save the current configs you did in order to load it quickly next time you launch Rviz. Just use the <em>File</em> menu and choose <em>save config as</em>.</p>
+</div>
+<p>Now it’s time to build a map!</p>
+</div>
+<div class="section" id="mapping">
+<h2>Mapping<a class="headerlink" href="#mapping" title="Permalink to this headline">¶</a></h2>
+<p>The first step we need to do in order to be able to perform autonomous navigation is to <strong>build a map</strong>.</p>
+<p>In this tutorial we will learn how to create a 2D map with a ROS package called <code class="docutils literal notranslate"><span class="pre">gmapping</span></code>. Here is the definition of the package according to the official WiKi (<a class="reference external" href="http://wiki.ros.org/gmapping">http://wiki.ros.org/gmapping</a>)</p>
+<p>&gt; The gmapping package provides laser-based SLAM (Simultaneous Localization and Mapping), as a ROS node called <code class="docutils literal notranslate"><span class="pre">slam_gmapping</span></code>. Using <code class="docutils literal notranslate"><span class="pre">slam_gmapping</span></code>, you can create a 2-D occupancy grid map (like a building floorplan) from laser and pose data collected by a mobile robot.</p>
+<p>Although there are other packages that allow to build <strong>3D</strong> maps, but we will only stick to 2D mapping in this tutorial.</p>
+<p>If you are curious, there is a nice package called <code class="docutils literal notranslate"><span class="pre">octomap</span></code>  for 3D mapping (<a class="reference external" href="http://wiki.ros.org/octomap">http://wiki.ros.org/octomap</a>).</p>
+<p>So basically, we will be performing 2D SLAM in order to construct a 2D map of a certain environment. To do that, as mentioned, we will use <code class="docutils literal notranslate"><span class="pre">gmapping</span></code> package. This package takes <em>laser scans</em> and <em>robot odometry</em> and outputs a map expressed as <em>occupancy grid</em>. Wait! What is occupancy grid? don’t worry, we will get to that soon.</p>
+<p>To start, we will see how to use mapping through an example.</p>
+<div class="section" id="building-2d-map-using-gmapping-package">
+<h3>Building 2D map using <code class="docutils literal notranslate"><span class="pre">gmapping</span></code> package<a class="headerlink" href="#building-2d-map-using-gmapping-package" title="Permalink to this headline">¶</a></h3>
+<p>First let’s bring up our Gazebo world.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo turtlebot_world.launch
+</pre></div>
+</div>
+<p>The playground world with a TurtleBot2 looks like this:</p>
+<a class="reference internal image-reference" href="_images/turtlebot_playground.png"><img alt="_images/turtlebot_playground.png" class="align-center" src="_images/turtlebot_playground.png" style="width: 706.5px; height: 413.0px;" /></a>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">You can launch another world using command</p>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo turtlebot_world.launch world_file:<span class="o">=</span>worlds/willowgarage.world
+</pre></div>
+</div>
+<p>To start building a map, let’s run the <code class="docutils literal notranslate"><span class="pre">gmapping</span></code>  node.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_gazebo gmapping_demo.launch
+</pre></div>
+</div>
+<p>Next, run <strong>Rviz</strong> in order to visualize the map you build in real-time.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun rviz rviz
+</pre></div>
+</div>
+<p>Add the following displays:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">RobotModel</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">LaserScan</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">Map</span></code></li>
+</ul>
+<p>In order to visualize the robot, laser scans,  and the map.</p>
+<p>Use your favorite teleoperation tool to drive the TurtleBot around the world, until you get satisfied with your map. The following capture shows the mapping process after turning 360 degrees.</p>
+<p>For example, to use the keyboard to drive the robot, launch the corresponding launch file as you did before in the <em>Tele-operating the Robot</em> section.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>roslaunch turtlebot_teleop keyboard_teleop.launch
+</pre></div>
+</div>
+<p>Start driving the robot using keyboard keys and observe how the map is updated in <strong>Rviz</strong>.</p>
+<a class="reference internal image-reference" href="_images/turtlebot_map_building.png"><img alt="_images/turtlebot_map_building.png" class="align-center" src="_images/turtlebot_map_building.png" style="width: 640.0px; height: 380.0px;" /></a>
+<p>Once you get satisfied about your map, you can save it for later use. To save the map execute the following command inside the folder you would like to save the map inside.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosrun map_server map_saver -f &lt;your map name&gt;
+</pre></div>
+</div>
+<p>Your saved map is represented by two files.</p>
+<ul class="simple">
+<li>YAML file which contains descriptions about your map setup</li>
+<li>grayscale image that represents your occupancy grid map, which actually can be edited by an image editor</li>
+</ul>
+<p><strong>OK! What has just happened ?!</strong> Let’s look closely into the <code class="docutils literal notranslate"><span class="pre">gmapping_demo.launch</span></code> file and see what it does.</p>
+</div>
+<div class="section" id="analyzing-gmapping-demo-launch">
+<h3>Analyzing <code class="docutils literal notranslate"><span class="pre">gmapping_demo.launch</span></code><a class="headerlink" href="#analyzing-gmapping-demo-launch" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="localization">
+<h2>Localization<a class="headerlink" href="#localization" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="path-planning-following">
+<h2>Path Planning/Following<a class="headerlink" href="#path-planning-following" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="mini-project">
+<h2>Mini Project<a class="headerlink" href="#mini-project" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
+<p>Main contributor is <a class="reference external" href="https://github.com/mzahana">Mohamed Abdelkader</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">ROS Navigation</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
+<li><a class="reference internal" href="#topics-covered">Topics Covered</a></li>
+<li><a class="reference internal" href="#environment-setup">Environment Setup</a><ul>
+<li><a class="reference internal" href="#install-turtlebot-packages">Install TurtleBot packages</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#tele-operating-the-robot">Tele-operating the Robot</a></li>
+<li><a class="reference internal" href="#rviz">Rviz</a></li>
+<li><a class="reference internal" href="#mapping">Mapping</a><ul>
+<li><a class="reference internal" href="#building-2d-map-using-gmapping-package">Building 2D map using <code class="docutils literal notranslate"><span class="pre">gmapping</span></code> package</a></li>
+<li><a class="reference internal" href="#analyzing-gmapping-demo-launch">Analyzing <code class="docutils literal notranslate"><span class="pre">gmapping_demo.launch</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#localization">Localization</a></li>
+<li><a class="reference internal" href="#path-planning-following">Path Planning/Following</a></li>
+<li><a class="reference internal" href="#mini-project">Mini Project</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+<li><a class="reference internal" href="#references">References</a></li>
+<li><a class="reference internal" href="#contributors">Contributors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="1-ros-basics.html"
+                        title="previous chapter">ROS Basics</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="1-3d-modeling.html"
+                        title="next chapter">3D Modeling</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/1-ros-navigation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="1-3d-modeling.html" title="3D Modeling"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="1-ros-basics.html" title="ROS Basics"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">RISC-Docs 0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, RISC Members.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.
+    </div>
+  </body>
+</html>
