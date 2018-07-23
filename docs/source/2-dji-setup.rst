@@ -43,4 +43,4 @@ You can import a function from there called ``geodetic2enu``.
 * A sample code for GPS navigation along with a launch file that automatically runs the DJI main node and the required services is available on the RISC Github page.
 
 
-Main contributor is Sarah Toonsi.
+Main contributor is Sarah Toonsi and Fat-hy Rajab.
