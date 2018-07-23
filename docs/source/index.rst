@@ -39,6 +39,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-multi-point-telemetry
    2-networking
    2-dji-setup
+   2-dji-guidance
    
 .. toctree::
     :maxdepth: 2

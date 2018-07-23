@@ -30,6 +30,12 @@ Setting up the DJI M100 with on-board computer (before you do these steps you mu
 
 You can import a function from there called ``geodetic2enu``.
 
+* Alternatively you can publish velocity setpoints to ``/dji_sdk/flight_control_setpoint_ENUvelocity_yawrate`` topic to navigate to specific GPS setpoint. 
+
+
+.. note::
+
+    You can't use velocity and position setpoints simultaneously.
 
 * More info about topics and services `here <http://wiki.ros.org/dji_sdk>`_.
 
