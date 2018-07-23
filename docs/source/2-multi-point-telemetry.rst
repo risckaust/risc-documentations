@@ -55,7 +55,7 @@ Upload Firmware to the radio
 
 .. note::
 
-  If you get errors, try to update `pyserial` module
+  If you get errors, try to update ``pyserial`` module
 
 
 
