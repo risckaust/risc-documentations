@@ -29,12 +29,12 @@ Clone the SiK package and switch to branch
 
 .. code-block:: bash
 
-cd ~
-mkdir ~/src
-cd ~/src
-git clone https://github.com/RFDesign/SiK.git
-cd SiK
-git checkout SiK_Multipoint
+  cd ~
+  mkdir ~/src
+  cd ~/src
+  git clone https://github.com/RFDesign/SiK.git
+  cd SiK
+  git checkout SiK_Multipoint
 
 
 Make and install,
@@ -47,7 +47,7 @@ Make and install,
 Upload Firmware to the radio
 -----------------------------
 
-**change the serial port name**
+**Change the serial port name**
 
 .. code-block:: bash
 
@@ -104,7 +104,7 @@ Make sure you save by typing,
 
 .. warning::
 
-  Make sure that you save parameters after each set using ``AT&W``. Otherwise, paramters changes won't survive restes.
+  Make sure that you save parameters after each set using ``AT&W``. Otherwise, parameters changes won't survive restes.
 
 References
 -----------
