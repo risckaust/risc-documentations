@@ -1,4 +1,4 @@
-DJI M100 setup
+DJI M100 ROS setup
 =====
 
 Setting up the DJI M100 with on-board computer (before you do these steps you must ensure that your drone is binded with your transmitter, your drone is activated and your on-board computer is connected to the drone through the UART port. DJI hardware setup `page <https://developer.dji.com/onboard-sdk/documentation/development-workflow/hardware-setup.html>`_.
