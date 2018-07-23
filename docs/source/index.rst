@@ -38,6 +38,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-auto-service-start-afer-boot
    2-multi-point-telemetry
    2-networking
+   2-dji-setup
    
 .. toctree::
     :maxdepth: 2
