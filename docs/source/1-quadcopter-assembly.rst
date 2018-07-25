@@ -32,7 +32,7 @@ This tutorial assumes you have the following skills:
   + What does KV2200 means? What will be changed if KV number grows?
   + What are the parameters of your motors?
 
-.. danger:: Do not leave your battery plugged in your quadcopter for long time and never discharge a LiPo battery below 3.0V per cell.
+.. danger:: Do not leave your battery plugged in your quadcopter for a long time and never discharge a LiPo battery below 3.4V per cell.
 
 Hardware assembly
 -----
