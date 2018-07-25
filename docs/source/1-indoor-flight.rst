@@ -602,8 +602,8 @@ File ``setpoints_node.py``:
 
 			# A Message for the current local position of the drone
 			self.local_pos = Point(0.0, 0.0, 0.0)
-
-		self.modes = fcuModes()
+			
+			self.modes = fcuModes()
 
 		# Callbacks
 
@@ -642,9 +642,9 @@ File ``setpoints_node.py``:
 		def updateSp(self):
 			x = -1*self.joy_msg.axes[1] # negative one might be changed if direction is reverse
 			y = -1*self.joy_msg.axes[0]
-		
-		self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
-		self.sp.position.y = self.local_pos.y + self.STEP_SIZE*y
+			
+			self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
+			self.sp.position.y = self.local_pos.y + self.STEP_SIZE*y
 
 
 	# Main function
