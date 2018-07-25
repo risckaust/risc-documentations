@@ -210,6 +210,32 @@ References
 Here is a `video <https://www.youtube.com/watch?v=sLLF-Ml2sIo>`_ for reference which explains how to install OpenCV on ODROID XU4.
 
 
+Intel Up Board
+--------------
+
+* Up board is used in the Intel Realsense development kit.
+* Follow `this guide <https://01.org/developerjourney/recipe/intel-realsense-robotic-development-kit>`_ to setup the Up board
+
+Using Edimax AC600 Wifi module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+You will need to install drivers as follows:
+
+.. code-block:: bash
+
+	sudo apt-get update
+	git clone https://github.com/gnab/rtl8812au.git
+	cd ~/rtl8812au
+	make
+	sudo make install
+	sudo modprobe 8812au
+
+Then, reboot
+
+.. note::
+	
+	To be able to use ``ssh`` from a remote computer, you will need,
+	``sudo apt-get install openssh-server && openssh-client``
+
 Raspberry Pi Setup
 ---------
 
