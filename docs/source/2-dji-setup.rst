@@ -13,7 +13,7 @@ Setting up the DJI M100 with on-board computer (before you do these steps you mu
 * Your drone needs to be in “function mode” (mode is changed from transmitter) and you need to launch the main sdk launch file to start using DJI topics and services. The launch file won't launch without an appropriate APP ID and key. Also you might have an error with the drone activation so you might need to connect your transmitter to a phone that has the DJI account that you activated your drone with before running the launch file. The phone must have the DJI go App. The APP helps in calibrating sensors and receiving camera feedback ( there must be a way to receive camera live streaming through ROS also)
 
 
-* If you want to have permission to publish to control the DJI drone with SDK you will need to call a ros service ``/dji_sdk/sdk_control_authority`` with boolean arguments (1 for authority).
+* If you want to have permission to publish to control the DJI drone with SDK you will need to call a ROS service ``/dji_sdk/sdk_control_authority`` with boolean arguments (1 for authority).
 
 
 * If you want to publish local position information to the ``/dji_sdk/local_position`` topic you will need to call the ``/dji_sdk/set_local_pos_ref`` service
@@ -43,4 +43,4 @@ You can import a function from there called ``geodetic2enu``.
 * A sample code for GPS navigation along with a launch file that automatically runs the DJI main node and the required services is available on the RISC Github page.
 
 
-Main contributor is Sarah Toonsi and Fat-hy Rajab.
+Main contributors are Sarah Toonsi and Fat-hy Omar Rajab.
