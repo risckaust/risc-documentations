@@ -612,26 +612,26 @@ File ``setpoints_node.py``:
 			self.local_pos.x = msg.pose.position.x
 			self.local_pos.y = msg.pose.position.y
 			self.local_pos.z = msg.pose.position.z
+			
+			## joystick callback
+			def joyCb(self, msg):
+				self.joy_msg = msg
+				
+			# If button 1 on joystick is pressed
+			if msg.buttons[0] > 0:
+				self.modes.setArm()
 
-		## joystick callback
-		def joyCb(self, msg):
-			self.joy_msg = msg
-
-		# If button 1 on joystick is pressed
-		if msg.buttons[0] > 0:
-			self.modes.setArm()
-
-		# If button 2 on joystick is pressed
-		if msg.buttons[1] > 0:
-			self.modes.setAutoLandMode()
+			# If button 2 on joystick is pressed
+			if msg.buttons[1] > 0:
+				self.modes.setAutoLandMode()
 		
-		# If button 3 on joystick is pressed 
-		if msg.buttons[2] > 0:
-			self.modes.setOffboardMode()
+			# If button 3 on joystick is pressed 
+			if msg.buttons[2] > 0:
+				self.modes.setOffboardMode()
 
-		# If button 11 on joystick is pressed
-		if msg.buttons[10] > 0:
-			self.modes.setDisarm()
+			# If button 11 on joystick is pressed
+			if msg.buttons[10] > 0:
+				self.modes.setDisarm()
 
 
 		## Drone State callback
