@@ -490,7 +490,12 @@ Linux PC commands
 
 It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
 
-* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files and put them into appropriate folders from your package. Try to find and understand what's different from code in SITL files.
+* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files and put them into ``scripts`` and ``launch`` folder accordingly. Try to find and understand what's different from code in SITL files.
+
+.. code-block:: bash
+	
+	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/setpoints_node.py
+	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/joystick_flight.launch
 
 * Make sure you give permissions to the joystick.
 
@@ -514,22 +519,3 @@ Joystick control
 ``BUTTON 11`` - Disarms the quadcopter
 
 Enjoy your flight.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
