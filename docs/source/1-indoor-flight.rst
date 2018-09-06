@@ -481,7 +481,7 @@ ODROID commands
 Linux PC commands
 ---------
 
-* On Linux PC open new tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
+* On Linux PC open a new tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
