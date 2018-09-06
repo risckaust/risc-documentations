@@ -218,7 +218,7 @@ First, create your custom ROS package. The code is commented so you can get an i
   # usually python scripts (nodes) are placed in a folder called scripts
   mkdir scripts
   cd scripts
-  wget
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-flight/setpoints_node.py
 
 Make the python file an executable,
 
@@ -234,7 +234,7 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd ~/catkin_ws/src/mypackage
   mkdir launch
   cd launch
-  wget 
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-flight/joystick_flight.launch
 
 In a fresh terminal, you can run the whole system by executing
 
