@@ -494,7 +494,10 @@ It's important at this stage to check if setpoints are published to ``/mavros/vi
 
 .. code-block:: bash
 	
+	# Inside the scripts folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/setpoints_node.py
+
+	#Inside the launch folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/joystick_flight.launch
 
 * Make sure you give permissions to the joystick.
