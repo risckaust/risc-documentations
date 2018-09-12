@@ -15,7 +15,8 @@ This tutorial assumes you have the following skills:
 
 * :doc:`1-ros-basics` or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. There are `solutions <https://github.com/luym11/ros_practise>`_ to ETHZ exercises available on Github.
 
-* Soldering, if not, please refer to basic skill `video <https://www.youtube.com/watch?v=BLfXXRfRIzY>`_.
+* Soldering, if not, please refer to basic skill `video <https://youtu.be/Qps9woUGkvI>`_.
+
 
 * Basic knowledge about LiPo batteries. Answer the following questions. You may read `this article <https://rogershobbycenter.com/lipoguide/>`_. 
 
@@ -42,7 +43,7 @@ Introduction
 
 You will need
 
-* Quadcopter frame. 250 frame will be a good start. The value 250 means the motor to motor diameter, as shown below.
+* Quadcopter frame. 250 or 330 frame will be a good start. The value 250/330 means the motor to motor diameter, as shown below.
 
 .. image:: ../_static/quad-diam.png
    :scale: 50 %
@@ -173,7 +174,7 @@ Calibration process
 
 * `Install PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
-* Set the airframe, eg. Generic 250 Frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
+* Set the airframe, for example: Generic 250 Frame, Flamewheel F330. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
 * Calibrate `Sensor orientation <https://docs.px4.io/en/config/flight_controller_orientation.html>`_ if any, `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
 
@@ -206,7 +207,7 @@ Video for your reference
 .. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
 
 
-* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter.
+* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary.
 
 
 Flying

@@ -207,7 +207,7 @@ Custom Setpoint Node
 
 Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the autopilot to track the setpoints. It has to be in **OFFBOARD** mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to **remember** that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publishing setpoints. **If you don't publish setpoints at more than 2Hz, it will go into a failsafe mode**.
 
-First, create your custom ROS package. The code is commented so you can get an idea of what each part does.
+First, create your custom ROS package. The code is commented so you can get an idea of what each part does. Go through code and try to understand it!
 
 
 .. code-block:: bash
@@ -227,7 +227,7 @@ Make the python file an executable,
   chmod +x setpoints_node.py
 
 
-Make a **launch** folder. We will create a ROS launch file to run everything at once.
+Make a **launch** folder. We will create a ROS launch file to run everything at once. Open the launch file and understand what every line executes.
 
 .. code-block:: bash
 
@@ -236,7 +236,7 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd launch
   wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-flight/joystick_flight.launch
 
-In a fresh terminal, you can run the whole system by executing
+In a fresh terminal, you can run the launch file by executing
 
 .. code-block:: bash
 

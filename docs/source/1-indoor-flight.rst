@@ -186,7 +186,7 @@ Right click on the body created, choose **Properties** and rename it such that t
 
 .. _stream-mocap-data:
 
-Streaming MOCAP Data
+Streaming MOCAP Data (try with both PC and Odroid)
 -----
 
 Check the IP address assigned to the Mocap machine, in our case it's **192.168.0.101**
@@ -392,7 +392,7 @@ Now you are ready to use position hold/offboard modes.
 	It is very important that you align the forward direction of your drone (robot) with the x-axis of your Mocap when you first define a rigid body. You can find the x-axis direction in the Mocap software, Motive.
 
 
-Checking EKF2 Consistency via  Log Files
+Checking EKF2 Consistency via  Log Files (optional)
 -------
 
 It's important to make sure that EKF2 estimator provides accurate enough estimates of the states for your flight controller to perform well. A quick way to debug that is through the log files.
@@ -424,43 +424,43 @@ We will need a PC running Linux with Joystick connected to it. To establish ODRO
 Setup a ROS Network
 -------
 
-* First let's set PC running Linux to be ROS Master by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+* First let's tell PC running Linux that Odroid is the Master in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 .. code-block:: bash
 
 	gedit ~/.bashrc
 
-* Add following lines to the end of the file. Both IP adresses are the same and represents IP address of the PC.
+* Add following lines to the end of the file. Just change last numbers to corresponding IP numbers.
 
 .. code-block:: bash
 
-	export ROS_MASTER_URI=http://192.168.0.119:11311
-	export ROS_HOSTNAME=192.168.0.119
+	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
+	export ROS_HOSTNAME=192.168.0.pc_ip_number
 
 Make sure you **source** the ``.bashrc`` file after this.
 
-* Log into a ODROID to get access to a command-line over a network.
+* Log into a ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
 
 .. code-block:: bash
 
-	ssh odroid@192.168.0.116
+	ssh odroid@192.168.0.odroid_ip_number
 
 It will prompt to enter password, if you use minimal image provided then it's **odroid**.
 
-*  We need to edit ``.bashrc`` file on ODROID as well.
+*  Let's edit ``.bashrc`` file on ODROID as well.
 
 .. code-block:: bash
 
 	nano .bashrc
 
-* Add the following lines to the end of the file. First IP address belongs to PC, and the second one to ODROID.
+* Add the following lines to the end of the file. Just change last numbers to corresponding IP numbers.
 
 .. code-block:: bash
 
-	export ROS_MASTER_URI=http://192.168.0.119:11311
-	export ROS_HOSTNAME=192.168.0.116
+	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
+	export ROS_HOSTNAME=192.168.0.odroid_ip_number
 
-To save file, press Alt+X, press Y, hit Enter. Source the ``.bashrc`` file. 
+To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file. 
 
 ODROID commands
 ---------
@@ -476,21 +476,21 @@ ODROID commands
 
 .. code-block:: bash
 
-	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
+	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.pc_ip_number:14550
 
 Linux PC commands
 ---------
 
-* On Linux PC open a new tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
+* In another tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
 
-It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo**. If you see setpoints are published then move to next step.
+It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo** on the PC. If you see setpoints are published then move to next step.
 
-* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files and put them into ``scripts`` and ``launch`` folder accordingly. Try to find and understand what's different from code in SITL files.
+* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the PC and put them into ``scripts`` and ``launch`` folder accordingly. Find and understand what's different from code in SITL files.
 
 .. code-block:: bash
 	
