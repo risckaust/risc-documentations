@@ -10,9 +10,19 @@ Objet30 Prime
    :scale: 50 %
    :align: center
 
-Printing options
-^^^^^
-You can print parts using USB stick or over WiFi. 
+
+
+
+Ultimaker3 Extended
+-----
+
+.. image:: ../_static/ultimaker.png
+   :scale: 30 %
+   :align: center
+
+
+
+Printing options: You can print parts using USB stick or over WiFi. 
 
 
 The display at the front side of the Ultimaker 3 shows all the necessary information for setting up and using your Ultimaker 3. You can navigate through menus by rotating and/or pushing the button at the right side of the display. Rotate to select or control an action; push to confirm an action. When pushing the button you will hear a “beeping” sound to confirm the action. A blinking button means the Ultimaker 3 is waiting for user input. When turning on your Ultimaker 3 after the first use, you will always see the Ultimaker logo first after which the main menu appears. The main menu offers three options: Print, Material/PrintCore and System.
@@ -31,13 +41,5 @@ System
 ^^^^^
 
 The System menu offers various options to control the network, build plate, print head and to perform maintenance and several tests.
-
-
-Ultimaker3 Extended
------
-
-.. image:: ../_static/ultimaker.png
-   :scale: 30 %
-   :align: center
 
 
