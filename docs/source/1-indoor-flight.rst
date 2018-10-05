@@ -134,6 +134,10 @@ Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe
 
 Flash image with `Etcher <https://etcher.io/>`_ to `ODROID XU4 eMMC <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_.
 
+.. important:: 
+
+	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space.
+
 No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. Now connect your ODROID XU4 to monitor using HDMI cable. You will also need a keyboard.
 
 After powering the ODROID you will prompt to enter username and password. It's all ``odroid``. Plug the `WiFi Module 4 <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141630348024>`_ to the ODROID's USB port. 
@@ -241,16 +245,6 @@ Software Requirements
 ------
 
 * Linux Ubuntu 16 installed on ODROID XU4. A minimal image is recommended for faster executions.
-
-.. hint::
-
-	A ready image for your eyes is available in `here <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_. This image has all the required software that is needed in this tutorial. You can use `Etcher <https://etcher.io/>`_ to flash your eMMC card with the provided ``.img`` file
-
-
-.. hint::
-
-	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space.
-
 
 * ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. The above image already includes this
 
