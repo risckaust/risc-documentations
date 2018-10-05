@@ -138,7 +138,9 @@ Flash image with `Etcher <https://etcher.io/>`_ to `ODROID XU4 eMMC <http://www.
 
 	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space. Choose your eMMC from the dropdown list on the right, select your partition and click ``Resize/Move``. Click on the right black arrow and drag it until the partition has its new (desired) size, then click on the ``Resize/Move`` button. Click apply and wait until it will resize the partition.
 
-No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. Now connect your ODROID XU4 to monitor using HDMI cable. You will also need a keyboard.
+No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. 
+
+Now connect your ODROID XU4 to monitor using HDMI cable. You will also need a keyboard.
 
 After powering the ODROID you will prompt to enter username and password. It's all ``odroid``. Plug the `WiFi Module 4 <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141630348024>`_ to the ODROID's USB port. 
 
@@ -172,7 +174,7 @@ Modify the file so it matches your WiFi network. It should look similar to this.
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. Refer to picture below.
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. When defining the rigid body make sure your drone is looking to the long wall. In **Advanced Network Options** change ``Up Axis`` to ``Z Up``. 
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
