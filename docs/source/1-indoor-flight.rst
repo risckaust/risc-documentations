@@ -174,7 +174,7 @@ Modify the file so it matches your WiFi network. It should look similar to this.
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. When defining the rigid body make sure your drone is looking to the long wall. In **Advanced Network Options** change ``Up Axis`` to ``Z Up``. 
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. When defining the rigid body make sure your drone is looking to the long wall. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``. 
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
@@ -382,11 +382,6 @@ Relay the Mocap data to the flight controller
 Check in **QGroundControl** that you got some message which means Mocap data is received by Pixhawk.
 
 Now you are ready to use position hold/offboard modes.
-
-.. important::
-
-	It is very important that you align the forward direction of your drone (robot) with the x-axis of your Mocap when you first define a rigid body. You can find the x-axis direction in the Mocap software, Motive.
-
 
 Checking EKF2 Consistency via  Log Files (optional)
 -------
