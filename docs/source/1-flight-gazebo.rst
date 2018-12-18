@@ -38,7 +38,7 @@ Software Requirements
 Setup Steps
 -----
 
-* Download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command.
+* Download this `ZIP file <https://github.com/risckaust/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command.
 
 .. code-block:: bash
   

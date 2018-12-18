@@ -49,7 +49,7 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/luym11/initial_settings/archive/master.zip>`_, and extract two ``.sh`` files to your home folder and run by following command. This will install ROS, and many other tools and dependencies you will need in the future.
+Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/risckaust/initial_settings/archive/master.zip>`_, and extract two ``.sh`` files to your home folder and run by following command. This will install ROS, and many other tools and dependencies you will need in the future.
 
 .. hint::
 
@@ -59,7 +59,7 @@ Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP fi
   
   ./ubuntu_install.sh # Will take some time to install
 
-Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
+Relaunch terminal. Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
 
 In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
 

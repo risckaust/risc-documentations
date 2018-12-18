@@ -40,6 +40,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-networking
    2-dji-setup
    2-dji-guidance
+   2-ros-network-wifi-ethernet
    
 .. toctree::
     :maxdepth: 2
