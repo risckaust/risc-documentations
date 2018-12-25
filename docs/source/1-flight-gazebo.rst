@@ -250,4 +250,4 @@ Now, you should see a quadcopter in Gazebo flying at a fixed height and respondi
   Always make sure that you have joystick permissions configured properly.
 
 
-
+Main contributor is `Mohamed Abdelkader <https://github.com/mzahana>`_.

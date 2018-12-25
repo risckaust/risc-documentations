@@ -237,4 +237,4 @@ Troubleshooting
 Contributors
 -----
 
-Main contributor is `Yimeng Lu <https://github.com/luym11>`_.
+Main contributor is `Yimeng Lu <https://github.com/luym11>`_ and `Kuat Telegenov <https://github.com/telegek>`_.

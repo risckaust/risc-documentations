@@ -59,7 +59,13 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    3-drill-press
    3-dremmel
    3-circular-saw
-   
+
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+    :caption: References
+
+    4-references
 
 
 
