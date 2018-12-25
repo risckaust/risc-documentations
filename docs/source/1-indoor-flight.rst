@@ -156,7 +156,7 @@ To set a static IP address open ``/etc/network/interfaces`` file for editing by 
 	
 	sudo nano /etc/network/interfaces
 
-Modify the file so it matches your WiFi network. It should look similar to this.
+Add following line to the file, and make sure it matches your WiFi network. Added lines should look similar to this.
 
 .. code-block:: bash
 
@@ -164,11 +164,11 @@ Modify the file so it matches your WiFi network. It should look similar to this.
 	allow-hotplug wlan0 # wlan0 WiFi card number
 	iface wlan0 inet static
 	address 192.168.0.xxx # Choose a static IP, usually you change the last number only for different devices
-	netmask 255.255.255.0
+	netmask 255.255.255.0 
 	broadcast 192.168.0.255
 	gateway 192.168.0.1 # Your router IP address
 	dns-nameservers 8.8.8.8
-	wpa-ssid "RISC-AreaC" # WiFi name
+	wpa-ssid "RISC-AreaC" # WiFi name (case sensitive)
 	wpa-psk "risc3720" # WiFi password
 
 Mocap computer settings
