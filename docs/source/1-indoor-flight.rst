@@ -156,7 +156,7 @@ To set a static IP address open ``/etc/network/interfaces`` file for editing by 
 	
 	sudo nano /etc/network/interfaces
 
-Add following line to the file, and make sure it matches your WiFi network. Added lines should look similar to this.
+Add following lines to the file, and make sure it matches your WiFi network. Added lines should look similar to this.
 
 .. code-block:: bash
 
