@@ -52,7 +52,7 @@ Manual control
 - The right analog stick is for x/y (position) motion. The left stick is for height. The red button is for disarm. The green button is for autoland. The down button on D-Pad is for dropping, if the object is picked (detected by the button on the gripper).
 
 .. image:: ../_static/f710.png
-   :scale: 30 %
+   :scale: 70 %
    :align: center
 
 
