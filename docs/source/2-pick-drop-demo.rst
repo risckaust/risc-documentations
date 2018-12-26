@@ -37,11 +37,9 @@ Experiment
     
     Always double check that you can hover the drone in **POSITION** flight mode, before you execute the experiments in **OFFBOARD** mode.
 
-Manual control
+Manual control (Drone 1)
 =====
 
-- Adjust the Rigid Body name in the 
-- Adjust connection links
 - Make sure that you give the joystick permissions (we used `Logitech F710 <https://www.logitechg.com/en-us/products/gamepads/f710-wireless-gamepad.html>`_). 
 
 .. code-block:: bash
@@ -56,15 +54,22 @@ Manual control
    :align: center
 
 
-- Run the following command on the onboard computer 
+- Run the following command on the onboard computer. Double check the addresses for joystick, arduino, FCU, Ground Contorl Station, and name of the Rigid Body from Mocap system.
 
 .. code-block:: bash
 
-    roslaunch pick_drop_demo start_system.launch
+    roslaunch pick_drop_demo start_manual_test.launch
 
 
-Autonomous mission
+Autonomous mission (Drone 2)
 ======
+
+- Run the following command on the onboard computer. Double check the addresses for arduino, FCU, Ground Contorl Station, and name of the Rigid Body from Mocap system.
+
+.. code-block:: bash
+
+    roslaunch pick_drop_demo start_autonomous_mission.launch
+
 
 Contributors
 ======
