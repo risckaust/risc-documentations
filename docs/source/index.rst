@@ -41,6 +41,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-dji-setup
    2-dji-guidance
    2-ros-network-wifi-ethernet
+   2-pick-drop-demo
    
 .. toctree::
     :maxdepth: 2
@@ -61,11 +62,11 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    3-circular-saw
 
 .. toctree::
-    :maxdepth: 2
-    :hidden:
-    :caption: References
+   :maxdepth: 2
+   :hidden:
+   :caption: References
 
-    4-references
+   4-references
 
 
 
