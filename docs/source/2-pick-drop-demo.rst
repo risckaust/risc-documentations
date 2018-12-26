@@ -46,7 +46,7 @@ Manual control
 
 .. code-block:: bash
 
-    sudo chmod a+rw /dev/input/js0
+    sudo chmod a+rw /dev/input/js0 # Check the input device number
 
 
 - The right analog stick is for x/y (position) motion. The left stick is for height. The red button is for disarm. The green button is for autoland. The down button on D-Pad is for dropping, if the object is picked (detected by the button on the gripper).
