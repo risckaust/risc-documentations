@@ -54,7 +54,7 @@ Manual control (Drone 1)
    :align: center
 
 
-- Run the following command on the onboard computer. Double check the addresses for joystick, arduino, FCU, Ground Contorl Station, and name of the Rigid Body from Mocap system.
+- Run the following command on the onboard computer. Double check the addresses for joystick, arduino, FCU, Ground Control Station, and name of the Rigid Body from Mocap system.
 
 .. code-block:: bash
 
@@ -64,7 +64,7 @@ Manual control (Drone 1)
 Autonomous mission (Drone 2)
 ======
 
-- Run the following command on the onboard computer. Double check the addresses for arduino, FCU, Ground Contorl Station, and name of the Rigid Body from Mocap system.
+- Run the following command on the onboard computer. That will start the autonomous mission with takeoff action to 1m height. Double check the addresses for arduino, FCU, Ground Control Station, and name of the Rigid Body from Mocap system.
 
 .. code-block:: bash
 
