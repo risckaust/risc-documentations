@@ -55,6 +55,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    :hidden:
    :caption: Hardware user's guides
 
+   3-video-cameras
    3-3d-printing
    3-CNC-machine
    3-drill-press
