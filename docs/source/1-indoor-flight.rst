@@ -410,7 +410,7 @@ Intro
 
 Now it's time to fly your drone in the cage!
 
-We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. PC that runs Joystick node will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally MAVROS will send setpoints to autopilot (real flight controller on your drone).
+We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. The Odroid on the drone will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally MAVROS will send setpoints to autopilot (real flight controller on your drone).
 
 Setup a ROS Network
 -------
