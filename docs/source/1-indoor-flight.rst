@@ -262,9 +262,7 @@ Software Requirements
 
 Again, this is included in the provided image
 
-Now, you need to set your flight controller firmware PX4, to accept mocap data. PX4 has two state estimators, ``EKF2`` (default) an extended Kalman filter, and ``LPE``.
-
-``LPE`` estimator supports mocap data directly. ``EKF2`` (recommended for this tutorial), however, (at the time of writing this tutorial) does not support directly. Instead, it can accept mocap data as vision-based data. We will explain how to setup both estimator to use mocap data.
+Now, you need to set your flight controller firmware PX4, to accept mocap data. ``EKF2`` estimator can accept mocap data as vision-based data.
 
 
 Setting EKF2 Estimator for MOCAP Fusion
@@ -276,16 +274,16 @@ First choose ``EKF2`` as your estimator from the ``System`` tab
    :scale: 50 %
    :align: center
 
-Also make sure the you set the baudrate correctly ``SYS_COMPANION``
+Also make sure the you set the baudrate correctly ``SYS_COMPANION``.
 
-In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use vision position and yaw.
+In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use ``vision position fusion`` and ``vision yaw fusion``.
 
 .. image:: ../_static/ekf2_mask.png
    :scale: 50 %
    :align: center
 
 
-There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/en/tutorials/tuning_the_ecl_ekf.html>`_
+There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
 
 
 .. image:: ../_static/ekf2_delay.png
@@ -309,44 +307,6 @@ Set the position of the center of the markers (that define the rigid body in the
    :align: center
 
 
-Setting LPE Estimator for MOCAP Fusion
-------
-
-You will need to set some parameters on Pixhawk as follows
-
-Select ``LPE`` as your estimator. You can change that from the ``System`` tab in ``QGroundControl``.
-
-You will also need to use the highest baud rate for the serial connection. See below picture.
-
-
-.. image:: ../_static/systems_tab.png
-   :scale: 50 %
-   :align: center
-
-
-Use heading from mocap. Adjust the ``ATT_EXT_HDG_M`` parameter as follows. Restart might needed to activate LPE parameters in QGroundControl.
-
-.. image:: ../_static/heading.png
-   :scale: 50 %
-   :align: center
-
-
-You will need to set the ``LPE_FUSION`` parameter to **not** to use GPS and **not** to use barometer, since most likely your mocap altitude is highly accurate. See following picture.
-
-
-.. image:: ../_static/lpe_fusion.jpg
-   :scale: 50 %
-   :align: center
-
-
-Also, disable any altitude sensor e.g. LIDAR
-
-
-.. image:: ../_static/sensors.png
-   :scale: 50 %
-   :align: center
-
-
 Now Restart Pixhawk
 
 
@@ -365,15 +325,6 @@ You will need to run MAVROS node in order to connect ODROID to the flight contro
 ``ttyUSB0`` should match the serial port ID in your ODROID. ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
 Relay the Mocap data to the flight controller
-
-* If you are using **LPE**
-
-.. code-block:: bash
-
-	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/mocap/pose
-
-
-* If you use **EKF2**
 
 .. code-block:: bash
 
@@ -472,7 +423,7 @@ ODROID commands
 Linux PC commands
 ---------
 
-* In another tab, relay positions from Mocap to MAVROS (assuming you are using **EKF2**).
+* In another tab, relay positions from Mocap to MAVROS.
 
 .. code-block:: bash
 
