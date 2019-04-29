@@ -37,7 +37,7 @@ Network Diagram
    :scale: 50 %
    :align: center
 
-Steps
+Setting the network
 -----
 Connect Intel NUC and Jetson TX2 with an Ethernet cable. Make sure both PCs are on. Disable WiFi on Jetson TX2. Make sure Intel NUC is connected to the WiFi router. Try to ping Jetson TX2 from Intel NUC or vice versa. It fails. To make it work, follow the steps below:
 
@@ -163,6 +163,7 @@ Intel NUC (ROS Master)
 - Add the following exports to wherever you do your exports (in my case, they are in the ``~/.bashrc`` file
 
 ``export ROS_MASTER_URI=http://10.42.0.1:11311``
+
 ``export ROS_IP=10.42.0.1``
 
 .. image:: ../_static/nuc-2-1.png
@@ -215,11 +216,13 @@ References
 None of which I strictly followed. I just got inspiration from these references in establishing the network and in writing this document. Things got working by trial and error and luck.
 
 https://risc.readthedocs.io/2-networking.html
+
 https://github.com/ethz-asl/mav_dji_ros_interface/wiki/NVIDIA-Jetson-TX2-integration
 
 Some Good Textbooks about Networking (first book = linux networking, second book = networking in general)
 
 http://linux-training.be/linuxnet.pdf
+
 http://iips.icci.edu.iq/images/exam/Computer-Networks---A-Tanenbaum---5th-edition.pdf
 
 
