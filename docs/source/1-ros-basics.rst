@@ -1329,13 +1329,9 @@ Until now, you have called services from the command line. There are three more 
 * Writing ROS node that calls a service
 * Writing custom service message
 
-For writing ROS services and clients, I refer you to the following ROS WiKi page for more details.
+For writing ROS services and clients, I refer you to the following `ROS WiKi page <http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29>`_ for more details.
 
-http://wiki.ros.org/ROS/Tutorials/WritingServiceClient%28python%29
-
-For writing custom messages, I refer you to the following ROS WiKi page for more details.
-
-http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv
+For writing custom messages, I refer you to the following `ROS WiKi page <http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv>`_ for more details.
 
 
 ROSBag
@@ -1347,7 +1343,7 @@ The ROSBag is a powerful tool for you to record and playback data from ROS envir
 
   rosbag record -a
 
-If you want to record to bag with specified name and specific topics, run the following command.
+If you want to record to bag with specified name and specific topics (``/odom`` and ``/altitude`` in this case), run the following command.
 
 
 .. code-block:: bash
@@ -1363,17 +1359,13 @@ You can record all topics subscribed to a specific node, split bag files, specif
 Useful Video Tutorials
 -------
 
-* ROS: Introduction, Installing ROS, and running the Turtlebot simulator.
-  * https://www.youtube.com/watch?v=9U6GDonGFHw
+* `ROS: Introduction, Installing ROS, and running the Turtlebot simulator <https://www.youtube.com/watch?v=9U6GDonGFHw>`_
 
-* Publishers and subscribers
-  * https://www.youtube.com/watch?v=bJB9tv4ThV4
+* `Publishers and subscribers <https://www.youtube.com/watch?v=bJB9tv4ThV4>`_
 
-* Python walkthrough of publisher/subscriber lab
-  * https://www.youtube.com/watch?v=DLVyc9hOvk8
+* `Python walkthrough of publisher/subscriber lab <https://www.youtube.com/watch?v=DLVyc9hOvk8>`_
 
-* To learn more about Nodes and Topics, check the following video:
-  * https://www.youtube.com/watch?v=Yx_vGAt74sk  ​
+* `To learn more about Nodes and Topics, check the following video <https://www.youtube.com/watch?v=Yx_vGAt74sk >`_ ​
 
 Solutions
 -----
