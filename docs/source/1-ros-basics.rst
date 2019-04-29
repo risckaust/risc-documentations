@@ -1365,7 +1365,7 @@ Useful Video Tutorials
 
 * `Python walkthrough of publisher/subscriber lab <https://www.youtube.com/watch?v=DLVyc9hOvk8>`_
 
-* `To learn more about Nodes and Topics, check the following video <https://www.youtube.com/watch?v=Yx_vGAt74sk >`_ ​
+* `To learn more about Nodes and Topics, check the following video <https://www.youtube.com/watch?v=Yx_vGAt74sk>`_ ​
 
 Solutions
 -----
