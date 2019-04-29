@@ -1338,17 +1338,27 @@ For writing custom messages, I refer you to the following ROS WiKi page for more
 http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv
 
 
-Remaining concepts
------------
+ROSBag
+-----
 
-ROS action
-^^^^^
+The ROSBag is a powerful tool for you to record and playback data from ROS environment for future debugging and analysis. To start recording all topics available, simply type the following command in a separate terminal.
 
-Rviz
-^^^^^
+.. code-block:: bash
 
-rosbag
-^^^^^
+  rosbag record -a
+
+If you want to record to bag with specified name and specific topics, run the following command.
+
+
+.. code-block:: bash
+
+  rosbag record -O file_name.bag /odom /altitude # O stands for Output name
+
+You can record all topics subscribed to a specific node, split bag files, specify duration, and many more. Check the official ROS documentation `webpage <http://wiki.ros.org/rosbag/Commandline>`_.
+
+
+``rqt_bag`` provides a GUI plugin for displaying and replaying ROS bag files.
+
 
 Useful Video Tutorials
 -------
