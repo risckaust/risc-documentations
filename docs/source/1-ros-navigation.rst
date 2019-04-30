@@ -48,7 +48,7 @@ For a robot to navigate autonomously it needs the following.
    :align: center
 
 
-* **Localization**. A robot needs to know where it is inside the map in order to know how to go to a goal location. You will learn how to use a localization algorithm already implemented in ROS to help the robot estimate its location in a given map based on 2D laser scans. The ROS package that will be used for localization is called `AMCL`, Adaptive Monte Carlo Localization.
+* **Localization**. A robot needs to know where it is inside the map in order to know how to go to a goal location. You will learn how to use a localization algorithm already implemented in ROS to help the robot estimate its location in a given map based on 2D laser scans. The ROS package that will be used for localization is called `amcl`, Adaptive Monte Carlo Localization.
 
 .. image:: ../_static/ros_amcl.png
    :scale: 50 %
@@ -148,7 +148,7 @@ To move the robot using a joystick (we will assume Logitech F710 joystick), exec
 Rviz
 ------
 
-**Rviz** (ROS visualization) is a 3D visualizer for displaying sensor data and state information from ROS.
+**Rviz** (ROS visualization) is a 3D visualizer for displaying sensor data and state information from ROS. You can also display live representations of sensor values coming over ROS Topics including camera data, infrared distance measurements, sonar data, and more.
 
 We will be using Rviz all the way in this tutorial. Now, let's see how we can show simple things in Rviz.
 
@@ -202,13 +202,12 @@ The first step we need to do in order to be able to perform autonomous navigatio
 
 In this tutorial we will learn how to create a 2D map with a ROS package called ``gmapping``. Here is the definition of the package according to the official WiKi (http://wiki.ros.org/gmapping)
 
-> The gmapping package provides laser-based SLAM (Simultaneous Localization and Mapping), as a ROS node called ``slam_gmapping``. Using ``slam_gmapping``, you can create a 2-D occupancy grid map (like a building floorplan) from laser and pose data collected by a mobile robot.
+.. note::
+
+    The gmapping package provides laser-based SLAM (Simultaneous Localization and Mapping), as a ROS node called slam_gmapping. Using slam_gmapping, you can create a 2-D occupancy grid map (like a building floorplan) from laser and pose data collected by a mobile robot.
+
 
 Although there are other packages that allow to build **3D** maps, but we will only stick to 2D mapping in this tutorial.
-
-If you are curious, there is a nice package called ``octomap``  for 3D mapping (http://wiki.ros.org/octomap).
-
-
 
 So basically, we will be performing 2D SLAM in order to construct a 2D map of a certain environment. To do that, as mentioned, we will use ``gmapping`` package. This package takes *laser scans* and *robot odometry* and outputs a map expressed as *occupancy grid*. Wait! What is occupancy grid? don't worry, we will get to that soon.
 
@@ -296,14 +295,54 @@ Your saved map is represented by two files.
 Analyzing ``gmapping_demo.launch``
 ^^^^^
 
+Let's open the gmapping_demo.launch by following command
+    
+.. code-block:: bash
+
+    roscd turtlebot_gazebo/launch
+    gedit gmapping_demo.launch
+
+picture here
+
+Let's check what is behind this parameter.
+
+.. code-block:: bash
+
+    printenv TURTLEBOT_3D_SENSOR
+
+Yields to asus_xtion_pro
+
+Let's check the asus_xtion_pro_gmapping.launch
+
+
+.. code-block:: bash
+
+    roscd turtlebot_navigation/launch/includes/gmapping
+    gedit asus_xtion_pro_gmapping.launch
+
+
+
 
 Localization
 -----
+
+After we build the map, we need to localize the robot on that map. In order to perform proper navigation, a robot needs to know in which position of the map it is located and with which orientation at every moment.
+
+Run the 
+
+
+.. code-block:: bash
+
+    roslaunch turtlebot_gazebo turtlebot_world.launch
+    roslaunch turtlebot_gazebo amcl_demo.launch
+    roslaunch turtlebot_teleop keyboard_teleop.launch
+
 
 
 Path Planning/Following
 -----
 
+Once we have map and localization we can send goal location to our robot. 
 
 
 Mini Project
