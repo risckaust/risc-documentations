@@ -1375,4 +1375,4 @@ Solutions are available at `Risc Github page <https://github.com/risckaust/risc-
 Contributors
 -----
 
-Main contributor is `Mohamed Abdelkader <https://github.com/mzahana>`_.
+`Mohamed Abdelkader <https://github.com/mzahana>`_.

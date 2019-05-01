@@ -466,4 +466,4 @@ Joystick control
 Enjoy your flight.
 
 
-Main contributor is `Mohamed Abdelkader <https://github.com/mzahana>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
+`Mohamed Abdelkader <https://github.com/mzahana>`_ and `Kuat Telegenov <https://github.com/telegek>`_.

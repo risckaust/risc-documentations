@@ -186,11 +186,9 @@ See following snapshots to know what to expect your rviz configs to be like.
 Now, you have a basic idea on how to use Rviz to visualize your robots states. Later, we will also use it to visualize the map we built or while we are building it, paths we want to navigate, and how to use it to set goal waypoints.
 
 
-
 .. hint::
 
-	If you close Rviz, you will loose the displays and the configs you made. You can save the current configs you did in order to load it quickly next time you launch Rviz. Just use the *File* menu and choose *save config as*.
-
+	If you close Rviz, you will lose the displays and the configs you made. You can save the current configs you did in order to load it quickly next time you launch Rviz. Just use the *File* menu and choose *save config as*.
 
 
 Now it's time to build a map!
@@ -221,7 +219,7 @@ First let's bring up our Gazebo world.
 
 .. code-block:: bash
 
-	roslaunch turtlebot_gazebo turtlebot_world.launch
+	roslaunch turtlebot_gazebo turtlebot_world.launch # you can launch different world by adding *world_file:=worlds/willowgarage.world*
 
 
 The playground world with a TurtleBot2 looks like this:
@@ -231,16 +229,7 @@ The playground world with a TurtleBot2 looks like this:
    :scale: 50 %
    :align: center
 
-.. hint::
-
-	You can launch another world using command
-
-.. code-block:: bash
-
-	roslaunch turtlebot_gazebo turtlebot_world.launch world_file:=worlds/willowgarage.world
-
-
-To start building a map, let's run the ``gmapping``  node.
+To start building a map, let's run the gmapping node
 
 .. code-block:: bash
 
@@ -254,13 +243,11 @@ Next, run **Rviz** in order to visualize the map you build in real-time.
 	rosrun rviz rviz
 
 
-Add the following displays:
+Add the following displays, in order to visualize the robot, laser scans, and the map
 
 * ``RobotModel``
-* ``LaserScan``
-* ``Map``
-
-In order to visualize the robot, laser scans,  and the map.
+* ``LaserScan``, with topic name /scan
+* ``Map``, with topic name /map
 
 Use your favorite teleoperation tool to drive the TurtleBot around the world, until you get satisfied with your map. The following capture shows the mapping process after turning 360 degrees.
 
@@ -288,61 +275,65 @@ Once you get satisfied about your map, you can save it for later use. To save th
 Your saved map is represented by two files.
 
 * YAML file which contains descriptions about your map setup
-* grayscale image that represents your occupancy grid map, which actually can be edited by an image editor
+* Grayscale image that represents your occupancy grid map, which actually can be edited by an image editor
 
-**OK! What has just happened ?!** Let's look closely into the ``gmapping_demo.launch`` file and see what it does.
-
-Analyzing ``gmapping_demo.launch``
-^^^^^
-
-Let's open the gmapping_demo.launch by following command
-    
-.. code-block:: bash
-
-    roscd turtlebot_gazebo/launch
-    gedit gmapping_demo.launch
-
-picture here
-
-Let's check what is behind this parameter.
-
-.. code-block:: bash
-
-    printenv TURTLEBOT_3D_SENSOR
-
-Yields to asus_xtion_pro
-
-Let's check the asus_xtion_pro_gmapping.launch
-
-
-.. code-block:: bash
-
-    roscd turtlebot_navigation/launch/includes/gmapping
-    gedit asus_xtion_pro_gmapping.launch
-
-
-
+Try to open ``gmapping_demo.launch`` and see what it does.
 
 Localization
 -----
 
 After we build the map, we need to localize the robot on that map. In order to perform proper navigation, a robot needs to know in which position of the map it is located and with which orientation at every moment.
 
-Run the 
-
+Run the the following commands
 
 .. code-block:: bash
 
-    roslaunch turtlebot_gazebo turtlebot_world.launch
-    roslaunch turtlebot_gazebo amcl_demo.launch
-    roslaunch turtlebot_teleop keyboard_teleop.launch
+    roslaunch turtlebot_gazebo turtlebot_world.launch # brings turtlebot in simulation
+    roslaunch turtlebot_gazebo amcl_demo.launch # starts amcl node, add following *map_file:=<full path to your map>*, to use saved map from previous seciton
+    roslaunch turtlebot_teleop keyboard_teleop.launch 
+    rosrun rviz rviz
 
+Add the following displays, in order to visualize the robot, position and orientation.
+
+* ``RobotModel``
+* ``PoseArray`` topic name /particlecloud
+
+
+Move the robot with the keyboard and see in rviz how things are changing. So amcl node is a probabilistic localization system for a robot moving in 2D. It implements the adaptive (or KLD-sampling) Monte Carlo localization approach (as described by Dieter Fox), which uses a particle filter to track the pose of a robot against a *known map*.
+
+
+pciture here of the robot with red arrows
+
+Also analyze ``amcl_demo.launch`` file and track what it does.
+
+.. hint::
+
+    You can use predefined Rviz configuration by running the following command
+
+    .. code-block:: bash
+
+        roslaunch turtlebot_rviz_launchers view_navigation.launch
 
 
 Path Planning/Following
 -----
 
-Once we have map and localization we can send goal location to our robot. 
+Let's run the acml_node from previous section
+
+.. code-block:: bash
+
+    roslaunch turtlebot_gazebo amcl_demo.launch
+
+    rostopic list
+
+    make 2D nav goal from rviz
+
+    rostopic echo /move_base_simple/goal
+    
+    let's see how topic has been changed.
+
+    which mean we can publish to this topic as well.
+
 
 
 Mini Project
@@ -350,16 +341,14 @@ Mini Project
 
 
 
-Conclusion
------
-
-
 
 References
 -----
+
+https://www.youtube.com/playlist?list=PLK0b4e05LnzZA_fWYi1_VEuBzNw9BGo6s
 
 
 Contributors
 -----
 
-Main contributor is `Mohamed Abdelkader <https://github.com/mzahana>`_.
+`Mohamed Abdelkader <https://github.com/mzahana>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
