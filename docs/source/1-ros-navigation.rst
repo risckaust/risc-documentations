@@ -196,6 +196,7 @@ Now it's time to build a map!
 Mapping
 -------
 
+
 The first step we need to do in order to be able to perform autonomous navigation is to **build a map**.
 
 In this tutorial we will learn how to create a 2D map with a ROS package called ``gmapping``. Here is the definition of the package according to the official WiKi (http://wiki.ros.org/gmapping)
@@ -207,19 +208,14 @@ In this tutorial we will learn how to create a 2D map with a ROS package called 
 
 Although there are other packages that allow to build **3D** maps, but we will only stick to 2D mapping in this tutorial.
 
-So basically, we will be performing 2D SLAM in order to construct a 2D map of a certain environment. To do that, as mentioned, we will use ``gmapping`` package. This package takes *laser scans* and *robot odometry* and outputs a map expressed as *occupancy grid*. Wait! What is occupancy grid? don't worry, we will get to that soon.
+So basically, we will be performing 2D SLAM in order to construct a 2D map of a certain environment. To do that, as mentioned, we will use ``gmapping`` package. This package takes *laser scans* and *robot odometry* and outputs a map expressed as *occupancy grid*.
 
 
-To start, we will see how to use mapping through an example.
-
-Building 2D map using ``gmapping`` package
-^^^^^^
-
-First let's bring up our Gazebo world.
+To start, we will see how to use mapping through an example. First let's bring up our Gazebo world.
 
 .. code-block:: bash
 
-	roslaunch turtlebot_gazebo turtlebot_world.launch # you can launch different world by adding *world_file:=worlds/willowgarage.world*
+	roslaunch turtlebot_gazebo turtlebot_world.launch # you can launch different world by adding world_file:=worlds/willowgarage.world
 
 
 The playground world with a TurtleBot2 looks like this:
@@ -245,9 +241,7 @@ Next, run **Rviz** in order to visualize the map you build in real-time.
 
 Add the following displays, in order to visualize the robot, laser scans, and the map
 
-* ``RobotModel``
-* ``LaserScan``, with topic name /scan
-* ``Map``, with topic name /map
+* ``RobotModel``, ``LaserScan`` with topic name /scan, ``Map`` with topic name /map
 
 Use your favorite teleoperation tool to drive the TurtleBot around the world, until you get satisfied with your map. The following capture shows the mapping process after turning 360 degrees.
 
@@ -277,7 +271,7 @@ Your saved map is represented by two files.
 * YAML file which contains descriptions about your map setup
 * Grayscale image that represents your occupancy grid map, which actually can be edited by an image editor
 
-Try to open ``gmapping_demo.launch`` and see what it does.
+Open ``gmapping_demo.launch`` and see what it does.
 
 Localization
 -----
@@ -289,7 +283,7 @@ Run the the following commands
 .. code-block:: bash
 
     roslaunch turtlebot_gazebo turtlebot_world.launch # brings turtlebot in simulation
-    roslaunch turtlebot_gazebo amcl_demo.launch # starts amcl node, add following *map_file:=<full path to your map>*, to use saved map from previous seciton
+    roslaunch turtlebot_gazebo amcl_demo.launch # starts amcl node, add *map_file:=<full path to your map>*, to use saved map from previous seciton
     roslaunch turtlebot_teleop keyboard_teleop.launch 
     rosrun rviz rviz
 
@@ -299,12 +293,12 @@ Add the following displays, in order to visualize the robot, position and orient
 * ``PoseArray`` topic name /particlecloud
 
 
-Move the robot with the keyboard and see in rviz how things are changing. So amcl node is a probabilistic localization system for a robot moving in 2D. It implements the adaptive (or KLD-sampling) Monte Carlo localization approach (as described by Dieter Fox), which uses a particle filter to track the pose of a robot against a *known map*.
+Move the robot with the keyboard and see in rviz how things are changing. So amcl node is a probabilistic localization system for a robot moving in 2D. It implements the adaptive (or KLD-sampling) Monte Carlo localization approach, which uses a particle filter to track the pose of a robot against a *known map*.
 
 
 pciture here of the robot with red arrows
 
-Also analyze ``amcl_demo.launch`` file and track what it does.
+Also analyze ``amcl_demo.launch`` file and check what it does.
 
 .. hint::
 
@@ -329,7 +323,7 @@ Let's run the acml_node from previous section
     make 2D nav goal from rviz
 
     rostopic echo /move_base_simple/goal
-    
+
     let's see how topic has been changed.
 
     which mean we can publish to this topic as well.
