@@ -296,7 +296,9 @@ Add the following displays, in order to visualize the robot, position and orient
 Move the robot with the keyboard and see in rviz how things are changing. So amcl node is a probabilistic localization system for a robot moving in 2D. It implements the adaptive (or KLD-sampling) Monte Carlo localization approach, which uses a particle filter to track the pose of a robot against a *known map*.
 
 
-pciture here of the robot with red arrows
+.. image:: ../_static/localization.png
+   :scale: 50 %
+   :align: center
 
 Also analyze ``amcl_demo.launch`` file and check what it does.
 
@@ -324,10 +326,13 @@ Let's run the acml_node from previous section
 
     rostopic echo /move_base_simple/goal
 
-    let's see how topic has been changed.
+let's see how topic has been changed.
 
-    which mean we can publish to this topic as well.
+which mean we can publish to this topic as well.
 
+.. image:: ../_static/navigation.png
+   :scale: 50 %
+   :align: center
 
 
 Mini Project
