@@ -181,22 +181,16 @@ Calibration process
 
 * `Install PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
-* Set the airframe, for example: Generic 250 Frame, Flamewheel F330. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
+* Set the airframe, for example: Generic 250 Frame, Flamewheel F330 or Flamewheel F450 depending on your frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
-* Calibrate `Sensor orientation <https://docs.px4.io/en/config/flight_controller_orientation.html>`_ if any, `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
-
-Video for your reference
-
-.. raw:: html
-  
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+* Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
 
 * In ``Flight Modes`` tab set:
 
   - **Modes: Channel 6 (maybe marked as FLAP/GYRO)**
   - **Mode 1: Position**. When sticks are released the vehicle will stop (and hold position against wind drift).
   - **Mode 4: Altitude**. Climb and drop are controlled to have a maximum rate.
-  - **Mode 6: Manual**. 
+  - **Mode 6: Manual**.
   - **Kill switch: Channel 5**. Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
 
 .. hint::
