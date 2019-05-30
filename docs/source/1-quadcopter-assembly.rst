@@ -146,7 +146,7 @@ Assembly process
     3. Press the **Menu** button on your Taranis X9D
     4. Go to page 2 by pressing **Page** button.
     5. Scroll down with **-** button until you see **Internal RF** line.
-    6. Select **[Bind]** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
+    6. Select **[Bind]** line, and press **ENT** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
     
   + Spektrum receiver with autobind 
 
@@ -190,8 +190,6 @@ Video for your reference
 .. raw:: html
   
   <iframe width="560" height="315" src="https://www.youtube.com/embed/91VGmdSlbo4?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-* Before you can calibrate the radio system the receiver and transmitter must be connected/bound. Follow the steps from this `page <https://docs.px4.io/en/config/radio.html>`_.
 
 * In ``Flight Modes`` tab set:
 
