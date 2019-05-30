@@ -242,6 +242,14 @@ Flying
   
   Always check the battery before flying
 
+
+
+Odroid installation
+------
+
+
+
+
 Troubleshooting
 ------
 
