@@ -74,7 +74,7 @@ You will need
 * Electronic speed controller (ESC) controls and regulates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
 
 .. image:: ../_static/esc.jpg
-   :scale: 50 %
+   :scale: 30 %
    :align: center
 
 .. note:: 
@@ -91,10 +91,10 @@ The most popular form of remote control unit (transmitter) for UAVs is shown bel
    :align: center
 
 
-* Use Taranis X9D Plus transmitter as shown below
+Use Taranis X9D Plus transmitter as shown below
 
 .. image:: ../_static/taranis.jpg
-   :scale: 40 %
+   :scale: 70 %
    :align: center
 
 * UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
@@ -128,10 +128,10 @@ Assembly process
 	Do not install propellers now.
 
 
-* Connect ESCs to motors and plug ESCs to power distribution board. As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
+* Connect ESCs to motors and plug ESCs to power distribution board (or solder them to the frame). As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
 
 
-* Install power module on the frame. One end should be plugged to power distribution board and the other end to the battery. DON’T plug it to the battery for now.
+* Install power module on the frame. One end should be plugged to power distribution board (or soldered to the frame) and the other end to the battery. DON’T plug it to the battery for now.
 
 * Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. To mount the controller to the frame, use thick double side tape to damp the vibrations.
 
