@@ -1,8 +1,6 @@
 Quadcopter Assembly
 =====
 
-Please find all components on Area-C shelves.
-
 Basic principles
 -----
 
@@ -13,7 +11,7 @@ Preliminaries
 
 This tutorial assumes you have the following skills:
 
-* :doc:`1-ros-basics` or `ETHZ Online Course <http://www.rsl.ethz.ch/education-students/lectures/ros.html>`_. There are `solutions <https://github.com/luym11/ros_practise>`_ to ETHZ exercises available on Github.
+* :doc:`1-ros-basics`.
 
 * Soldering, if not, please refer to basic skill `video <https://youtu.be/Qps9woUGkvI>`_.
 
@@ -43,14 +41,14 @@ Introduction
 
 You will need
 
-* Quadcopter frame. 250 or 330 frame will be a good start. The value 250/330 means the motor to motor diameter, as shown below.
+* Quadcopter frame. Frames 250 or 330 will be a good start. The value 250/330 means the motor to motor diameter, as shown below.
 
 .. image:: ../_static/quad-diam.png
    :scale: 50 %
    :align: center
 
 
-* Power distribution board to distribute power from a battery to 4 ESCs.
+* Power distribution board to distribute power from a battery to 4 ESCs (no need in case of F330 and F450).
 
 
 .. image:: ../_static/distro-power.jpg
@@ -93,7 +91,13 @@ The most popular form of remote control unit (transmitter) for UAVs is shown bel
    :align: center
 
 
-* UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid (in case you are using it). A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
+* Use Taranis X9D Plus transmitter as shown below
+
+.. image:: ../_static/taranis.jpg
+   :scale: 40 %
+   :align: center
+
+* UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
 
 .. image:: ../_static/ubec.jpg
    :scale: 40 %
@@ -111,7 +115,7 @@ The most popular form of remote control unit (transmitter) for UAVs is shown bel
 Assembly process
 ^^^^^
 
-* Assemble the frame. Attach the power distribution board to it.
+* Assemble the frame. Attach the power distribution board to it (no need if you use frame with soldered pads).
 
 * Mount the motors to the frame. Mind CW and CCW directions. They should be mounted as follows. We usually use **X** configuration.
 
@@ -137,38 +141,37 @@ Assembly process
 
 * Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to **MAIN OUT** port 1.
 
-* Binding process depends on the receiver you use:
+* Binding process for FrSky X8R
 
-  + FrSky X8R
+    * Connect the RCIN port from Pixhawk to SBUS port on X8R
+    * Turn on the X8R while holding the **F/S** button on the module. Release the button.
+    * Press the **Menu** button on your Taranis X9D
+    * Go to page 2 by pressing **Page** button.
+    * Scroll down with **-** button until you see **Internal RF** line.
+    * Select **[Bind]** line, and press **ENT** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
 
-    1. Connect the RCIN port from Pixhawk to SBUS port on X8R
-    2. Turn on the X8R while holding the **F/S** button on the module. Release the button.
-    3. Press the **Menu** button on your Taranis X9D
-    4. Go to page 2 by pressing **Page** button.
-    5. Scroll down with **-** button until you see **Internal RF** line.
-    6. Select **[Bind]** line, and press **ENT** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
-    
-  + Spektrum receiver with autobind 
 
-    1. With the transmitter off, power on the receiver.
-    2. The receiver will attempt to connect to the last transmitter it was bound to.
-    3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED. If it doesn't, press **Spektrum Bind** button in **Radio** tab.
-    4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
-    5. When the receiver binds the orange LED turns solid.
+  .. + Spektrum receiver with autobind 
 
-    .. important::
+  ..   1. With the transmitter off, power on the receiver.
+  ..   2. The receiver will attempt to connect to the last transmitter it was bound to.
+  ..   3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED. If it doesn't, press **Spektrum Bind** button in **Radio** tab.
+  ..   4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
+  ..   5. When the receiver binds the orange LED turns solid.
 
-      Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
+  ..   .. important::
 
-  + Spektrum receiver without autobind
+  ..     Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
 
-    1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_.
-    2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC receiver to AR8000 receiver.
-    3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
-    4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
-    5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.
-    6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
-    7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
+  .. + Spektrum receiver without autobind
+
+  ..   1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_.
+  ..   2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC receiver to AR8000 receiver.
+  ..   3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
+  ..   4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
+  ..   5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.
+  ..   6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
+  ..   7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
 
 * Plug the battery and check 4 ESCs has static green LED lighted up. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
 
