@@ -200,7 +200,12 @@ Calibration process
   
   If you set everything right, you will see changes in **Flight Mode Settings** section highlighted as yellow. Also, moving sticks, dials and switches will be reported in **Channel Monitor** section.
 
-* In ``Power tab`` write the parameters of your battery (Number of cells, Full / Empty voltages) and calibrate ESCs if needed. More information on this `page <https://docs.px4.io/en/config/battery.html>`_ and `here <https://docs.px4.io/en/advanced_config/esc_calibration.html>`_.
+* In ``Power tab`` write the parameters of your battery (Number of cells), calibrate the battery voltage and ESCs (if you use DJI ESCs, no need to calibrate them).
+
+  * Press **Calculate** on the **Voltage divider** line
+  * Measure the voltage with Digital Battery Capacity Checker by connecting it to the battery
+  * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button
+  * To calibrate ESC press **Calibrate** under **ESC PWM Minimum and Maximum Calibration** and follow on-screen instructions
 
 * Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
 
@@ -209,7 +214,7 @@ Calibration process
 .. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
 
 
-* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary.
+* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary (no need for F330 and F450 frame).
 
 
 Flying
