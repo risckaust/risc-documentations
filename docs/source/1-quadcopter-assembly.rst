@@ -186,19 +186,30 @@ Calibration process
 
 * Set the airframe, for example: Generic 250 Frame, Flamewheel F330 or Flamewheel F450 depending on your frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
-* Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
+* Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_. 
+* Calibrate the `Radio <https://docs.px4.io/en/config/radio.html#performing-the-calibration>`_.
 
-* In ``Flight Modes`` tab set:
+* In ``Flight Modes`` tab under the **Flight Mode Settings** and **Switch settings** sections set:
 
-  - **Modes: Channel 6 (maybe marked as FLAP/GYRO)**
-  - **Mode 1: Position**. When sticks are released the vehicle will stop (and hold position against wind drift).
+  - **Mode Channel** to SB (whatever channel it is)
+  - **Mode 1: Manual**. 
   - **Mode 4: Altitude**. Climb and drop are controlled to have a maximum rate.
-  - **Mode 6: Manual**.
-  - **Kill switch: Channel 5**. Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
+  - **Mode 6: Position**. When sticks are released the vehicle will stop (and hold position against wind drift).
+  - **Emergency Kill switch channel** to SF (whatever channel it is). Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
+  - **Offboard switch channel** to SA (whatever channel it is).
+
+You should have similar as shown in the picture below.
+
+.. image:: ../_static/qground.png
+   :scale: 60 %
+   :align: center
+
 
 .. hint::
   
   If you set everything right, you will see changes in **Flight Mode Settings** section highlighted as yellow. Also, moving sticks, dials and switches will be reported in **Channel Monitor** section.
+
+
 
 * In ``Power tab`` write the parameters of your battery (Number of cells), calibrate the battery voltage and ESCs (if you use DJI ESCs, no need to calibrate them).
 
@@ -207,6 +218,7 @@ Calibration process
   * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button
   * To calibrate ESC press **Calibrate** under **ESC PWM Minimum and Maximum Calibration** and follow on-screen instructions
 
+
 * Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
 
 * Now you can install propellers. Note that there are CW and CCW propellers as well.
@@ -214,7 +226,7 @@ Calibration process
 .. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
 
 
-* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary (no need for F330 and F450 frame).
+* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary (no need for F330 and F450 frames).
 
 
 Flying
