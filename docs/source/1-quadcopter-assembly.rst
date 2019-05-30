@@ -140,12 +140,13 @@ Assembly process
 * Binding process depends on the receiver you use:
 
   + FrSky X8R
-  1. Connect the RCIN port from Pixhawk to SBUS port on X8R
-  2. Turn on the X8R while holding the **F/S** button on the module. Release the button.
-  3. Press the **Menu** button on your Taranis X9D
-  4. Go to page 2 by pressing **Page** button.
-  5. Scroll down with **-** button until you see **Internal RF** line.
-  6. Select **[Bind]** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
+
+    1. Connect the RCIN port from Pixhawk to SBUS port on X8R
+    2. Turn on the X8R while holding the **F/S** button on the module. Release the button.
+    3. Press the **Menu** button on your Taranis X9D
+    4. Go to page 2 by pressing **Page** button.
+    5. Scroll down with **-** button until you see **Internal RF** line.
+    6. Select **[Bind]** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
     
   + Spektrum receiver with autobind 
 
