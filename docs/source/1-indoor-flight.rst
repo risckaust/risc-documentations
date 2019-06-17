@@ -322,13 +322,13 @@ Getting MOCAP data into PX4
 
 Assuming your ``vrpn_client_node`` is still running from :ref:`optitrack-interface` on your ODROID, we will republish it to another topic by ``relay`` command.
 
-You will need to run MAVROS node in order to connect ODROID to the flight controller. Separate terminal on ODROID (CTRL + ALT + F2/F3/F4)
+You will need to run MAVROS node by openning a new separate terminal on ODROID (CTRL + ALT + F2/F3/F4)
 
 .. code-block:: bash
 
-	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
+	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.105:14550
 
-``ttyUSB0`` should match the serial port ID in your ODROID. Use ``ls /dev/ttyUSB*`` command on your odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
+wher ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
 Relay the Mocap data to the flight controller
 
@@ -336,9 +336,7 @@ Relay the Mocap data to the flight controller
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Check whether if you can switch your drone to **Position** mode.
-
-Now you are ready to use position hold/offboard modes.
+Check whether if you can switch your drone to **Position** mode. If successfull, you are ready to use position hold/offboard modes.
 
 Checking EKF2 Consistency via  Log Files (optional)
 -------
