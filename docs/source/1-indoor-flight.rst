@@ -206,7 +206,7 @@ In your ROS machine (PC or ODROID), where you want to get tracking data, run the
 Now you should be able to receive Mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``.
 
 
-Open new terminal (**CTRL + ALT + F2** on ODROID XU4) and try following command
+Open new terminal (**CTRL + ALT + F2/F3/F3...** on ODROID XU4) and try following command
 
 .. code-block:: bash
 
@@ -239,7 +239,7 @@ Hardware Requirements
 
 * Pixhawk or similar controller that runs PX4 firmware
 * ODROID (we will assume XU4)
-* Serial connection, to connect ODROID to Pixhawk. You can use USB/FTDI cable. If you are using **Pixhawk 2**, then connect the serial cable to ``TELEM2`` port. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
+* Serial connection, to connect ODROID to Pixhawk. You will need to solder you own USB/FTDI cable to connect from Odroid USB port to ``TELEM2`` port on Pixhawk. Mind that ``TX`` connects to ``RX``, ``RX`` connects to ``TX``, ``G`` to ``G``. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
 * OptiTrack PC
 * WiFi router (5GHz is recommended)
 
@@ -268,13 +268,19 @@ Now, you need to set your flight controller firmware PX4, to accept mocap data. 
 Setting EKF2 Estimator for MOCAP Fusion
 -----
 
-First choose ``EKF2`` as your estimator from the ``System`` tab
+To set up the default companion computer message stream on ``TELEM 2``, set the following parameters:
 
-.. image:: ../_static/ekf2_est.png
-   :scale: 50 %
-   :align: center
 
-Also make sure the you set the baudrate correctly ``SYS_COMPANION``.
+If using firmware version below 1.9.0, change the following parameters:
+
+* ``SYS_COMPANION`` = Companion Link (921600 baud, 8N1)
+
+Starting from firmware 1.9.0, change the following parameters:
+
+* ``MAV_1_CONFIG`` = TELEM 2 (MAV_1_CONFIG is often used to map the TELEM 2 port)
+* ``MAV_1_MODE`` = Onboard
+* ``SER_TEL2_BAUD`` = 921600 (921600 or higher recommended for applications like log streaming or FastRTPS)
+
 
 In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use ``vision position fusion`` and ``vision yaw fusion``.
 
