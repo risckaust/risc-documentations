@@ -265,7 +265,7 @@ Again, this is included in the provided image
 Now, you need to set your flight controller firmware PX4, to accept mocap data. ``EKF2`` estimator can accept mocap data as vision-based data.
 
 
-Setting EKF2 Estimator for MOCAP Fusion
+Settings in QGroundControl
 -----
 
 To set up the default companion computer message stream on ``TELEM 2``, set the following parameters:
@@ -282,7 +282,7 @@ Starting from firmware 1.9.0, change the following parameters:
 * ``SER_TEL2_BAUD`` = 921600 (921600 or higher recommended for applications like log streaming or FastRTPS)
 
 
-In the ``EKF2`` parameters tab, set ``EKF2_AID_MASK`` to **not** use GPS, and use ``vision position fusion`` and ``vision yaw fusion``.
+Set ``EKF2_AID_MASK`` to **not** use GPS, and use **vision position fusion** and **vision yaw fusion**.
 
 .. image:: ../_static/ekf2_mask.png
    :scale: 50 %
@@ -328,7 +328,7 @@ You will need to run MAVROS node in order to connect ODROID to the flight contro
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.119:14550
 
-``ttyUSB0`` should match the serial port ID in your ODROID. ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
+``ttyUSB0`` should match the serial port ID in your ODROID. Use ``ls /dev/ttyUSB*`` command on your odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
 Relay the Mocap data to the flight controller
 
@@ -336,7 +336,7 @@ Relay the Mocap data to the flight controller
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Check in **QGroundControl** that you got some message which means Mocap data is received by Pixhawk.
+Check whether if you can switch your drone to **Position** mode.
 
 Now you are ready to use position hold/offboard modes.
 
