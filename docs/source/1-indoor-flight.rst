@@ -38,7 +38,7 @@ A companion computer is referred to SBC that is connected to a flight controller
 Motion Capture Setup: OptiTrack
 =========
 
-Camera calibration
+Camera calibration (skip for bootcamp)
 -----
 
 Make sure that you remove any markers from the captured area and Area-C before performing calibration.

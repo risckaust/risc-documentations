@@ -38,16 +38,6 @@ Software Requirements
 Setup Steps
 -----
 
-* Download this `ZIP file <https://github.com/risckaust/initial_settings/archive/master.zip>`_, and extract ``.sh`` files to your home folder and run by command.
-
-.. code-block:: bash
-  
-  ./ubuntu_install.sh
-
-Then copy commands line by line from ``ws.sh`` and run them one by one in a terminal.
-
-This will setup all permissions and development environment which includes the software-in-the-loop simulation. 
-
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
 Testing SITL with Gazebo \(No ROS\)
