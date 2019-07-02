@@ -49,11 +49,11 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-Assuming you have workstation with installed Ubuntu 16.04, download this `ZIP file <https://github.com/risckaust/initial_settings/archive/master.zip>`_. Assuming it has been downloaded to ``Downloads`` folder, right click on the archive file and choose **Extract here**. Open terminal by pressing ``CTRL + ALT + T`` and launch following commands.
+Assuming you have workstation with installed Ubuntu 16.04, execute following command in the terminal. Open terminal by pressing ``CTRL + ALT + T``.
 
 .. code-block:: bash
 
-  cd Downloads/initial_settings # Press enter
+  wget https://raw.githubusercontent.com/risckaust/initial_settings/master/ubuntu_sim_ros_kinetic.sh # Press enter
   source ubuntu_sim_ros_kinetic.sh # Will take some time to install
 
 In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
@@ -70,7 +70,7 @@ During this tutorial, you will work with a simulated robot called **TurtleBot**,
 For reference see `Turtlebot wiki page <http://wiki.ros.org/Robots/TurtleBot>`_.
 
 
-Open application called **Terminator**, it's highly recommended to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.
+Open application called **Terminator** (you can install it by running following command in the terminal ``sudo apt-get install terminator``), it's highly recommended to use this application instead of stock Terminal. You can have tabs or split windows into few terminals. To install the required packages, execute the following commands.
 
 .. code-block:: bash
 
