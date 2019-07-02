@@ -40,38 +40,31 @@ Setup Steps
 
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
-Testing SITL with Gazebo \(No ROS\)
+SITL with Gazebo
 -----
 
-In this step, we will validate that the PX4 SITL app and Gazebo work as expected. To run the SITL app and Gazebo, execute the following commands in a new terminal
+There are ROS launch scripts available to run the simulation wrapped in ROS
+
+To run SITL wrapped in ROS the ROS environment needs to be updated:
+
 
 .. code-block:: bash
 
   cd ~/src/Firmware
-  make posix_sitl_default gazebo
+  DONT_RUN=1 make px4_sitl_default gazebo
+  cd ~/catkin_ws
+  catkin build
 
-After sometime, you should be able to see an Iris model loaded in Gazebo, and the ``pxh>`` command line in the terminal. Just hit ENTER couple of times if you don't see the ``pxh>`` command line, and it should appear.  
+Launching Gazebo with ROS Wrappers
+------
 
-To takeoff/land the quadcopter, execute the following commands in the terminal
-
-.. code-block:: bash
-
-  pxh> commander takeoff
-  pxh> commander land
-
-
-If the previous actions succeed the the installation is OK. Next, we will run ROS and a MAVROS node which will allow us to interface the autopilot with ROS.
-
-Interfacing with ROS
------
-
-Now, you are ready to launch Gazebo+PX4 SITL app+ROS+MAVROS. To do that, execute the following command.
+Now, you are ready to launch Gazebo + PX4 SITL app + ROS + MAVROS. To do that, execute the following command.
 
 .. code-block:: bash
   
   roslaunch px4 mavros_posix_sitl.launch fcu_url:="udp://:14540@127.0.0.1:14557"
 
-You should be able to see ``/mavros`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see
+You should be able to see ``/mavros`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see following
 
 .. code-block:: bash
 
