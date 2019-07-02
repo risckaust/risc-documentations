@@ -2,4 +2,12 @@
 =====
 
 
-As for now follow this `guide <http://tutorial45.com/solidworks-tutorial-create-simple-3d-object/>`_. You may use iMac or Lenovo station in Area-A to use SolidWorks.
+Odroid platfrom design
+
+
+
+To 3D print the designed part, refer to 3D print section.
+
+
+
+You may use iMac or Lenovo station in Area-A to run SolidWorks.
