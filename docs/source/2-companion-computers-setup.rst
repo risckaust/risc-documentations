@@ -126,6 +126,10 @@ Install vrpn
 
 	sudo apt-get install ros-kinetic-vrpn-client-ros
 
+
+Backup image
+^^^^^^^^^^^^^^^
+
 After you installed all the packages and software you might want to create an image of the entire eMMC. Plug it into the another Ubuntu running computer and execute the following comands:
 
 .. code-block:: bash
