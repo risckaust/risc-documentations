@@ -34,7 +34,7 @@ Flashing Ubuntu image
 You can use either an SD card or eMMC. eMMC is recommended as it is much faster than SD card, 16GB or more is recommended.
 
 
-For our applications we often use minimal image (minimal, Bare OS) without GUI. Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image from official odroid webpage and use ``Etcher`` to flash it to either SD or eMMC card.
+For our applications we use minimal image (minimal, Bare OS) without GUI. Minimal image will have much smaller size and faster boot and less overhead in general. Extract the downloaded image from official odroid webpage and use ``Etcher`` to flash it to either SD or eMMC card.
 
 User account setup
 """""""""""
@@ -45,7 +45,7 @@ After downloading and flashing image to odroid, it is recommended to setup a use
 
 	adduser odroid # create new user with name odroid
 	adduser odroid sudo # add odroid user to admin group
-	sudo adduser odroid dialout # give odroid user access to serial ports
+	adduser odroid dialout # give odroid user access to serial ports
 
 Network Setup
 ^^^^^^^^^
@@ -90,8 +90,10 @@ After odroid is connected to WiFi network and internet run the following command
 
 .. code-block:: bash
 
-	sudo apt-get update
-	sudo apt-get upgrade
+	apt-get update
+	apt-get upgrade
+
+Reboot the odroid and now login with newly created user.
 
 Installing packages
 ^^^^^^^^^^^^^^^
@@ -124,14 +126,15 @@ Install vrpn
 
 	sudo apt-get install ros-kinetic-vrpn-client-ros
 
-After you installed all the packages and software you might want to create an image of the entire eMMC. Plug it into the another Ubuntu running computer and execute following comands:
+After you installed all the packages and software you might want to create an image of the entire eMMC. Plug it into the another Ubuntu running computer and execute the following comands:
 
 .. code-block:: bash
 
 	lsbkl # Will lists the block devices 
-	dd if=/dev/sdc of=/path_to_the_folder/backup.img # Match **sdc** to the eMMC from previous command
-	# It will take time to create an image, and create a file with full capacity of the eMMC
-	xz -c backup.img > backup.img.xz # to reduce the size and get off the unused space
+	dd if=/dev/sdc of=/path_to_the_folder/backup.img # Match sdc to the eMMC from previous command
+	# It will take time to create an image, and will create a file with full capacity of the eMMC
+	# To reduce the size and shrink the unused space run the following
+	xz -c backup.img > backup.img.xz 
 
 
 Intel Up Board
