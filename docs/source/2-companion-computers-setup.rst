@@ -46,10 +46,6 @@ After downloading and flashing image to odroid, it is recommended to setup a use
 	adduser odroid # create new user with name odroid
 	adduser odroid sudo # add odroid user to admin group
 	sudo adduser odroid dialout # give odroid user access to serial ports
-	
-	
-	apt-get update
-	apt-get upgrade
 
 Network Setup
 ^^^^^^^^^
