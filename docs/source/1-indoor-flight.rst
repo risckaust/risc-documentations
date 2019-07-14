@@ -205,11 +205,11 @@ Software Requirements
 
 * Linux Ubuntu 16 installed on ODROID XU4. A minimal image is recommended for faster executions.
 
-* ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. The above image already includes this
+* ROS `Kinetic <http://wiki.ros.org/kinetic/Installation/Ubuntu>`_ installed on ODROID XU4. Already preinstalled in the image.
 
-* ``MAVROS`` package: `Binary installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb>`_. Again, the above image includes this
+* ``MAVROS`` package: `Binary installation <https://github.com/mavlink/mavros/blob/master/mavros/README.md#binary-installation-deb>`_. Already preinstalled in the image.
 
-* Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. You can use the following command to install the package (assuming **ROS Kinetic** is used).
+* Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. Already preinstalled in the image.
 
 Now, you need to set your flight controller firmware PX4, to accept mocap data. ``EKF2`` estimator can accept mocap data as vision-based data.
 
