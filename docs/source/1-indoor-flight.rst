@@ -57,21 +57,6 @@ Follow `this guide <http://wiki.optitrack.com/index.php?title=Calibration>`_ in 
 
 	It is recommended to perform camera calibration on a weekly basis, or every couple of weeks.
 
-Motive setup
------
-
-In this section, we mainly want to learn how to 
-
-* Create rigid bodies that represent objects to be tracked (e.g. quadcopter)
-* Make an appropriate marker setup
-
-Make sure that you have clean markers. Markers should not be placed in symmetric shape. Markers should not be close to each other.
-
-Read `this guide <http://wiki.optitrack.com/index.php?title=Markers>`_ for detailed markers setup.
-
-Follow `this guide <http://wiki.optitrack.com/index.php?title=Rigid_Body_Tracking>`_ to create rigid bodies.
-
-.. _optitrack-interface:
 
 OptiTrack Interface to ROS
 =====
@@ -99,7 +84,7 @@ Required Software
 Installation
 -----
 
-Method 2. Odroid XU4
+Odroid XU4
 ^^^^^
 
 Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_.
@@ -144,7 +129,9 @@ Add or edit following lines to the file, and make sure it matches your WiFi netw
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. When defining the rigid body make sure your drone is looking to the long wall. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``. 
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``.
+
+.. important:: When defining a body, make sure front of your drone is aligned with the X-axis of the flying arena.
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
