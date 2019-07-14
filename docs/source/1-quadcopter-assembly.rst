@@ -87,12 +87,12 @@ You will need
 It's recommended to use Taranis X9D Plus transmitter with X8R receiver as shown below
 
 .. image:: ../_static/frsky_taranis.jpg
-   :scale: 70 %
+   :scale: 90 %
    :align: center
 
 
 .. image:: ../_static/x8r.jpg
-   :scale: 40 %
+   :scale: 30 %
    :align: center
 
 * UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
@@ -178,7 +178,7 @@ Calibration process
 
 * Download ``QGroundControl`` on your computer and open it.
 
-* `Install PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
+* `Install Stable PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
 * Set the airframe, for example: Generic 250 Frame, Flamewheel F330 or Flamewheel F450 depending on your frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
