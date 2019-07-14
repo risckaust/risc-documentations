@@ -82,19 +82,17 @@ You will need
   Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn). 
 
 
-* Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware. Spektrum and DSM receivers must connect to a SPKT/DSM input. PPM-Sum and S.BUS receivers must connect directly to the RC ground, power and signal pins (typically labeled **RC** or **RCIN**)
+* Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware.
 
-The most popular form of remote control unit (transmitter) for UAVs is shown below. It has separate control sticks for controlling roll/pitch and for throttle/yaw as shown
+It's recommended to use Taranis X9D Plus transmitter with X8R receiver as shown below
 
-.. image:: ../_static/rc_basic_commands.png
-   :scale: 30 %
+.. image:: ../_static/frsky_taranis.jpg
+   :scale: 70 %
    :align: center
 
 
-Use Taranis X9D Plus transmitter as shown below
-
-.. image:: ../_static/taranis.jpg
-   :scale: 70 %
+.. image:: ../_static/x8r.jpg
+   :scale: 40 %
    :align: center
 
 * UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
@@ -173,8 +171,6 @@ Assembly process
   ..   6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
   ..   7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
 
-* Plug the battery and check 4 ESCs has static green LED lighted up. Buzzer will produce sound in the beginning and remain silent. Unplug the battery.
-
 * For this stage there’s no need to install Odroid.
 
 Calibration process
@@ -191,14 +187,14 @@ Calibration process
 
 * In ``Flight Modes`` tab under the **Flight Mode Settings** and **Switch settings** sections set:
 
-  - **Mode Channel** to SB (whatever channel it is)
+  - **Mode Channel** to SB (SB switch labeled on your Taranis X9D)
   - **Mode 1: Manual**. 
   - **Mode 4: Altitude**. Climb and drop are controlled to have a maximum rate.
-  - **Mode 6: Position**. When sticks are released the vehicle will stop (and hold position against wind drift).
-  - **Emergency Kill switch channel** to SF (whatever channel it is). Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
-  - **Offboard switch channel** to SA (whatever channel it is).
+  - **Mode 6: Position**. When sticks are released the vehicle will stop and hold position.
+  - **Emergency Kill switch channel** to SF (SF switch labeled on your Taranis X9D). Immediately stops all motor outputs. The vehicle will crash, which may in some circumstances be more desirable than allowing it to continue flying.
+  - **Offboard switch channel** to SA (SA switch labeled on your Taranis X9D).
 
-You should have similar as shown in the picture below.
+You should have similar as shown in the picture below. Channels for **Flight Mode Settings** and **Switch Settings** might differ.
 
 .. image:: ../_static/qground.png
    :scale: 60 %
@@ -260,6 +256,10 @@ Troubleshooting
 * Motor are not rotating or rotating partially.
 
   - Set ``PWM_RATE`` value to default.
+
+* Drone goes high during take-off and hits the ceiling, even though after take-off the throttle stick is all they way down
+
+  - Try to lower ``MPC_THR_HOVER`` value
 
 Contributors
 -----
