@@ -238,7 +238,7 @@ Set ``EKF2_AID_MASK`` to **not** use GPS, and use **vision position fusion** and
    :align: center
 
 
-There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
+There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/master/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
 
 
 .. image:: ../_static/ekf2_delay.png
@@ -291,7 +291,7 @@ Check `this page <https://dev.px4.io/master/en/ros/external_position_estimation.
 Checking EKF2 Consistency via  Log Files (optional)
 -------
 
-Please refer to this `link <https://dev.px4.io/v1.9.0/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
+Please refer to this `link <https://dev.px4.io/master/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
 
 Flying
 ======
