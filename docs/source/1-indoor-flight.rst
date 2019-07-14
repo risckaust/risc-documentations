@@ -131,7 +131,7 @@ Mocap computer settings
 
 In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``.
 
-.. important:: When defining a body, make sure front of your drone is aligned with the X-axis of the flying arena.
+.. important:: Align your robot's forward direction with the the `system +x-axis <https://v20.wiki.optitrack.com/index.php?title=Template:Coordinate_System>`_.
 
 .. image:: ../_static/capture1.png
    :scale: 50 %
@@ -278,13 +278,15 @@ You will need to run MAVROS node by openning a new separate terminal on ODROID (
 
 where ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
-Relay the Mocap data to the flight controller
+MAVROS provides a plugin to relay pose data published on ``/mavros/vision_pose/pose`` to PX4. Assuming that MAVROS is running, you just need to remap the pose topic that you get from Mocap ``/vrpn_client_node/<rigid_body_name>/pose`` directly to ``/mavros/vision_pose/pose``.
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
 Check whether if you can switch your drone to **Position** mode (will be reported in ``QGroundControl``). If successfull, you are ready to use position hold/offboard modes.
+
+Check `this page <https://dev.px4.io/master/en/ros/external_position_estimation.html#first-flight>`_ before first flight in Position mode.
 
 Checking EKF2 Consistency via  Log Files (optional)
 -------
