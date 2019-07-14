@@ -330,7 +330,8 @@ Setup a ROS Network
 	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
 	export ROS_HOSTNAME=192.168.0.pc_ip_number
 
-	Make sure you **source** the ``.bashrc`` file after this.
+
+Make sure you **source** the ``.bashrc`` file after this.
 
 * From NUC/laptop log into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
 
@@ -338,7 +339,8 @@ Setup a ROS Network
 
 	ssh odroid@192.168.0.odroid_ip_number
 
-	It will prompt to enter password, if you use minimal image provided then it's **odroid**.
+
+It will prompt to enter password, if you use minimal image provided then it's **odroid**.
 
 *  Let's edit ``.bashrc`` file on ODROID as well.
 
@@ -353,7 +355,7 @@ Setup a ROS Network
 	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
 	export ROS_HOSTNAME=192.168.0.odroid_ip_number
 
-	To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file. 
+To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file. 
 
 ODROID commands
 ---------
