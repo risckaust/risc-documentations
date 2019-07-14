@@ -225,7 +225,7 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
 * Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary (no need for F330 and F450 frames).
 
 
-Flying
+Flying in manual mode
 ------
 
 * Read `First Flight Guidelines <https://docs.px4.io/en/flying/first_flight_guidelines.html>`_ and `Flying 101 <https://docs.px4.io/en/flying/basic_flying.html>`_.
@@ -243,6 +243,15 @@ Flying
 Odroid installation
 ------
 
+- Mount Odroid XU4 on the drone
+
+- Solder the UBEC input cable to the power distribution board (or the frame) 
+
+- Solder jack cable to female servo cable and connect to the UBEC output cable
+
+- Connect the odroid to ``TELEM2`` port on Pixhawk or ``USB/OBC`` on MindPX using `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Note that GND connects to GND, RX to TX, and TX to RX.
+
+- Plug the jack cable to the odroid and check if it's powered from the battery
 
 
 

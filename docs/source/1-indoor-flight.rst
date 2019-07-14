@@ -6,7 +6,7 @@ System Architecture
 
 In order to start flying the quadcopter indoor, we need the position and orientation feedback for this.
 
-This section will guide you how to use OptiTrack Motion Capture System, how to stream position and orientation data to ROS, and feed it to your flight controller. Finally you will be able to fly your drone inside the arena.
+This section will guide you how to use OptiTrack Motion Capture System, how to stream position and orientation data to ROS, and feed it to your flight controller. Finally you will be able to fly your drone inside the arena in position mode.
 
 
 .. image:: ../_static/sys_arch2.png
@@ -28,10 +28,10 @@ OptiTrack motion capture system (Mocap hereinafter) works as follows. The overhe
     
 All cameras are connected to a single Mocap PC through network switches. Motive Optical motion capture software is installed on this PC.
   
-Controller
+Onboard computer
 -----
 
-Controllers are PCs or single board computer (SBC) which are used to control the objects in the flying arena. When a PC is used to control an object, this referred as **OFFBOARD** control. Also a controller can be a flight controller that runs an autopilot firmware to control a vehicle (e.g. quadcopter).
+Single board computer (SBC) which are used to control the drone in the flying arena. When a PC is used to control a drone, this referred as **OFFBOARD** control.
 
 A companion computer is referred to SBC that is connected to a flight controller. Usually, SBC is used to perform more sophisticated/high computations that the flight controller can not. In other words, the flight controller is designed for low-level tasks, e.g. attitude control, motor driving, sensor data acquisition. However, the companion computer is used for high-level-control e.g. path planning, optimization.  
 
@@ -56,12 +56,6 @@ Follow `this guide <http://wiki.optitrack.com/index.php?title=Calibration>`_ in 
 .. note::
 
 	It is recommended to perform camera calibration on a weekly basis, or every couple of weeks.
-
-Calibration video:
-
-.. raw:: html
-	
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/cNZaFEghTBU?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Motive setup
 -----
@@ -105,44 +99,20 @@ Required Software
 Installation
 -----
 
-Method 1. PC
-^^^^^
-
-Install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ using following command.
-
-.. code-block:: bash
-
-	sudo apt-get install ros-kinetic-vrpn-client-ros -y
-
-Configure your IP address to be manual with the following values:
-
-
-.. code-block:: bash
-
-	IP: 192.168.0.xxx (The *xxx* value shouldn't conflict with existing IP addresses)
-	Subnet Mask: 255.255.255.0
-	Gateway: 192.168.0.1
-	DNS Server: 8.8.8.8
-
-
-Check `this video <https://www.youtube.com/watch?v=o9fJWDoX4nE>`_ to set static IP on Ubuntu.
-
 Method 2. Odroid XU4
 ^^^^^
 
-Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_ or `Ubuntu 16 Full with GUI <https://www.dropbox.com/s/gybc65tbct4d68b/ubuntu16_full_ros_kinetic.img?dl=0>`_. It's highly recommended to use minimal image.
+Download `Ubuntu 16 with ROS Kinetic minimal <https://www.dropbox.com/s/bllrihqe9k8rtn9/ubuntu16_minimal_ros_kinetic_mavros.img?dl=0>`_.
 
-Flash image with `Etcher <https://etcher.io/>`_ to `ODROID XU4 eMMC <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_.
+Flash image with `Etcher <https://etcher.io/>`_ to `ODROID XU4 eMMC <https://www.hardkernel.com/shop/32gb-emmc-module-xu4-linux/>`_.
 
 .. important:: 
 
 	Make sure that you expand your eMMC card after you flash a new image in order to use the full space of the eMMC card. Use Gparted Partition Editor on Linux to merge unallocated space with flashed space. Choose your eMMC from the dropdown list on the right, select your partition and click ``Resize/Move``. Click on the right black arrow and drag it until the partition has its new (desired) size, then click on the ``Resize/Move`` button. Click apply and wait until it will resize the partition.
 
-No need to install `vrpn_client_ros <http://wiki.ros.org/vrpn_client_ros>`_ package as it's already included. 
-
 Now connect your ODROID XU4 to monitor using HDMI cable. You will also need a keyboard.
 
-After powering the ODROID you will prompt to enter username and password. It's all ``odroid``. Plug the `WiFi Module 4 <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141630348024>`_ to the ODROID's USB port. 
+After powering the ODROID you will prompt to enter username and password. It's all ``odroid``. Plug the `WiFi Module 4 <https://www.hardkernel.com/shop/wifi-module-4/>`_ to the ODROID's USB port. 
 
 Check the WiFi card number by typing following command
 
@@ -156,7 +126,7 @@ To set a static IP address open ``/etc/network/interfaces`` file for editing by 
 	
 	sudo nano /etc/network/interfaces
 
-Add following lines to the file, and make sure it matches your WiFi network. Added lines should look similar to this.
+Add or edit following lines to the file, and make sure it matches your WiFi network. Added lines should look similar to this.
 
 .. code-block:: bash
 
@@ -192,12 +162,12 @@ Right click on the body created, choose **Properties** and rename it such that t
 
 .. _stream-mocap-data:
 
-Streaming MOCAP Data (try with both PC and Odroid)
+Streaming MOCAP Data
 -----
 
 Check the IP address assigned to the Mocap machine, in our case it's **192.168.0.101**
 
-In your ROS machine (PC or ODROID), where you want to get tracking data, run the ``vrpn_client_ros`` node as follows
+On your odroid), where you want to get tracking data, run the ``vrpn_client_ros`` node as follows
 
 .. code-block:: bash
 
@@ -206,7 +176,7 @@ In your ROS machine (PC or ODROID), where you want to get tracking data, run the
 Now you should be able to receive Mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``.
 
 
-Open new terminal (**CTRL + ALT + F2/F3/F3...** on ODROID XU4) and try following command
+Open new terminal (**CTRL + ALT + F2/F3/F3...**) and try following command
 
 .. code-block:: bash
 
@@ -254,14 +224,6 @@ Software Requirements
 
 * Install ``vrpn_client_ros`` `package <http://wiki.ros.org/vrpn_client_ros>`_. You can use the following command to install the package (assuming **ROS Kinetic** is used).
 
-
-.. code-block:: bash
-
-	sudo apt-get install ros-kinetic-vrpn-client-ros -y
-
-
-Again, this is included in the provided image
-
 Now, you need to set your flight controller firmware PX4, to accept mocap data. ``EKF2`` estimator can accept mocap data as vision-based data.
 
 
@@ -305,7 +267,7 @@ Choose the height mode to be vision
 
 
 
-Set the position of the center of the markers (that define the rigid body in the mocap system) with respect to the center of the flight controller. +x points forward, +y right, +z down
+(OPTIONAL, for better accuracy). Set the position of the center of the markers (that define the rigid body in the mocap system) with respect to the center of the flight controller. +x points forward, +y right, +z down
 
 
 .. image:: ../_static/marker_pos.png
@@ -314,7 +276,6 @@ Set the position of the center of the markers (that define the rigid body in the
 
 
 Now Restart Pixhawk
-
 
 
 Getting MOCAP data into PX4
@@ -328,7 +289,7 @@ You will need to run MAVROS node by openning a new separate terminal on ODROID (
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.105:14550
 
-wher ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
+where ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
 
 Relay the Mocap data to the flight controller
 
@@ -336,26 +297,12 @@ Relay the Mocap data to the flight controller
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Check whether if you can switch your drone to **Position** mode. If successfull, you are ready to use position hold/offboard modes.
+Check whether if you can switch your drone to **Position** mode (will be reported in ``QGroundControl``). If successfull, you are ready to use position hold/offboard modes.
 
 Checking EKF2 Consistency via  Log Files (optional)
 -------
 
-It's important to make sure that EKF2 estimator provides accurate enough estimates of the states for your flight controller to perform well. A quick way to debug that is through the log files.
-
-The default log file format in PX4 is ``Ulog``. Usually, the default setting, is that the logs start after arming the vehicle and stopped after disarm. You can change it, so it logs after you power controller.
-
-* Use QGC to download ``Ulog`` file you wish to analyze
-
-* Download the `FlightPlot <https://pixhawk.org/dev/flightplot>`_ software to open your logs.
-
-* Plot the fields ``ekf2_innovations_0.vel_pos_innov[3]``, ``ekf2_innovations_0.vel_pos_innov[4]``, ``ekf2_innovations_0.vel_pos_innov[5]``
-Those are the innovations on the x/y/z position estimates reported by the ``EKF2``. They should very small values, (ideally zero!), see the picture below for reasonable values. If those values are large, then ``EKF2`` is not providing accurate estimation. This is most likely because of the inconsistency of timestamps of the fused measurements. For that, you will need to start adjusting the ``EKF2_<sensor>_DELAY`` parameters that affect the position estimates. For example, if you are using Mocap, then you will need to adjust ``EKF2_EV_DELAY``. It should be decreased if you are feeding Mocap data at high rate.
-
-
-.. image:: ../_static/log_ekf2_innov.png
-   :scale: 50 %
-   :align: center
+Please refer to this `link <https://dev.px4.io/v1.9.0/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
 
 Flying
 ======
@@ -370,7 +317,7 @@ We will need a PC running Linux with Joystick connected to it. To establish ODRO
 Setup a ROS Network
 -------
 
-* First let's tell PC running Linux that Odroid is the Master in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+* First let's tell NUC/laptop running Linux that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 .. code-block:: bash
 
@@ -383,15 +330,15 @@ Setup a ROS Network
 	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
 	export ROS_HOSTNAME=192.168.0.pc_ip_number
 
-Make sure you **source** the ``.bashrc`` file after this.
+	Make sure you **source** the ``.bashrc`` file after this.
 
-* Log into a ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
+* From NUC/laptop log into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
 
 .. code-block:: bash
 
 	ssh odroid@192.168.0.odroid_ip_number
 
-It will prompt to enter password, if you use minimal image provided then it's **odroid**.
+	It will prompt to enter password, if you use minimal image provided then it's **odroid**.
 
 *  Let's edit ``.bashrc`` file on ODROID as well.
 
@@ -406,37 +353,31 @@ It will prompt to enter password, if you use minimal image provided then it's **
 	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
 	export ROS_HOSTNAME=192.168.0.odroid_ip_number
 
-To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file. 
+	To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file. 
 
 ODROID commands
 ---------
 
-* Run on ODROID ``vrpn_client_ros`` as follows (repeated here for your convenience):
+* Run on ODROID separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
 
 .. code-block:: bash
 
 	roslaunch vrpn_client_ros sample.launch server:=192.168.0.101
 
-
-* Open another tab, log into ODROID again and run MAVROS:
-
 .. code-block:: bash
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.pc_ip_number:14550
-
-Linux PC commands
----------
-
-* In another tab, relay positions from Mocap to MAVROS.
 
 .. code-block:: bash
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
+NUC/laptop commands
+---------
 
-It's important at this stage to check if setpoints are published to ``/mavros/vision_pose/pose`` by **rostopic echo** on the PC. If you see setpoints are published then move to next step.
+It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics.
 
-* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the PC and put them into ``scripts`` and ``launch`` folder accordingly. Find and understand what's different from code in SITL files.
+* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the NUC/laptop and put them into ``scripts`` and ``launch`` folder accordingly. Find and understand what's different from code in SITL files.
 
 .. code-block:: bash
 	
@@ -450,7 +391,7 @@ It's important at this stage to check if setpoints are published to ``/mavros/vi
 
 .. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
-* Now run in a new terminal your launch file
+* Now run in a new terminal on the NUC/laptop your launch file
 
 .. code-block:: bash
 
