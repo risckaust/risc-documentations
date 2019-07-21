@@ -12,14 +12,14 @@ ODROID XU4 setup
 List of components
 ^^^^^^^
 
-* `ODROID XU4 <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G143452239825>`_.
-* `16GB \(or more\) eMMc module <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G145628174287>`_.
-* `eMMC reader <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G135415955758>`_.
-* `Micro\-SD reader <https://www.amazon.com/Computer-Memory-Card-Readers/b?ie=UTF8&node=516872>`_.
+* `ODROID XU4 <https://www.hardkernel.com/product/`_.
+* `16GB \(or more\) eMMc module <https://www.hardkernel.com/product-category/memories/>`_.
+* `eMMC reader <https://www.hardkernel.com/shop/emmc-module-reader-board-for-os-upgrade/>`_.
+* Micro-SD reader.
 
-* `WiFi Module 3 \(2\.4Ghz only\) <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G137447734369>`_ good for outdoor use,  or `WiFi Module 5 dual band 2\.4\/5Ghz <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G147513281389>`_ good for high-bandwidth. 
+* `WiFi Module 3 \(2\.4Ghz only\) <https://www.hardkernel.com/product-category/connectivity/>`_ good for outdoor use,  or `WiFi Module 5 dual band 2\.4\/5Ghz <https://www.hardkernel.com/product-category/connectivity/>`_ good for high-bandwidth. 
 
-* `DC plug cable \- for onboard\/portable power connection <http://www.hardkernel.com/main/products/prdt_info.php?g_code=G141440511056>`_.
+* `DC plug cable \- for onboard\/portable power connection <https://www.hardkernel.com/product-category/cables/>`_.
 
 Setup Ubuntu
 ^^^^^^
