@@ -12,7 +12,7 @@ ODROID XU4 setup
 List of components
 ^^^^^^^
 
-* `ODROID XU4 <https://www.hardkernel.com/product/`_.
+* `ODROID XU4 <https://www.hardkernel.com/product/>`_.
 * `16GB \(or more\) eMMc module <https://www.hardkernel.com/product-category/memories/>`_.
 * `eMMC reader <https://www.hardkernel.com/shop/emmc-module-reader-board-for-os-upgrade/>`_.
 * Micro-SD reader.
