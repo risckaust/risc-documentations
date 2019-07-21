@@ -247,11 +247,11 @@ Odroid installation
 
 - Solder the UBEC input cable to the power distribution board (or the frame) 
 
-- Solder jack cable to female servo cable and connect to the UBEC output cable
+- Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC output cable
 
-- Connect the odroid to ``TELEM2`` port on Pixhawk or ``USB/OBC`` on MindPX using `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Note that GND connects to GND, RX to TX, and TX to RX.
+- In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to GND, TX, and RX. After that solder these three wires to corresponding **TELEM2** port cable. Note that GND connects to GND, RX to TX, and TX to RX.
 
-- Plug the jack cable to the odroid and check if it's powered from the battery
+- Plug in the DC power cable to the Odroid and check if it's powered from the battery
 
 
 
