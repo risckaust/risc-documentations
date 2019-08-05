@@ -13,11 +13,28 @@ Objet30 Prime
 After each printing
 ^^^^^^^
 
-After printing, make sure to remove the parts properly from the table.
-Use cotton piece cloth and alcohol to wipe the table.
-Use wizard to do heads cleaning
-Use wizard to do wiper cleaning
+Cleaning the print heads and the roller
+""""""""""""
 
+To maintain the Objet30 printer in optimum condition, clean the print heads after every print job, when you remove the model from the build tray.
+
+- Start the **Head Cleaning** Wizard from the Options menu
+
+.. image:: ../_static/heads_cleaning.png
+   :scale: 50 %
+   :align: center
+
+- Follow the instructions on the wizard screens, and select the confirmation check boxes, click Next.
+- When the screen with **Clean Printer Components** appears, open the cover
+- Place the mirror on the build tray
+- Put on the gloves
+- Soak the cleaning cloth with alcohol
+- Clean the orifice plates, with a back-and-forth motion. Use the mirror to make sure that you have removed all of the residue material
+- Clean the entire roller surface, by rotating it as you clean
+- When you have finished cleaning, select the confirmation check boxes in the wizard screen and click Next
+- Remove the cleaning materials and mirror from the printer and close the cover
+- Select the confirmation check boxes in the wizard screen and click Next. The head-purge cycle begins. When this is complete, the final wizard screen appears.
+- Click Done to close the wizard
 
 Ultimaker3 Extended
 -----
