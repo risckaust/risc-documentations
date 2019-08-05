@@ -77,15 +77,13 @@ A rubber wiper removes excess material from the print heads after the purge sequ
 Ultimaker3 Extended
 -----
 
-.. image:: ../_static/ultimaker.png
-   :scale: 20 %
-   :align: center
-
 How to Print
 
 - Install `Cura software <https://ultimaker.com/en/products/ultimaker-cura-software/list>`_ (Windows, Linux and OSX are supported) or use it on the iMac in Area A.
 - Save your 3D model as a STL file from your Computer-aided design (CAD) software.
 - Open STL(s) files in the Cura software.
 
+.. note::
 
+    The routine maintenance tasks are performed only by lab engineer. You may refer to Ultimaker3 user guide document for more detailed instructions.
 
