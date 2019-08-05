@@ -4,11 +4,19 @@
 Objet30 Prime
 -----
 
-.. image:: ../_static/objet.jpg
-   :scale: 70 %
+
+
+- Open Objet Studio application from Desktop
+- Click **Insert** from Tray Settings tab to place an object on the build tray. In Insert dialog box, choose your STL file and units of your file.
+
+.. image:: ../_static/objet_studio.png
+   :scale: 100 %
    :align: center
 
-- Use HP station in Area B.
+- Click **Placement** to automatically arrange objects on the build tray
+- Click **Validate** to check that the tray is “valid” and can be printed.
+- Click **Estimate** to calculate the time and material resources needed for producing trays before sending them to the printer
+- Click **Build** to start printing
 
 After each printing
 ^^^^^^^
@@ -57,10 +65,12 @@ A rubber wiper removes excess material from the print heads after the purge sequ
 - Put on the cleaning gloves
 - Using a generous amount of alcohol on the cleaning cloth, remove any material remaining on the wiper and the surrounding area
 - In the wizard screen, confirm that the wiper blade is clean, and click Next
-- Remove all tools and cleaning materials from the printer, and close the cover. sConfirm this in the wizard screen, and click Next
+- Remove all tools and cleaning materials from the printer, and close the cover. Confirm this in the wizard screen, and click Next
 - Click Done to close the wizard
 
+..note::
 
+    The routine maintenance tasks are performed only by lab engineer. You may refer to Objet30 user guide document for more detailed instructions.
 
 
 
