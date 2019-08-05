@@ -7,10 +7,10 @@ Objet30 Prime
 
 
 - Open Objet Studio application from Desktop
-- Click **Insert** from Tray Settings tab to place an object on the build tray. In Insert dialog box, choose your STL file and units of your file.
+- Click **Insert** from Tray Settings tab to place an object on the build tray. In Insert dialog box, choose your STL file and units of your file
 
 .. image:: ../_static/objet_studio.png
-   :scale: 70 %
+   :scale: 50 %
    :align: center
 
 - Click **Placement** to automatically arrange objects on the build tray
@@ -32,7 +32,7 @@ To maintain the Objet30 printer in optimum condition, clean the print heads afte
    :scale: 50 %
    :align: center
 
-- Follow the instructions on the wizard screens, and select the confirmation check boxes, click Next.
+- Follow the instructions on the wizard screens, and select the confirmation check boxes, click Next
 - When the screen with **Clean Printer Components** appears, open the cover
 
 .. warning::
@@ -46,7 +46,7 @@ To maintain the Objet30 printer in optimum condition, clean the print heads afte
 - Clean the entire roller surface, by rotating it as you clean
 - When you have finished cleaning, select the confirmation check boxes in the wizard screen and click Next
 - Remove the cleaning materials and mirror from the printer and close the cover
-- Select the confirmation check boxes in the wizard screen and click Next. The head-purge cycle begins. When this is complete, the final wizard screen appears.
+- Select the confirmation check boxes in the wizard screen and click Next. The head-purge cycle begins. When this is complete, the final wizard screen appears
 - Click Done to close the wizard
 
 Cleaning the wiper
