@@ -15,7 +15,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Boot Camp
+   :caption: Bootcamp
    
    1-ros-basics
    1-ros-navigation

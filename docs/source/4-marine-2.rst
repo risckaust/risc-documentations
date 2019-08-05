@@ -1,4 +1,6 @@
 How to start bluerov simulator
+================================
+
 
 To setup the environment for Gazebo simulation and BlueROV2 using SITL and Ardusub follow the `following instructions <https://gist.github.com/monabf/bc04b7ab366f812c645bf0aa6f22c8de>`_.
 
