@@ -22,7 +22,7 @@ To setup the environment for Gazebo simulation and BlueROV2 using SITL and Ardus
     source gazebo.sh
     gazebo --verbose worlds/underwater.world -u
 
-6- add apm.launch to any package you have in ros or create a new package for that. Launch file available `here <>`_.
+6- add apm.launch to any package you have in ros or create a new package for that. Launch file available `here <https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/marine/apm.launch>`_.
 
 .. code-block:: bash
 
