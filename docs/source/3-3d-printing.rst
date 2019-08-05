@@ -10,7 +10,7 @@ Objet30 Prime
 - Click **Insert** from Tray Settings tab to place an object on the build tray. In Insert dialog box, choose your STL file and units of your file.
 
 .. image:: ../_static/objet_studio.png
-   :scale: 100 %
+   :scale: 70 %
    :align: center
 
 - Click **Placement** to automatically arrange objects on the build tray
@@ -68,7 +68,7 @@ A rubber wiper removes excess material from the print heads after the purge sequ
 - Remove all tools and cleaning materials from the printer, and close the cover. Confirm this in the wizard screen, and click Next
 - Click Done to close the wizard
 
-..note::
+.. note::
 
     The routine maintenance tasks are performed only by lab engineer. You may refer to Objet30 user guide document for more detailed instructions.
 
