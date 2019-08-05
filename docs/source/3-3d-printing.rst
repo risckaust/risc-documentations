@@ -26,6 +26,11 @@ To maintain the Objet30 printer in optimum condition, clean the print heads afte
 
 - Follow the instructions on the wizard screens, and select the confirmation check boxes, click Next.
 - When the screen with **Clean Printer Components** appears, open the cover
+
+.. warning::
+
+    The print head orifice plates (bottom surface) may be hot. Do not touch them with your bare hands, and proceed with caution.
+
 - Place the mirror on the build tray
 - Put on the gloves
 - Soak the cleaning cloth with alcohol
