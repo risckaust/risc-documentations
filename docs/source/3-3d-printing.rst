@@ -41,6 +41,29 @@ To maintain the Objet30 printer in optimum condition, clean the print heads afte
 - Select the confirmation check boxes in the wizard screen and click Next. The head-purge cycle begins. When this is complete, the final wizard screen appears.
 - Click Done to close the wizard
 
+Cleaning the wiper
+""""""""
+
+A rubber wiper removes excess material from the print heads after the purge sequence. This is done automatically before each print job. You should clean the wiper and surrounding area.
+
+- Start the **Wiper Cleaning** wizard from the Options menu.
+
+.. image:: ../_static/wiper_cleaning.png
+   :scale: 50 %
+   :align: center
+
+- Make sure that the build tray is empty, and close the printer cover. Confirm this in the wizard screen and click Next
+- When the next screen appears, open the cover
+- Put on the cleaning gloves
+- Using a generous amount of alcohol on the cleaning cloth, remove any material remaining on the wiper and the surrounding area
+- In the wizard screen, confirm that the wiper blade is clean, and click Next
+- Remove all tools and cleaning materials from the printer, and close the cover. sConfirm this in the wizard screen, and click Next
+- Click Done to close the wizard
+
+
+
+
+
 Ultimaker3 Extended
 -----
 
