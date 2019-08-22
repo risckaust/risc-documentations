@@ -42,6 +42,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-dji-guidance
    2-ros-network-wifi-ethernet
    2-pick-drop-demo
+   2-taranis-dji
    
 .. toctree::
     :maxdepth: 2
