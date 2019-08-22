@@ -15,7 +15,7 @@ Setup
 In the menu of the Taranix X7Q transmitter go the **MIXER** page and change it to match following picture.
 
 .. image:: ../_static/mixer_menu_1.png
-   :scale: 50 %
+   :scale: 100 %
    :align: center
 
 
