@@ -118,6 +118,7 @@ Make the python file an executable,
 
   chmod +x square.py
 
+The python file is missing the topic name for the publisher. Your goal is to fix it by providing the right name for the topic.
 
 Make a **launch** folder. We will create a ROS launch file to run everything at once. Open the launch file and understand what every line executes.
 
@@ -128,8 +129,9 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd launch
   wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/main.launch
 
+This launch inclides MAVROS sitl launch file. But you still need to change parameter for the vehicle, so it spawns the rover into the simulated world.
 
-Build and source the catkin workspace. In a fresh terminal, you can run the launch file by executing
+Build and source the catkin workspace. In a fresh terminal, you can run the launch file by executing:
 
 .. code-block:: bash
 
