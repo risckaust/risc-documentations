@@ -15,7 +15,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
 .. toctree::
    :maxdepth: 2
    :hidden:
-   :caption: Bootcamp
+   :caption: Aerial Bootcamp
    
    1-ros-basics
    1-ros-navigation
@@ -23,6 +23,19 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    1-flight-gazebo
    1-quadcopter-assembly
    1-indoor-flight
+
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :caption: Rover Bootcamp
+   
+   1-ros-basics
+   1-ros-navigation
+   1-3d-modeling
+   1-z-gazebo-simulation
+   1-z-robot-assembly
+   1-z-robot-navigation
 
 .. toctree::
    :maxdepth: 2
