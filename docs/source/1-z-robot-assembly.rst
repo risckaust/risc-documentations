@@ -42,10 +42,10 @@ You will need
    :align: center
 
 
-* Motor controllers to control DC motors.
+* Two **motor controllers** to control DC motors.
 
 .. image:: ../_static/motor-controller.png
-   :scale: 50 %
+   :scale: 25 %
    :align: center
  
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
