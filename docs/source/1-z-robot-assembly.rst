@@ -35,46 +35,20 @@ Introduction
 
 You will need
 
-* Rover frame.
+* Rover frame with four wheels and DC motors.
 
-.. image:: ../_static/quad-diam.png
+.. image:: ../_static/rover.jpg
    :scale: 50 %
    :align: center
 
 
-* Power distribution board to distribute power from a battery to 4 ESCs (no need in case of F330 and F450).
+* Motor controllers to control DC motors.
 
-
-.. image:: ../_static/distro-power.jpg
+.. image:: ../_static/motor-controller.png
    :scale: 50 %
    :align: center
-
-
+ 
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
-
-* Brushless motors and propellers. For mini quad pilots, 3-blade (or tri-blade) propellers are equally popular as the two blades, they are commonly used in both racing and free-style flying. Some people prefer tri-blades because it has more grip in the air. Basically, by adding more blade it’s effectively adding more surface area, and therefore it generates more thrust in the expense of higher current draw and more drag. 
-
-.. note:: 
-  
-  There are 2 types of format that manufacturers use.
-
-  L x P x B or LLPP x B where L- length, P – pitch, B – number of blades.
-
-  For example 6×4.5 (also known as 6045) propellers are 6 inch long and has a pitch of 4.5 inch. Another example, 5x4x3 (sometimes 5040×3) is a 3-blade 5″ propeller that has a pitch of 4 inch. “BN” indicates Bullnose props.
-
-  Sometimes you might see **R** or **C** after the size numbers, such as 5x3R. **R** indicates the rotation of the propeller, which stands for “reversed”. It should be mounted on a motor that spins clockwise. **C** is the opposite, should be used with motors that spins counter-clockwise.
-
-
-* Electronic speed controller (ESC) controls and regulates the speed of an electric brushless motor. All ESCs comes with a rating. The Turnigy Multistar ESC shown below has a rating of 10A, meaning it can draw a maximum continuous current of 10A. Anything higher than 10A will eventually burn or damage the ESC. 
-
-.. image:: ../_static/esc.jpg
-   :scale: 30 %
-   :align: center
-
-.. note:: 
-
-  Drawing 10A for a long time (~10mins) will heat up the ESC and damage it as well. Always use a higher rating ESC for your setup. E.g. If your motor draws 10A (at full throttle), use either a 12A or a 15A. If the 12A and the 15A ESC weight approximately the same, choose the 15A. A higher rating ESC will prevent overheating. To handle more power, a high rating ESC will be required. As the rating goes up, the weight, size and cost of the ESC go up as well. Always consider how much power you will need by looking up your motor specification (Max current motor drawn). 
-
 
 * Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware.
 
@@ -95,14 +69,13 @@ It's recommended to use Taranis X9D Plus transmitter with X8R receiver as shown 
    :scale: 40 %
    :align: center
 
-
 * Power module. It is the best way to provide power for flight controller unit. It has voltage and current sensors that allows autopilot to estimate remaining battery charge precisely. Usually it comes with every autopilot controller as a default kit. Check official documentations to match right power module to a selected flight controller.
 
 .. image:: ../_static/power_module.jpg
    :scale: 60 %
    :align: center
 
-* LiPo battery. Assuming you know what is the balancer, cell count and voltage, capacity and C-rating.
+* LiPo battery. 3000/4000 mAh 3S battery is recommended.
 
 Assembly process
 ^^^^^
@@ -248,23 +221,7 @@ Odroid installation
 - Plug in the DC power cable to the Odroid and check if it's powered from the battery
 
 
-
-Troubleshooting
-------
-
-* Motors are not rotating while armed and rotates with higher throttle
-
-  - Check ``PWM_MAX`` and ``PWM_MIN`` in parameters and make sure it’s associated with ESCs
-
-* Motor are not rotating or rotating partially.
-
-  - Set ``PWM_RATE`` value to default.
-
-* Drone goes high during take-off and hits the ceiling, even though after take-off the throttle stick is all they way down
-
-  - Try to lower ``MPC_THR_HOVER`` value
-
 Contributors
 -----
 
-`Yimeng Lu <https://github.com/luym11>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
+`Mohammad Albeaik`_ and `Kuat Telegenov <https://github.com/telegek>`_.
