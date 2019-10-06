@@ -2,9 +2,12 @@ Software in the Loop Rover Control
 =====
 
 
-This tutorial explains the steps required to drive a simulated rover in the Gazebo simulator. 
+This tutorial explains the steps required to drive a simulated rover in the Gazebo simulator. We are going to learn a basic way of controlling the rover by publishing the desired setpoints to a specific topic. There is a mode in PX4 autopilot which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, or attitude setpoints.
+
+In general, a MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics and if the mode set to **OFFBOARD**, the MAVROS node will transfer those setpoints to the autopilot to execute. 
 
 
+In this tutorial we will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the MAVROS node will send it to the autopilot. The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local`. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position set points and send them to the autopilot to execute.
 
 .. The following diagram shows how the system components work together.
 
@@ -43,7 +46,6 @@ There are launch files available to run the simulation wrapped in ROS
 
 To run SITL wrapped in ROS with Rover configation, the ROS environment needs to be updated:
 
-
 .. code-block:: bash
 
   cd ~/src/Firmware
@@ -52,7 +54,6 @@ To run SITL wrapped in ROS with Rover configation, the ROS environment needs to 
   catkin build
 
 Now close the terminal.
-
 
 Launching Gazebo with ROS Wrappers
 ------
@@ -91,25 +92,12 @@ Which will show if the mavros node is connected to the PX4 SITL app or not.
 
 Now, you can monitor the rover's states and control it via a MAVROS node.
 
-* In this tutorial, we are going to learn basic way of controlling the rover by publishing the desired setpoints
-
-* There is a flight mode in PX4 autopilot which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, and attitude setpoints. You cannot mix between different setpoints _e.g._ velocity setpoints in x/y and position in z.
-
-* A MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics, the mavros node will transfer those setpoints to the autopilot to execute.
-
-* If the autopilot's flight mode is **OFFBOARD**, the autopilot will accept the received setpoints and execute them.
-
-* We will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the mavros node will send it to the autopilot.
-
-* The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local`. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position set points and send them to the autopilot.
-
-
 Custom Setpoint Node
 -----
 
-**Now, it's time for some coding!** You will write a ROS node in Python that listens to the ``/joy`` topic that is published by the ``joy`` node, and converts the joystick commands to xyz position setpoints. Then, it will publish the calculated position setpoints into ``/mavros/setpoint_raw/local``
+**Now, it's time for some coding!** You will write a ROS node in Python that publishes the desired position setpoints into ``mavros/setpoint_position/local``.
 
-Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the autopilot to track the setpoints. It has to be in **OFFBOARD** mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to **remember** that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publishing setpoints. **If you don't publish setpoints at more than 2Hz, it will go into a failsafe mode**.
+Publishing to ``mavros/setpoint_position/local`` topic is not enough to get the autopilot to track the setpoints. It has to be in **OFFBOARD** mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to **remember** that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publishing setpoints. **If you don't publish setpoints at more than 2Hz, it will go into a failsafe mode** and **OFFBOARD** mode will be off.
 
 First, create your custom ROS package. The code is commented so you can get an idea of what each part does. Go through code and try to understand it!
 
@@ -122,13 +110,13 @@ First, create your custom ROS package. The code is commented so you can get an i
   # usually python scripts (nodes) are placed in a folder called scripts
   mkdir scripts
   cd scripts
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-flight/setpoints_node.py
+  wget 
 
 Make the python file an executable,
 
 .. code-block:: bash
 
-  chmod +x setpoints_node.py
+  chmod +x .py
 
 
 Make a **launch** folder. We will create a ROS launch file to run everything at once. Open the launch file and understand what every line executes.
@@ -138,20 +126,17 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd ~/catkin_ws/src/mypackage
   mkdir launch
   cd launch
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-flight/joystick_flight.launch
+  wget 
 
-In a fresh terminal, you can run the launch file by executing
+
+Buiild and source the catkin workspace. In a fresh terminal, you can run the launch file by executing
 
 .. code-block:: bash
 
-  roslaunch mypackage joystick_flight.launch
+  roslaunch mypackage .launch
 
 
-Now, you should see a quadcopter in Gazebo flying at a fixed height and responding to your joystick commands.
+Now, you should see a rover following the square autonomously.
 
-.. warning:: 
-
-  Always make sure that you have joystick permissions configured properly.
-
-
-`Mohamed Abdelkader <https://github.com/mzahana>`_.
+Contributors
+-----

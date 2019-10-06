@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- MAVROS-->
+    <include file="$(find px4)/launch/mavros_posix_sitl.launch">
+        <arg name="vehicle" value="rover" />
+    </include>
+
+    <!-- Your package node-->
+    <node pkg="my_package" type="square_no_class.py" name="setpoints_node"  required="true" output="screen">
+    </node>
+
+</launch>
