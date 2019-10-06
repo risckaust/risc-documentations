@@ -6,7 +6,7 @@
     </include>
 
     <!-- Your package node-->
-    <node pkg="my_package" type="square_no_class.py" name="setpoints_node"  required="true" output="screen">
+    <node pkg="mypackage" type="square_no_class.py" name="rover_node"  required="true" output="screen">
     </node>
 
 </launch>

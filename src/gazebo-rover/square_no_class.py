@@ -79,7 +79,7 @@ class Controller:
 def main():
 
     # Initiate node
-    rospy.init_node('node', anonymous=True)
+    rospy.init_node('rover_node', anonymous=True)
 
     # Rover object
     rover = Controller()

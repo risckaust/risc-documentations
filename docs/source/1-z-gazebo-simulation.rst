@@ -7,7 +7,7 @@ This tutorial explains the steps required to drive a simulated rover in the Gaze
 In general, a MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics and if the mode set to **OFFBOARD**, the MAVROS node will transfer those setpoints to the autopilot to execute. 
 
 
-In this tutorial we will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the MAVROS node will send it to the autopilot. The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local`. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position set points and send them to the autopilot to execute.
+In this tutorial we will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the MAVROS node will send it to the autopilot. The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local``. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position set points and send them to the autopilot to execute.
 
 .. The following diagram shows how the system components work together.
 
@@ -110,13 +110,13 @@ First, create your custom ROS package. The code is commented so you can get an i
   # usually python scripts (nodes) are placed in a folder called scripts
   mkdir scripts
   cd scripts
-  wget 
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/square_no_class.py
 
 Make the python file an executable,
 
 .. code-block:: bash
 
-  chmod +x .py
+  chmod +x square_no_class.py
 
 
 Make a **launch** folder. We will create a ROS launch file to run everything at once. Open the launch file and understand what every line executes.
@@ -126,14 +126,14 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd ~/catkin_ws/src/mypackage
   mkdir launch
   cd launch
-  wget 
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/all_no_class.launch
 
 
 Buiild and source the catkin workspace. In a fresh terminal, you can run the launch file by executing
 
 .. code-block:: bash
 
-  roslaunch mypackage .launch
+  roslaunch mypackage.launch
 
 
 Now, you should see a rover following the square autonomously.
