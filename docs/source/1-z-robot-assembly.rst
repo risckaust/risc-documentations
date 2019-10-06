@@ -45,7 +45,7 @@ You will need
 * Two **motor controllers** to control DC motors.
 
 .. image:: ../_static/motor-controller.png
-   :scale: 25 %
+   :scale: 20 %
    :align: center
  
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
@@ -61,9 +61,9 @@ You will need
    :scale: 30 %
    :align: center
 
-* UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to ~5 Volts to safely power your Odroid and other electronics.
+* UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to 5/12 Volts to safely power your Odroid and other electronics. We will use Twin Output BEC which will power Odroid and Motor controllers at the same time.
 
-.. image:: ../_static/ubec.jpg
+.. image:: ../_static/sbec.jpg
    :scale: 40 %
    :align: center
 
@@ -80,13 +80,14 @@ Assembly process
 
 * Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screws. 
 
-* 
+* Connect right motors to the OUTA/OUTB of the first motor controller.
 
-* Assemble the frame. Attach the power distribution board to it (no need if you use frame with soldered pads).
+* Connect left motors to the OUTA/OUTB of the second motor controller.
 
 
-* Connect ESCs to motors and plug ESCs to power distribution board (or solder them to the frame). As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
-
+.. image:: ../_static/scheme.png
+   :scale: 60 %
+   :align: center
 
 
 .. image:: ../_static/motor_scheme.jpg
