@@ -1,0 +1,13 @@
+<launch>
+
+    <!-- MAVROS-->
+    <include file="$(find px4)/launch/mavros_posix_sitl.launch">
+    <!-- Add argument name and value here to change from drone to rover -->
+        <arg name="" value="" />
+    </include>
+
+    <!-- Your package node-->
+    <node pkg="mypackage" type="square.py" name="rover_node"  required="true" output="screen">
+    </node>
+
+</launch>

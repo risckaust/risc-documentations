@@ -110,13 +110,13 @@ First, create your custom ROS package. The code is commented so you can get an i
   # usually python scripts (nodes) are placed in a folder called scripts
   mkdir scripts
   cd scripts
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/square_no_class.py
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/square.py
 
 Make the python file an executable,
 
 .. code-block:: bash
 
-  chmod +x square_no_class.py
+  chmod +x square.py
 
 
 Make a **launch** folder. We will create a ROS launch file to run everything at once. Open the launch file and understand what every line executes.
@@ -126,17 +126,17 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
   cd ~/catkin_ws/src/mypackage
   mkdir launch
   cd launch
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/all_no_class.launch
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/gazebo-rover/main.launch
 
 
-Buiild and source the catkin workspace. In a fresh terminal, you can run the launch file by executing
+Build and source the catkin workspace. In a fresh terminal, you can run the launch file by executing
 
 .. code-block:: bash
 
-  roslaunch mypackage.launch
-
+  roslaunch mypackage main.launch
 
 Now, you should see a rover following the square autonomously.
 
 Contributors
 -----
+
