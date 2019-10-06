@@ -70,6 +70,7 @@ You should be able to see ``/mavros`` topics using ``rostopic list`` in a new te
 
   $ rosnode list
   /gazebo
+  /gazebo_gui
   /mavros
   /rosout
 
