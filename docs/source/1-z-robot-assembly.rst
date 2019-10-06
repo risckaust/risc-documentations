@@ -50,9 +50,7 @@ You will need
  
 * Flight Controller. Use any flight controller available in the lab. Just make sure you have compatible power modules, receivers, GPS, and other additional modules. The documentations for each board are available `here <https://docs.px4.io/en/flight_controller/pixhawk_series.html>`_.
 
-* Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware.
-
-It's recommended to use Taranis X9D Plus transmitter with X8R receiver as shown below
+* Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware. It's recommended to use **Taranis X9D Plus transmitter with X8R receiver** as shown below
 
 .. image:: ../_static/frsky_taranis.jpg
    :scale: 90 %
@@ -80,21 +78,20 @@ It's recommended to use Taranis X9D Plus transmitter with X8R receiver as shown 
 Assembly process
 ^^^^^
 
+* Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screws. 
+
+* 
+
 * Assemble the frame. Attach the power distribution board to it (no need if you use frame with soldered pads).
-
-* Mount the motors to the frame. Mind CW and CCW directions. They should be mounted as follows. We usually use **X** configuration.
-
-.. image:: ../_static/quad_1.jpg
-   :scale: 90 %
-   :align: center
-
-.. important::
-
-	Do not install propellers now.
 
 
 * Connect ESCs to motors and plug ESCs to power distribution board (or solder them to the frame). As for now, connect motors to ESCs arbitrary, later you will set them properly by switching any two wires.
 
+
+
+.. image:: ../_static/motor_scheme.jpg
+   :scale: 50 %
+   :align: center
 
 * Install power module on the frame. One end should be plugged to power distribution board (or soldered to the frame) and the other end to the battery. DON’T plug it to the battery for now.
 
@@ -115,31 +112,6 @@ Assembly process
     * Scroll down with **-** button until you see **Internal RF** line.
     * Select **[Bind]** line, and press **ENT** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
 
-
-  .. + Spektrum receiver with autobind 
-
-  ..   1. With the transmitter off, power on the receiver.
-  ..   2. The receiver will attempt to connect to the last transmitter it was bound to.
-  ..   3. If no transmitter is found it will enter Bind mode, as indicated by a flashing orange LED. If it doesn't, press **Spektrum Bind** button in **Radio** tab.
-  ..   4. Press and continue holding bind button, turn on your transmitter and allow the remote receiver to autobind.
-  ..   5. When the receiver binds the orange LED turns solid.
-
-  ..   .. important::
-
-  ..     Once the receiver is bound to your transmitter, always power your transmitter on first so the receiver will not enter bind mode. If the model enters bind mode unintentionally, shut off power to the model, ensure the transmitter is powered on with the correct model selected, and then power the model on again. The receiver will not lose its previous bind information if it enters bind mode and does not bind.
-
-  .. + Spektrum receiver without autobind
-
-  ..   1. Use `AR8000 8ch DSMX Receiver <https://www.spektrumrc.com/Products/Default.aspx?ProdID=SPMAR8000>`_.
-  ..   2. Insert the bind plug in the ``BATT/BIND`` port on the AR8000 receiver and connect RC receiver to AR8000 receiver.
-  ..   3. Power the AR8000 receiver by connecting any AUX port to any Pixhawk MAIN OUT port (motor ports). Note that the LED on the receiver should be flashing, indicating that the receiver is in bind mode and ready to be bound to the transmitter.
-  ..   4. Move the sticks and switches on the transmitter to the desired failsafe positions (low throttle and neutral control positions).
-  ..   5. Press and continue holding bind button, turn on your transmitter, the system will connect within a few seconds. Once connected, the LED on the receiver will go solid indicating the system is connected.
-  ..   6. Remove the bind plug from the ``BATT/BIND`` port on the receiver before you power off the transmitter.
-  ..   7. Remove the RC receiver from AR8000, and connect it to Pixhawk via port ``SPKT/DSM``.
-
-* For this stage there’s no need to install Odroid.
-
 Calibration process
 -----
 
@@ -147,7 +119,7 @@ Calibration process
 
 * `Install Stable PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
-* Set the airframe, for example: Generic 250 Frame, Flamewheel F330 or Flamewheel F450 depending on your frame. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
+* Set the airframe to Axial Racing AX10. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
 * Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_. 
 * Calibrate the `Radio <https://docs.px4.io/en/config/radio.html#performing-the-calibration>`_.
@@ -167,35 +139,26 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
    :scale: 60 %
    :align: center
 
-
 .. hint::
   
   If you set everything right, you will see changes in **Flight Mode Settings** section highlighted as yellow. Also, moving sticks, dials and switches will be reported in **Channel Monitor** section.
 
-
-
-* In ``Power tab`` write the parameters of your battery (Number of cells), calibrate the battery voltage and ESCs (if you use DJI ESCs, no need to calibrate them).
+* In ``Power tab`` write the parameters of your battery (Number of cells), calibrate the battery voltage.
 
   * Press **Calculate** on the **Voltage divider** line
   * Measure the voltage with Digital Battery Capacity Checker by connecting it to the battery
   * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button
-  * To calibrate ESC press **Calibrate** under **ESC PWM Minimum and Maximum Calibration** and follow on-screen instructions
 
 
 * Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
 
-* Now you can install propellers. Note that there are CW and CCW propellers as well.
 
 .. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
 
 
-* Follow this `guide <https://docs.px4.io/en/advanced_config/pid_tuning_guide_multicopter.html>`_ to perform **PID** tuning for your quadcopter if necessary (no need for F330 and F450 frames).
-
-
-Flying in manual mode
+Driving the rover with the transmitter
 ------
 
-* Read `First Flight Guidelines <https://docs.px4.io/en/flying/first_flight_guidelines.html>`_ and `Flying 101 <https://docs.px4.io/en/flying/basic_flying.html>`_.
 
 * Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
 * Check the battery level, make sure it's enough to perform your first flight.
@@ -204,7 +167,6 @@ Flying in manual mode
 .. important::
   
   Always check the battery before flying
-
 
 
 Odroid installation
@@ -224,4 +186,4 @@ Odroid installation
 Contributors
 -----
 
-`Mohammad Albeaik`_ and `Kuat Telegenov <https://github.com/telegek>`_.
+Mohammad Albeaik and `Kuat Telegenov <https://github.com/telegek>`_.
