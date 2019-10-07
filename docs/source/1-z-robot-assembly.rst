@@ -77,7 +77,11 @@ You will need
 
 * LiPo battery. 3000/4000 mAh 3S battery is recommended.
 
-* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection.
+.. image:: ../_static/lipo.jpg
+   :scale: 40 %
+   :align: center
+
+* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection. Odroid will need WiFi USB module, eMMC card and DC plug cable.
 
 .. image:: ../_static/odroid.jpg
    :scale: 60 %
@@ -86,36 +90,33 @@ You will need
 Assembly process
 ^^^^^
 
-* Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screw sets. 
+* Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screw sets.
 
-* Connect right motors to the OUTA/OUTB of the first motor controller. The first controller RC1 port should be connected to MAINx. Mind signal, +, and -.
+* Attach flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front. To mount the controller to the frame, use thick double side tape to damp the vibrations.
 
-* Connect left motors to the OUTA/OUTB of the second motor controller. The second controler RC1 port should be connected to MAINx. Mind signal, +, and -.
 
+* Connect right side motors to the **OUTA/OUTB** of the first motor controller. The first controller's ``RC1`` port should be connected to ``MAIN2`` of the flight controller. Make sure you match ``SIGNAL``, ``+`` and ``-``. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
+
+* Connect left side motors to the **OUTA/OUTB** of the second motor controller. The second controler's ``RC1`` port should be connected to ``MAIN4`` of the flight controller. Make sure you match ``SIGNAL``, ``+`` and ``-``. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
+
+* Connect BEC's 12V positive and ground outputs to ``VIN`` and ``GND`` respectively. You have to connect both motor controllers. They will be powered from the same BEC. 
+
+
+The following diagram shows the connection for one of the sides. **RC Interface (RC Receiver)** is used for connecting to flight controller. **USB Interface** is used for modifying settings on the motor controller and flashing software.
 
 .. image:: ../_static/scheme.png
    :scale: 70 %
    :align: center
 
 
-.. image:: ../_static/motor_scheme.jpg
-   :scale: 40 %
-   :align: center
-
-* Install power module on the frame. One end should be plugged to power distribution board (or soldered to the frame) and the other end to the battery. DON’T plug it to the battery for now.
-
-* Install flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front between motor 1 and 3. To mount the controller to the frame, use thick double side tape to damp the vibrations.
-
-* Plug cable from power module to ``POWER`` port of your flight controller.
+* Install power module on the frame. Plug cable from power module to ``POWER`` port of your flight controller.
 
 * Plug buzzer and switch to their corresponding ports on flight controller.
 
-* Connect each of your ESCs servo cables to the corresponding **MAIN OUT** output, eg. motor 1 to **MAIN OUT** port 1.
-
 * Binding process for FrSky X8R
 
-    * Connect the RCIN port from Pixhawk to SBUS port on X8R
-    * Turn on the X8R while holding the **F/S** button on the module. Release the button.
+    * Connect the ``RCIN`` port from Pixhawk to ``SBUS`` port on **X8R**.
+    * Turn on the **X8R** while holding the **F/S** button on the module. Release the button.
     * Press the **Menu** button on your Taranis X9D
     * Go to page 2 by pressing **Page** button.
     * Scroll down with **-** button until you see **Internal RF** line.
@@ -131,6 +132,7 @@ Calibration process
 * Set the airframe to Axial Racing AX10. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
 * Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_. 
+
 * Calibrate the `Radio <https://docs.px4.io/en/config/radio.html#performing-the-calibration>`_.
 
 * In ``Flight Modes`` tab under the **Flight Mode Settings** and **Switch settings** sections set:
@@ -154,9 +156,11 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
 
 * In ``Power tab`` write the parameters of your battery (Number of cells), calibrate the battery voltage.
 
-  * Press **Calculate** on the **Voltage divider** line
-  * Measure the voltage with Digital Battery Capacity Checker by connecting it to the battery
-  * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button
+  * Press **Calculate** on the **Voltage divider** line.
+
+  * Measure the voltage with Digital Battery Capacity Checker by connecting it to the battery.
+
+  * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button.
 
 
 Driving the rover with the transmitter
@@ -164,8 +168,10 @@ Driving the rover with the transmitter
 
 
 * Make sure you switch **Kill switch** to off. Select **Manual** as your flight mode.
-* Check the battery level, make sure it's enough to perform your first flight.
-* Put the quadcopter in the cage and arm. Slowly add throttle while keeping it in the middle of the cage by controlling pitch and yaw.
+
+* Check the battery level, make sure it's enough to perform your first ride.
+
+* Put the rover in the cage and arm???
 
 .. important::
   
@@ -175,18 +181,16 @@ Driving the rover with the transmitter
 Odroid installation
 ------
 
-- Mount Odroid XU4 on the drone
+- Mount Odroid XU4 on the rover
 
-- Solder the UBEC input cable to the power distribution board (or the frame) 
+- To power the odroid we need to provide 5V power to it. Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC output cable
 
-- Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC output cable
+- Next we need to connect Odroid to the flight controller using serial connection. In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to ``GND``, ``TX``, and ``RX``. After that solder these three wires to corresponding **TELEM2** port cable. Note that ``GND`` connects to ``GND``, ``RX`` to ``TX``, and ``TX`` to ``RX``.
 
-- In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to GND, TX, and RX. After that solder these three wires to corresponding **TELEM2** port cable. Note that GND connects to GND, RX to TX, and TX to RX.
-
-- Plug in the DC power cable to the Odroid and check if it's powered from the battery
+- Plug in the DC power cable to the Odroid and check if it's powered
 
 
 Contributors
 -----
 
-Mohammad Albeaik and `Kuat Telegenov <https://github.com/telegek>`_.
+`Mohammad Albeaik <https://github.com/Mohammad-Albeaik>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
