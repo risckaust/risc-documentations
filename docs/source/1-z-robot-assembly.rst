@@ -4,7 +4,9 @@ Rover Assembly
 Basic principles
 -----
 
-Feel free to place the components anywhere inside the frame but take care of wires. Carefully choose zipties, shrinking tubes, double sided tapes or soldering for different situations.
+This tutorial will guide you how to build a skid-steer rover. Skid-steer vehicles have the wheels mechanically locked in synchronization on each side, and where the left-side drive wheels can be driven independently of the right-side drive wheels.
+
+While building the rover, feel free to place the components anywhere inside the frame but take care of wires. Carefully choose zipties, shrinking tubes, double sided tapes or soldering for different situations.
 
 Preliminaries
 ------
@@ -53,7 +55,7 @@ You will need
 * Remote control system. A remote control (RC) radio system is required if you want to manually control your vehicle. In addition to the transmitter/receiver pairs being compatible, the receiver must also be compatible with PX4 and the flight controller hardware. It's recommended to use **Taranis X9D Plus transmitter with X8R receiver** as shown below
 
 .. image:: ../_static/frsky_taranis.jpg
-   :scale: 90 %
+   :scale: 80 %
    :align: center
 
 
@@ -64,7 +66,7 @@ You will need
 * UBEC (Universal Battery eliminator circuit) to convert voltage to power Odroid. A BEC is basically a step down voltage regulator. It will take your main battery voltage (e.g. 11.1 Volts) and reduce it down to 5/12 Volts to safely power your Odroid and other electronics. We will use Twin Output BEC which will power Odroid and Motor controllers at the same time.
 
 .. image:: ../_static/sbec.jpg
-   :scale: 40 %
+   :scale: 60 %
    :align: center
 
 * Power module. It is the best way to provide power for flight controller unit. It has voltage and current sensors that allows autopilot to estimate remaining battery charge precisely. Usually it comes with every autopilot controller as a default kit. Check official documentations to match right power module to a selected flight controller.
@@ -75,23 +77,29 @@ You will need
 
 * LiPo battery. 3000/4000 mAh 3S battery is recommended.
 
+* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection.
+
+.. image:: ../_static/odroid.jpg
+   :scale: 60 %
+   :align: center
+
 Assembly process
 ^^^^^
 
-* Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screws. 
+* Install DC motors to the frame if necessary. Attach the wheels to the motor shafts with provided screw sets. 
 
-* Connect right motors to the OUTA/OUTB of the first motor controller.
+* Connect right motors to the OUTA/OUTB of the first motor controller. The first controller RC1 port should be connected to MAINx. Mind signal, +, and -.
 
-* Connect left motors to the OUTA/OUTB of the second motor controller.
+* Connect left motors to the OUTA/OUTB of the second motor controller. The second controler RC1 port should be connected to MAINx. Mind signal, +, and -.
 
 
 .. image:: ../_static/scheme.png
-   :scale: 60 %
+   :scale: 70 %
    :align: center
 
 
 .. image:: ../_static/motor_scheme.jpg
-   :scale: 50 %
+   :scale: 40 %
    :align: center
 
 * Install power module on the frame. One end should be plugged to power distribution board (or soldered to the frame) and the other end to the battery. DON’T plug it to the battery for now.
@@ -151,12 +159,6 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
   * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button
 
 
-* Arm your quadcopter, and check if all motors are rotating in the direction intended. If no, switch any two wires that are connected to ESC. To arm the drone, put the throttle stick in the bottom right corner. This will start the motors on a quadcopter. To disarm, put the throttle stick in the bottom left corner.
-
-
-.. danger:: After you install propellers, make sure to keep battery or receiver disconnected while you are working on your quadcopter. Someone may use transmitter bounded to your drone for their own quadcopter as well. The same transmitter can arm several quadcopters!
-
-
 Driving the rover with the transmitter
 ------
 
@@ -167,7 +169,7 @@ Driving the rover with the transmitter
 
 .. important::
   
-  Always check the battery before flying
+  Always check the battery before starting
 
 
 Odroid installation
