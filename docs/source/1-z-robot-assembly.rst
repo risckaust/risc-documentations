@@ -125,13 +125,13 @@ The following diagram shows the connection for one of the sides. **RC Interface 
 Calibration process
 -----
 
-* Download ``QGroundControl`` on your computer and open it.
+* Download ``QGroundControl`` on your computer and open it. Connect your flight controller to the computer.
 
 * `Install Stable PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
 * Set the airframe to Axial Racing AX10. Follow steps from this `page <https://docs.px4.io/en/config/airframe.html>`_.
 
-* Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_. 
+* Calibrate `Compass <https://docs.px4.io/en/config/compass.html>`_, `Accelerometer <https://docs.px4.io/en/config/accelerometer.html>`_, and `Level Horizon <https://docs.px4.io/en/config/level_horizon_calibration.html>`_.
 
 * Calibrate the `Radio <https://docs.px4.io/en/config/radio.html#performing-the-calibration>`_.
 
@@ -171,7 +171,7 @@ Driving the rover with the transmitter
 
 * Check the battery level, make sure it's enough to perform your first ride.
 
-* Put the rover in the cage and arm???
+* Put the rover in the cage and do what??
 
 .. important::
   
@@ -181,7 +181,7 @@ Driving the rover with the transmitter
 Odroid installation
 ------
 
-- Mount Odroid XU4 on the rover
+- Mount and attach Odroid XU4 on the rover. Connect WiFi module to the Odroid.
 
 - To power the odroid we need to provide 5V power to it. Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC 5V output cable
 
