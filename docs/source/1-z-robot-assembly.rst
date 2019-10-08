@@ -113,7 +113,7 @@ The following diagram shows the connection for one of the sides. **RC Interface 
 
 * Plug buzzer and switch to their corresponding ports on flight controller.
 
-* Connect the ``RCIN`` port from Pixhawk to ``SBUS`` port on **X8R** and follow binding process for FrSky X8R.
+* Connect the ``RCIN`` port from Pixhawk to ``SBUS`` port on **X8R** and follow the binding process for FrSky X8R.
 
     * Turn on the **X8R** while holding the **F/S** button on the module. Release the button.
     * Press the **Menu** button on your Taranis X9D transmitter.
@@ -161,6 +161,9 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
 
   * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button.
 
+* Search for ``FW_ARSP_MODE`` in QGroundControl parameters, and set it to **Airspeed disabled**.
+
+* Search for ``PWM_MAX`` and ``PWM_MIN`` and set them to **2200** and **800** respectively.
 
 Configuring the motor controller
 ------
@@ -181,7 +184,7 @@ Connect motor controller to the Ubuntu based computer using mini USB cable. Navi
 
 
 .. image:: ../_static/pololu-software.png
-   :scale: 60 %
+   :scale: 50 %
    :align: center
 
 
