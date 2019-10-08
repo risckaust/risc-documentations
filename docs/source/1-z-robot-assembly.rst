@@ -81,7 +81,7 @@ You will need
    :scale: 60 %
    :align: center
 
-* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection. Odroid will need WiFi USB module, `eMMC memory module <https://www.hardkernel.com/shop/32gb-emmc-module-xu4-linux/>`_ and `DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_.
+* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection. Odroid will need `WiFi USB module <https://www.hardkernel.com/product-category/connectivity/>`_, `eMMC memory module <https://www.hardkernel.com/shop/32gb-emmc-module-xu4-linux/>`_ and `DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_.
 
 .. image:: ../_static/odroid.jpg
    :scale: 60 %
@@ -95,14 +95,14 @@ Assembly process
 * Attach flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front. To mount the controller to the frame, use thick double side tape to damp the vibrations.
 
 
-* Connect right side motors to the **OUTA/OUTB** of the first motor controller. The first controller's ``RC1`` port should be connected to ``MAIN2`` of the flight controller. Make sure you match ``SIGNAL``, ``+`` and ``-``. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
+* Connect right side motor's red cable to **OUTA**, and black cable to to the **OUTB** of the first motor controller. The motor controller's **RC1** port should be connected to **MAIN1** PWM ouput channel. Make sure you match **SIGNAL**, **+** and **-**. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
 
-* Connect left side motors to the **OUTA/OUTB** of the second motor controller. The second controler's ``RC1`` port should be connected to ``MAIN4`` of the flight controller. Make sure you match ``SIGNAL``, ``+`` and ``-``. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
+* Connect left side motor's red cable to **OUTB**, and black cable to to the **OUTA** of the second motor controller. The motor controller's **RC1** port should be connected to **MAIN3** PWM ouput channel. Again match **SIGNAL**, **+** and **-**.
 
-* Connect BEC's 12V positive and ground outputs to ``VIN`` and ``GND`` respectively. You have to connect both motor controllers. They will be powered from the same BEC. 
+* Connect BEC's 12V positive and ground outputs to **VIN** and **GND** respectively. You have to connect both motor controllers. They will be powered from the same BEC. 
 
 
-The following diagram shows the connection for one of the sides. **RC Interface (RC Receiver)** is used for connecting to flight controller. **USB Interface** is used for modifying settings on the motor controller and flashing software.
+The following diagram shows the connection for one of the sides. **RC Interface (RC Receiver)** is used for connecting to flight controller. **USB Interface** is used for modifying settings on the motor controller and flashing firmware.
 
 .. image:: ../_static/scheme.png
    :scale: 70 %
@@ -124,7 +124,7 @@ The following diagram shows the connection for one of the sides. **RC Interface 
 Calibration process
 -----
 
-* Download ``QGroundControl`` on your computer and open it. Connect your flight controller to the computer.
+* Open **QGroundControl**  and connect your flight controller to the computer.
 
 * `Install Stable PX4 firmware <https://docs.px4.io/en/config/firmware.html>`_.
 
