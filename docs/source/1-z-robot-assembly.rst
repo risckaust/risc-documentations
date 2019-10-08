@@ -81,7 +81,7 @@ You will need
    :scale: 60 %
    :align: center
 
-* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection. Odroid will need WiFi USB module, eMMC card and DC plug cable.
+* Odroid XU4. Onboard computer that will run high level programs and algorithms. It will be connected to Flight Controller through serial connection. Odroid will need WiFi USB module, `eMMC memory module <https://www.hardkernel.com/shop/32gb-emmc-module-xu4-linux/>`_ and `DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_.
 
 .. image:: ../_static/odroid.jpg
    :scale: 60 %
@@ -113,11 +113,10 @@ The following diagram shows the connection for one of the sides. **RC Interface 
 
 * Plug buzzer and switch to their corresponding ports on flight controller.
 
-* Binding process for FrSky X8R
+* Connect the ``RCIN`` port from Pixhawk to ``SBUS`` port on **X8R** and follow binding process for FrSky X8R.
 
-    * Connect the ``RCIN`` port from Pixhawk to ``SBUS`` port on **X8R**.
     * Turn on the **X8R** while holding the **F/S** button on the module. Release the button.
-    * Press the **Menu** button on your Taranis X9D
+    * Press the **Menu** button on your Taranis X9D transmitter.
     * Go to page 2 by pressing **Page** button.
     * Scroll down with **-** button until you see **Internal RF** line.
     * Select **[Bind]** line, and press **ENT** button. The RED LED on the X8R receiver will flash, indicating the binding process is completed
@@ -163,6 +162,29 @@ You should have similar as shown in the picture below. Channels for **Flight Mod
   * Enter the the voltage value from the Digital Battery Capacity Checker and press **Calculate** button.
 
 
+Configuring the motor controller
+------
+
+Download `Simple Motor Controller Linux Software <https://www.pololu.com/file/0J411/smclinux-101119.tar.gz>`_ on the Ubuntu based computer. Open terminal and navigate to the downloaded folder, and unzip the archive with the following command.
+
+.. code-block:: bash
+
+	tar -xzvf smc-linux-101119.tar.gz #File name might differ
+
+After following the instructions in **README.txt** , you can run the program by following command.
+
+.. code-block:: bash
+
+	./SmcCenter
+
+Connect motor controller to the Ubuntu based computer using mini USB cable. Navigate to **Input Settings** tab and change **Input Mode** to **RC** as shown below. After that press **Apply Settings**.
+
+
+.. image:: ../_static/pololu-software.png
+   :scale: 60 %
+   :align: center
+
+
 Driving the rover with the transmitter
 ------
 
@@ -183,9 +205,9 @@ Odroid installation
 
 - Mount and attach Odroid XU4 on the rover. Connect WiFi module to the Odroid.
 
-- To power the odroid we need to provide 5V power to it. Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC 5V output cable
+- To power the Odroid we need to provide 5V power to it. Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC 5V output cable
 
-- Next we need to connect Odroid to the flight controller using serial connection. In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to ``GND``, ``TX``, and ``RX``. After that solder these three wires to corresponding **TELEM2** port cable. Note that ``GND`` connects to ``GND``, ``RX`` to ``TX``, and ``TX`` to ``RX``.
+- Next we need to connect Odroid to the flight controller using serial connection. In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to ``GND``, ``TX``, and ``RX`` (refer to page 8 of the FTDI datasheet file). After that solder these three wires to corresponding **TELEM2** port cable. Note that ``GND`` connects to ``GND``, ``RX`` to ``TX``, and ``TX`` to ``RX``.
 
 - Plug in the DC power cable to the Odroid and check if it's powered
 
