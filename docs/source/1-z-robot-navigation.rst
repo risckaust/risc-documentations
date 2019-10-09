@@ -135,13 +135,13 @@ Save the file, reboot the Odroid, disconnect/connect WiFi Module, and check if y
 	ping 192.168.0.101 # Mocap computer
 	ping 192.168.0.1 # router
 
-If you're receiving a reply, the network is set correctly. Disconnect monitor, power and keyboard. From now on we will use **ssh** command to access Odroid' terminal over WiFi.
+If you're receiving a reply, the network is set correctly. Power off odroid, disconnect monitor, power and keyboard. From now on we will use **ssh** command to access Odroid' terminal over WiFi.
 
 
 Mocap computer settings
 ^^^^^
 
-In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Create a rigid body by selecting markers of interest. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``.
+In Motive, choose **View > Data Streaming** from menu bar. Check the boxes ``Broadcast Frame Data`` in **OptiTrack Streaming Engine** and **VRPN Streaming Engine** sections. Place your Rigid Body Marker Base or the rover (if markers are installed on the rover) inside the cage. Create a rigid body by selecting markers of interest as show in the figure below. In **Advanced Network Options** section change ``Up Axis`` to ``Z Up``.
 
 .. important:: Align your robot's forward direction with the the `system +x-axis <https://v20.wiki.optitrack.com/index.php?title=Template:Coordinate_System>`_.
 
@@ -164,7 +164,17 @@ Streaming MOCAP Data
 
 Check the IP address assigned to the Mocap machine, in our case it's **192.168.0.101**
 
-On your odroid), where you want to get tracking data, run the ``vrpn_client_ros`` node as follows
+Power the Odroid, and use Ubuntu based computer in the lab (NUC or laptop). We will remotely access Odroid from another computer connected to the same network. Execute following command from the terminal
+
+.. code-block:: bash
+
+	ssh odroid@192.168.0.xxx # the IP address you set on the Odroid previously
+
+It will prompt the password, it's *odroid*.
+
+Now we are in the command-line of the Odroid. 
+
+To get the tracking data we need to run the ``vrpn_client_ros`` node as follows
 
 .. code-block:: bash
 
@@ -172,8 +182,7 @@ On your odroid), where you want to get tracking data, run the ``vrpn_client_ros`
 
 Now you should be able to receive Mocap data under topic ``/vrpn_client_node/<rigid_body_name>/pose``.
 
-
-Open new terminal (**CTRL + ALT + F2/F3/F3...**) and try following command
+Open new terminal, *ssh* again, and try following command.
 
 .. code-block:: bash
 
@@ -185,7 +194,7 @@ You should get similar to this. More information on message type `here <http://d
    :scale: 60 %
    :align: center
 
-
+That means you are able to track you rigid body inside the arena, and get the data to the Odroid.
 
 Feeding MOCAP data to Pixhawk
 =====
@@ -206,7 +215,10 @@ Hardware Requirements
 
 * Pixhawk or similar controller that runs PX4 firmware
 * ODROID (we will assume XU4)
-* Serial connection, to connect ODROID to Pixhawk. You will need to solder you own USB/FTDI cable to connect from Odroid USB port to ``TELEM2`` port on Pixhawk. Mind that ``TX`` connects to ``RX``, ``RX`` connects to ``TX``, ``G`` to ``G``. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
+* Serial connection between Odroid and Pixhawk.
+
+.. , to connect ODROID to Pixhawk. You will need to solder you own USB/FTDI cable to connect from Odroid USB port to ``TELEM2`` port on Pixhawk. Mind that ``TX`` connects to ``RX``, ``RX`` connects to ``TX``, ``G`` to ``G``. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
+
 * OptiTrack PC
 * WiFi router (5GHz is recommended)
 
@@ -241,11 +253,13 @@ Starting from firmware 1.9.0, change the following parameters:
 * ``SER_TEL2_BAUD`` = 921600 (921600 or higher recommended for applications like log streaming or FastRTPS)
 
 
-Set ``EKF2_AID_MASK`` to **not** use GPS, and use **vision position fusion** and **vision yaw fusion**.
+Set ``EKF2_AID_MASK`` to **not** use GPS, and use **vision position fusion** and **vision yaw fusion**. This way the rover will use vision for positioning.
 
 .. image:: ../_static/ekf2_mask.png
    :scale: 50 %
    :align: center
+
+To Enable RC stick override of auto modes, search for ``COM_RC_OVERRIDE`` in QGroundControl parameters and enable it.
 
 
 There are some delay parameters that need to set properly, because they directly affect the EKF estimation. For more information read `this wiki <https://dev.px4.io/master/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
