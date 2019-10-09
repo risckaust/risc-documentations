@@ -200,12 +200,15 @@ Driving the rover with the transmitter
 
 * Check the battery level, make sure it's enough to perform your first ride.
 
-* Put the rover in the cage and do what??
-
 .. important::
   
   Always check the battery before starting
 
+* Put the rover in the cage.
+
+* Left stick on the transmitter controls left wheels, while right stick controls left wheels. By moving two sticks in the same side (left or ride) will move rover either front or backward. If you move stick in a opposite direction from each other, that will make rover to turn around it's own axis.
+
+* After the rover is functional and can be controller from the transmitter it's time to install Odroid and connect it to the flight controller.
 
 Odroid installation
 ------
