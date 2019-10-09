@@ -339,13 +339,13 @@ We will need a computer running Ubuntu with Joystick connected to it. To establi
 Setup a ROS Network
 -------
 
-* First let's tell computer running Ubuntu that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+First let's tell computer running Ubuntu that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 .. code-block:: bash
 
 	gedit ~/.bashrc
 
-* Add following lines to the end of the file. Just change last numbers to corresponding IP numbers.
+Add following lines to the end of the file. Just change last numbers to corresponding IP numbers.
 
 .. code-block:: bash
 
@@ -355,7 +355,7 @@ Setup a ROS Network
 
 Make sure you **source** the ``.bashrc`` file after this.
 
-* From computer *ssh* into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
+From computer *ssh* into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
 
 .. code-block:: bash
 
@@ -364,7 +364,7 @@ Make sure you **source** the ``.bashrc`` file after this.
 
 It will prompt to enter password, if you use minimal image provided then it's **odroid**.
 
-*  Let's edit ``.bashrc`` file on ODROID as well.
+Let's edit ``.bashrc`` file on ODROID as well.
 
 .. code-block:: bash
 
@@ -382,7 +382,7 @@ To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file.
 ODROID commands
 ---------
 
-* Run on Odroid separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
+Run on Odroid separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
 
 .. code-block:: bash
 
@@ -396,12 +396,12 @@ ODROID commands
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-NUC/laptop commands
+Computer commands
 ---------
 
 It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics on the computer.
 
-* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go throught the code and understand what it does.
+Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go throught the code and understand what it does.
 
 .. code-block:: bash
 	
@@ -411,11 +411,11 @@ It's important at this stage to check if data from Mocap is published to ``/mavr
 	#Inside the launch folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/joystick_flight.launch
 
-* Make sure you give permissions to the joystick.
+Make sure you give permissions to the joystick.
 
 .. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
-* Now run in a new terminal on the compouter your launch file
+Now run in a new terminal on the compouter your launch file
 
 .. code-block:: bash
 
@@ -435,4 +435,8 @@ Joystick control
 Try to move joystick, rover should move accordingly.
 
 
-`Mohamed Abdelkader <https://github.com/mzahana>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
+
+Contributors
+-----
+
+`Mohammad Albeaik <https://github.com/Mohammad-Albeaik>`_ and `Kuat Telegenov <https://github.com/telegek>`_.

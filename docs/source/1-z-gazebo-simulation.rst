@@ -142,3 +142,4 @@ Now, you should see a rover following the square autonomously.
 Contributors
 -----
 
+Sarah Toonsi and `Kuat Telegenov <https://github.com/telegek>`_.
