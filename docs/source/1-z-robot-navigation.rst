@@ -216,9 +216,6 @@ Hardware Requirements
 * Pixhawk or similar controller that runs PX4 firmware
 * ODROID (we will assume XU4)
 * Serial connection between Odroid and Pixhawk.
-
-.. , to connect ODROID to Pixhawk. You will need to solder you own USB/FTDI cable to connect from Odroid USB port to ``TELEM2`` port on Pixhawk. Mind that ``TX`` connects to ``RX``, ``RX`` connects to ``TX``, ``G`` to ``G``. If you are using **MindPX** flight controller, just use a USB to micro-USB cable and connect it to **USB/OBC** port.
-
 * OptiTrack PC
 * WiFi router (5GHz is recommended)
 
@@ -292,15 +289,27 @@ Now Restart Pixhawk
 Getting MOCAP data into PX4
 -----
 
-Assuming your ``vrpn_client_node`` is still running from :ref:`optitrack-interface` on your ODROID, we will republish it to another topic by ``relay`` command.
 
-You will need to run MAVROS node by openning a new separate terminal on ODROID (CTRL + ALT + F2/F3/F4)
+It's time to mount Odroid on the rover, and connect it to the Pixhawk.
+
+First, to power the Odroid we need to provide 5V power to it. Solder `Odroid DC Plug Cable <https://www.hardkernel.com/shop/dc-plug-cable-assembly-5-5mm/>`_ to `female servo cable <https://www.sparkfun.com/products/8738>`_ and connect to the UBEC 5V output cable
+
+Next we need to connect Odroid to the flight controller using serial connection. In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to ``GND``, ``TX``, and ``RX`` (refer to page 8 of the FTDI datasheet file). After that solder these three wires to corresponding **TELEM2** port cable. Note that ``GND`` connects to ``GND``, ``RX`` to ``TX``, and ``TX`` to ``RX``.
+
+Plug in the DC power cable to the Odroid and check if it's powered
+
+
+The idea is to republish the data form vprn node to mavros vision topic by ``relay`` command.
+
+First run vrpn_client_node on your Odroid.
+
+Next, you will need to run MAVROS node in a new terminal on Odroid
 
 .. code-block:: bash
 
 	roslaunch mavros px4.launch fcu_url:=/dev/ttyUSB0:921600 gcs_url:=udp://@192.168.0.105:14550
 
-where ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameters ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to ``QGroundControl`` on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs ``QGroundControl``.
+where ``fcu_url`` is the serial port that connects ODROID to the flight controller. Use ``ls /dev/ttyUSB*`` command on your Odroid to see if serial port is connected. Parameter ``gcs_url:=udp://@192.168.0.119:14550`` is used to allow you to receive data to **QGroundControl** on your machine (that has to be connected to the same WiFi router). Adjust the IP to match your PC IP, that runs **QGroundControl**.
 
 MAVROS provides a plugin to relay pose data published on ``/mavros/vision_pose/pose`` to PX4. Assuming that MAVROS is running, you just need to remap the pose topic that you get from Mocap ``/vrpn_client_node/<rigid_body_name>/pose`` directly to ``/mavros/vision_pose/pose``.
 
@@ -308,9 +317,10 @@ MAVROS provides a plugin to relay pose data published on ``/mavros/vision_pose/p
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Check whether if you can switch your drone to **Position** mode (will be reported in ``QGroundControl``). If successfull, you are ready to use position hold/offboard modes.
+Stream over MAVLink and check the MAVLink inspector with **QGroundControl**, the local pose topic should be in NED.
 
-Check `this page <https://dev.px4.io/master/en/ros/external_position_estimation.html#first-flight>`_ before first flight in Position mode.
+Move the robot around by hand and see if the estimated local position is consistent (always in NED).
+
 
 Checking EKF2 Consistency via  Log Files (optional)
 -------
