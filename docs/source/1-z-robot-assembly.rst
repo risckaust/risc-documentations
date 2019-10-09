@@ -95,9 +95,9 @@ Assembly process
 * Attach flight controller on the frame. Take a look at your flight controller and make sure the arrow is pointing to the front. To mount the controller to the frame, use thick double side tape to damp the vibrations.
 
 
-* Connect right side motor's red cable to **OUTA**, and black cable to to the **OUTB** of the first motor controller. The motor controller's **RC1** port should be connected to **MAIN1** PWM ouput channel. Make sure you match **SIGNAL**, **+** and **-**. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
+* Connect right side motor's red cable to **OUTB**, and yellow cable to to the **OUTA** of the first motor controller. The motor controller's **RC1** port should be connected to **MAIN1** PWM ouput channel. Make sure you match **SIGNAL**, **+** and **-**. Use `servo cable <https://www.sparkfun.com/products/8738>`_ for this connection.
 
-* Connect left side motor's red cable to **OUTB**, and black cable to to the **OUTA** of the second motor controller. The motor controller's **RC1** port should be connected to **MAIN3** PWM ouput channel. Again match **SIGNAL**, **+** and **-**.
+* Connect left side motor's red cable to **OUTA**, and yellow cable to to the **OUTB** of the second motor controller. The motor controller's **RC1** port should be connected to **MAIN3** PWM ouput channel. Again match **SIGNAL**, **+** and **-**.
 
 * Connect BEC's 12V positive and ground outputs to **VIN** and **GND** respectively. You have to connect both motor controllers. They will be powered from the same BEC. 
 
