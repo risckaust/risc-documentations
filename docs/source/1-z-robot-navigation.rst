@@ -289,6 +289,8 @@ Now Restart Pixhawk
 Getting MOCAP data into PX4
 -----
 
+Odroid installation
+^^^^^
 
 It's time to mount Odroid on the rover, and connect it to the Pixhawk.
 
@@ -296,12 +298,16 @@ First, to power the Odroid we need to provide 5V power to it. Solder `Odroid DC 
 
 Next we need to connect Odroid to the flight controller using serial connection. In case of MindPX simply connect micro-USB cable to ``USB/OBC`` from the Odroid USB port. In case of Pixhawk use `FTDI module <https://www.ftdichip.com/Support/Documents/DataSheets/Cables/DS_TTL-232R_PCB.pdf>`_. Use `servo cable <https://www.sparkfun.com/products/8738>`_ to solder three wires to ``GND``, ``TX``, and ``RX`` (refer to page 8 of the FTDI datasheet file). After that solder these three wires to corresponding **TELEM2** port cable. Note that ``GND`` connects to ``GND``, ``RX`` to ``TX``, and ``TX`` to ``RX``.
 
-Plug in the DC power cable to the Odroid and check if it's powered
+
+Plug in the DC power cable to the Odroid and check if it's powered.
+
+Feeding data
+^^^^^
 
 
-The idea is to republish the data form vprn node to mavros vision topic by ``relay`` command.
+For robot to get data from Mocap we need republish the data form vprn node to mavros vision topic by ``relay`` command.
 
-First run vrpn_client_node on your Odroid.
+First run **vrpn_client_node** on your Odroid.
 
 Next, you will need to run MAVROS node in a new terminal on Odroid
 
@@ -317,30 +323,23 @@ MAVROS provides a plugin to relay pose data published on ``/mavros/vision_pose/p
 
 	rosrun topic_tools relay /vrpn_client_node/<rigid_body_name>/pose /mavros/vision_pose/pose
 
-Stream over MAVLink and check the MAVLink inspector with **QGroundControl**, the local pose topic should be in NED.
-
-Move the robot around by hand and see if the estimated local position is consistent (always in NED).
+Stream over MAVLink and check the MAVLink inspector with **QGroundControl**, the local pose topic should be in NED. Move the robot around by hand and see if the estimated local position is consistent (always in NED).
 
 
-Checking EKF2 Consistency via  Log Files (optional)
--------
-
-Please refer to this `link <https://dev.px4.io/master/en/ros/external_position_estimation.html#tuning-EKF2_EV_DELAY>`_
-
-Flying
+Navigating rover
 ======
 
 Intro
 ------
 
-Now it's time to fly your drone in the cage!
+Now it's time to control rover from the joystick.
 
-We will need a PC running Linux with Joystick connected to it. To establish ODROID communication with that PC, we will setup ROS Network. The Odroid on the drone will be the ROS Master. The logic is the same as in the Software in the Loop simulator. The joystick commands will be converted to position setpoints and will be published to ``/mavros/setpoint_raw/local`` node. Finally MAVROS will send setpoints to autopilot (real flight controller on your drone).
+We will need a computer running Ubuntu with Joystick connected to it. To establish Odroid communication with that computer, we will setup ROS Network. The Odroid on the rover will be the ROS Master. The joystick commands will be converted to position setpoints. The difference between rover own position and the goal position will be error for the PID controller. The output of PID controller will be published  ``mavros/rc/override`` topic and "simulate" the transmitter sticks movements.
 
 Setup a ROS Network
 -------
 
-* First let's tell NUC/laptop running Linux that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+* First let's tell computer running Ubuntu that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
 
 .. code-block:: bash
 
@@ -351,12 +350,12 @@ Setup a ROS Network
 .. code-block:: bash
 
 	export ROS_MASTER_URI=http://192.168.0.odroid_ip_number:11311
-	export ROS_HOSTNAME=192.168.0.pc_ip_number
+	export ROS_HOSTNAME=192.168.0.computer_ip_number
 
 
 Make sure you **source** the ``.bashrc`` file after this.
 
-* From NUC/laptop log into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
+* From computer *ssh* into an ODROID to get access to a command-line over a network. We will setup an Odroid as a Master now.
 
 .. code-block:: bash
 
@@ -383,7 +382,7 @@ To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file.
 ODROID commands
 ---------
 
-* Run on ODROID separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
+* Run on Odroid separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
 
 .. code-block:: bash
 
@@ -400,9 +399,9 @@ ODROID commands
 NUC/laptop commands
 ---------
 
-It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics.
+It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics on the computer.
 
-* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the NUC/laptop and put them into ``scripts`` and ``launch`` folder accordingly. Find and understand what's different from code in SITL files.
+* Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go throught the code and understand what it does.
 
 .. code-block:: bash
 	
@@ -416,7 +415,7 @@ It's important at this stage to check if data from Mocap is published to ``/mavr
 
 .. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
-* Now run in a new terminal on the NUC/laptop your launch file
+* Now run in a new terminal on the compouter your launch file
 
 .. code-block:: bash
 
@@ -425,15 +424,15 @@ It's important at this stage to check if data from Mocap is published to ``/mavr
 Joystick control
 -------
 
-``BUTTON 1`` - Arms the quadcopter
+.. ``BUTTON 1`` - Arms the quadcopter
 
-``BUTTON 3`` - Switches quadcopter to OFFBOARD flight mode. It should takeoff after this.
+.. ``BUTTON 3`` - Switches quadcopter to OFFBOARD flight mode. It should takeoff after this.
 
-``BUTTON 2`` - Lands the quadcopter
+.. ``BUTTON 2`` - Lands the quadcopter
 
-``BUTTON 11`` - Disarms the quadcopter
+.. ``BUTTON 11`` - Disarms the quadcopter 
 
-Enjoy your flight.
+Try to move joystick, rover should move accordingly.
 
 
 `Mohamed Abdelkader <https://github.com/mzahana>`_ and `Kuat Telegenov <https://github.com/telegek>`_.
