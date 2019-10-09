@@ -4,7 +4,11 @@ Rover Assembly
 Basic principles
 -----
 
-This tutorial will guide you how to build a skid-steer rover. Skid-steer vehicles have the wheels mechanically locked in synchronization on each side, and where the left-side drive wheels can be driven independently of the right-side drive wheels.
+This tutorial will guide you how to build a skid-steer rover. Skid-steer vehicles have the wheels mechanically locked in synchronization on each side, and where the left-side drive wheels can be driven independently of the right-side drive wheels. We have to set skid-steer frame in flight controler's configuration. The flight controller will generate PWM signal at MAIN PWM output ports. We will connect these ports to motor controller input (RC1 in this case). Then motor controller will drive the DC motors according to the signal coming from the flight controller. The following diagram shows how the system components connected together.
+
+.. image:: ../_static/top_scheme.png
+   :scale: 70 %
+   :align: center
 
 While building the rover, feel free to place the components anywhere inside the frame but take care of wires. Carefully choose zipties, shrinking tubes, double sided tapes or soldering for different situations.
 
