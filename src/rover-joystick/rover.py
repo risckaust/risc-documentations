@@ -14,30 +14,30 @@ from std_msgs.msg import String
 from mavros_msgs.msg import OverrideRCIn
 from sensor_msgs.msg import Joy
 
-x         			            = 0.0
-y         			            = 0.0
-z         			            = 0.0
-local_ang 			            = [0.0, 0.0, 0.0, 0.0]
-roll      			            = 0.0
-pitch     			            = 0.0
-yaw       			            = 0.0
-velocity 				        = Twist()
-RcOver 					        = OverrideRCIn()
-RcOver.channels                 = [1500, 1500, 1500, 1500,0,0,0,0]
-sum_error_rho 		            = 0
-sum_error_alpha 		        = 0
-kvp 							= 20				# Speed P
-kvd                             = 2                 # Speed D
-kvi                             = 0.05              # Speed I
-kwp 							= 50				# P
-kwd 							= 2					# D
-kwi 							= 0.05 				# I
-old_rho 					    = 0
-old_alpha 					    = 0
-joy_msg   					    = Joy()
-joy_msg.axes 					= [0.0,0.0,0.0]
-xg 						        = 0
-yg 						        = 0
+x         		= 0.0
+y         		= 0.0
+z         		= 0.0
+local_ang 		= [0.0, 0.0, 0.0, 0.0]
+roll      		= 0.0
+pitch     		= 0.0
+yaw       		= 0.0
+velocity 		= Twist()
+RcOver 			= OverrideRCIn()
+RcOver.channels = [1500, 1500, 1500, 1500,0,0,0,0]
+sum_error_rho 	= 0
+sum_error_alpha = 0
+kvp 			= 20   # Speed P
+kvd             = 2    # Speed D
+kvi             = 0.05 # Speed I
+kwp 			= 50   # P
+kwd 			= 2	   # D
+kwi 		    = 0.05 # I
+old_rho 		= 0
+old_alpha 		= 0
+joy_msg   		= Joy()
+joy_msg.axes 	= [0.0,0.0,0.0]
+xg 				= 0
+yg 				= 0
 
 def posCb(msg):
     global x, y, z, roll, pitch, yaw
@@ -139,7 +139,7 @@ def main():
     rate = rospy.Rate(60.0)
 
     # Subscribe to Rover's local position
-    rospy.Subscriber('vrpn_client_node/mmb/pose', PoseStamped, posCb)
+    rospy.Subscriber('mavros/local_position/pose', PoseStamped, posCb)
 
     # Subscribe to joystick topic
     rospy.Subscriber('joy', Joy, joyCB)
