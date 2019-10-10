@@ -401,40 +401,32 @@ Computer commands
 
 It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics on the computer.
 
-Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go through the code and understand what it does.
+Download ``rover_joystick.launch`` and ``rover.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go through the code and understand what it does.
 
 .. code-block:: bash
 	
 	# Inside the scripts folder of your package
-	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/setpoints_node.py
+	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/rover-joystick/rover.py
 
 	#Inside the launch folder of your package
-	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/joystick_flight.launch
+	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/rover-joystick/rover_joystick.launch
 
-To give permession to the joystick, refer to the .....
-
-.. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
-
-Now run in a new terminal on the compouter your launch file
+To give permission to the joystick, execute the following command and disconnect/connect joystick after this.
 
 .. code-block:: bash
 
-  roslaunch mypackage joystick_flight.launch
+  sudo chmod a+rw /dev/input/js0
+
+Now run in a new terminal on the computer your launch file
+
+.. code-block:: bash
+
+  roslaunch mypackage rover_joystick.launch
 
 Joystick control
 -------
 
-.. ``BUTTON 1`` - Arms the quadcopter
-
-.. ``BUTTON 3`` - Switches quadcopter to OFFBOARD flight mode. It should takeoff after this.
-
-.. ``BUTTON 2`` - Lands the quadcopter
-
-.. ``BUTTON 11`` - Disarms the quadcopter 
-
 Try to move joystick, rover should move accordingly.
-
-
 
 Contributors
 -----
