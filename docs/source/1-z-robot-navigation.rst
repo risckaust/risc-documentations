@@ -245,7 +245,7 @@ If using firmware version below 1.9.0, change the following parameters:
 
 Starting from firmware 1.9.0, change the following parameters:
 
-* ``MAV_1_CONFIG`` = TELEM 2 (MAV_1_CONFIG is often used to map the TELEM 2 port)
+* ``MAV_1_CONFIG`` = TELEM 2 (MAV_1_CONFIG is often used to map the TELEM 2 port), reboot
 * ``MAV_1_MODE`` = Onboard
 * ``SER_TEL2_BAUD`` = 921600 (921600 or higher recommended for applications like log streaming or FastRTPS)
 
@@ -407,6 +407,7 @@ Download ``rover_joystick.launch`` and ``rover.py`` files to the computer and pu
 	
 	# Inside the scripts folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/rover-joystick/rover.py
+	chmod +x rover.py
 
 	#Inside the launch folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/rover-joystick/rover_joystick.launch
