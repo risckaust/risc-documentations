@@ -208,14 +208,11 @@ Driving the rover with the transmitter
 
 * Left stick on the transmitter controls left wheels, while right stick controls left wheels. By moving two sticks in the same side (left or ride) will move rover either front or backward. If you move stick in a opposite direction from each other, that will make rover to turn around it's own axis.
 
-* After the rover is functional and can be controller from the transmitter it's time to install Odroid and connect it to the flight controller.
-
-
 
 Markers installation
 ------
 
-Attach four Motion Capture Markers to the `Rigid Body Marker Base <https://optitrack.com/products/motion-capture-markers/#mcp1145>`_. Install Rigid Body Marker Base on the rover.
+Attach four Motion Capture Markers to the `Rigid Body Marker Base <https://optitrack.com/products/motion-capture-markers/#mcp1145>`_. Mount Rigid Body Marker Base on the rover.
 
 Contributors
 -----

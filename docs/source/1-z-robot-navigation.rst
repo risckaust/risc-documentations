@@ -334,12 +334,12 @@ Intro
 
 Now it's time to control rover from the joystick.
 
-We will need a computer running Ubuntu with Joystick connected to it. To establish Odroid communication with that computer, we will setup ROS Network. The Odroid on the rover will be the ROS Master. The joystick commands will be converted to position setpoints. The difference between rover own position and the goal position will be error for the PID controller. The output of PID controller will be published  ``mavros/rc/override`` topic and "simulate" the transmitter sticks movements.
+We will need a computer running Ubuntu with Joystick connected to it. To establish Odroid communication with that computer, we will setup ROS Network. The Odroid on the rover will be the ROS Master. The joystick commands will be converted to position setpoints. The difference between rover own position and the goal position will be error for the PID controller. The output of PID controller will be published to ``mavros/rc/override`` topic and "simulate" the transmitter sticks movements.
 
 Setup a ROS Network
 -------
 
-First let's tell computer running Ubuntu that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing.
+First let's tell computer running Ubuntu that Odroid is the **Master** in the ROS network by editing ``.bashrc`` file. Open terminal and open ``.bashrc`` file for editing on the computer with joystick.
 
 .. code-block:: bash
 
@@ -382,7 +382,7 @@ To save file, press Ctrl+X, press Y, hit Enter. Source the ``.bashrc`` file.
 ODROID commands
 ---------
 
-Run on Odroid separate terminals ``vrpn_client_ros``, ``MAVROS`` and relay.
+Run on Odroid separate terminals **vrpn_client_ros**, **MAVROS** and **relay**.
 
 .. code-block:: bash
 
@@ -401,7 +401,7 @@ Computer commands
 
 It's important at this stage to check if data from Mocap is published to ``/mavros/vision_pose/pose`` and ``/mavros/local_position/pose`` by echo'ing these topics on the computer.
 
-Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go throught the code and understand what it does.
+Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the computer and put them into ``scripts`` and ``launch`` folder accordingly. Try to go through the code and understand what it does.
 
 .. code-block:: bash
 	
@@ -411,7 +411,7 @@ Download ``joystick_flight.launch`` and ``setpoints_node.py`` files to the compu
 	#Inside the launch folder of your package
 	wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/indoor-flight/joystick_flight.launch
 
-Make sure you give permissions to the joystick.
+To give permession to the joystick, refer to the .....
 
 .. danger:: Keep the transmitter nearby to engage the ``Kill Switch`` trigger in case something will go wrong.
 
