@@ -27,10 +27,10 @@ RcOver.channels = [1500, 1500, 1500, 1500,0,0,0,0]
 sum_error_rho 	= 0
 sum_error_alpha = 0
 kvp 			= 20   # Speed P
-kvd             = 2    # Speed D
+kvd             = 1    # Speed D
 kvi             = 0.05 # Speed I
-kwp 			= 50   # P
-kwd 			= 2	   # D
+kwp 			= 80   # P
+kwd 			= 1	   # D
 kwi 		    = 0.05 # I
 old_rho 		= 0
 old_alpha 		= 0
@@ -38,9 +38,11 @@ joy_msg   		= Joy()
 joy_msg.axes 	= [0.0,0.0,0.0]
 xg 				= 0
 yg 				= 0
+kill            = 0
 
 def posCb(msg):
     global x, y, z, roll, pitch, yaw
+    # Getting position of the rover
     x = msg.pose.position.x
     y = msg.pose.position.y
     z = msg.pose.position.z
@@ -49,85 +51,92 @@ def posCb(msg):
     roll, pitch, yaw = euler_from_quaternion(local_ang)
 
 def UpdateSpeed():
-    global v, w , velocity, yaw, x ,y, sum_error_rho, sum_error_alpha, kvp, kwp, kvd, kwd, kvi, kwi, old_rho, old_alpha, xg, yg
+    global v, w , velocity, yaw, x ,y, sum_error_rho, sum_error_alpha, kvp, kwp, kvd, kwd, kvi, kwi, old_rho, old_alpha, xg, yg, kill
 
 #------------------------------------------------------------------------- PID Start ----------------------------------------------------------------------
+    if kill == 0: # If button 11 the rover will not move at all
+        if xg != 0 or yg != 0: # If setpoints are set from joystick
+            dx = xg - x
+            dy = yg - y
 
-    dx = xg - x
-    dy = yg - y
+            rho = sqrt(dx*dx + dy*dy)
+            alpha = (atan2(dy,dx)) - yaw
 
-    rho = sqrt(dx*dx + dy*dy)
-    alpha = (atan2(dy,dx)) - yaw
+            if alpha > pi:
+                alpha = alpha - 2*pi
+            elif alpha < -pi:
+                alpha = alpha + 2*pi
+            
 
-    if alpha > pi:
-       alpha = alpha - 2*pi
-    elif alpha < -pi:
-       alpha = alpha + 2*pi
-       
+            if (alpha < pi/2) and (alpha > -pi/2):
+                rho = rho
+            else:
+                rho = - rho
 
-    if (alpha < pi/2) and (alpha > -pi/2):
-        rho = rho
+            sum_error_rho = sum_error_rho + rho
+            sum_error_alpha = sum_error_alpha + alpha
+
+            v =  kvp * rho   + kvd * (abs(rho) - abs(old_rho)) + kvi * sum_error_rho
+            w =  kwp * alpha + kwd * (abs(alpha) - abs(old_alpha)) + kwi * sum_error_alpha
+
+            if sum_error_rho > 10:
+                sum_error_rho = 10
+            elif sum_error_rho < -10:
+                sum_error_rho = -10
+            if sum_error_alpha > 10:
+                sum_error_alpha = 10
+            elif sum_error_alpha < -10:
+                sum_error_alpha = -10
+
+            if v > 30:
+                v = 30
+            if v < -30:
+                v = -30
+            if w > 100:
+                w = 100
+            if w < -100:
+                w = -100
+
+            old_rho     = rho
+            old_alpha   = alpha
+
+            if abs( rho) < 0.1: 		# 10 cm away from the final destination 
+                v = 0
+                w = 0
+            
+        #------------------------------------------------------------------------- PID end-------------------------------------------------------------------------
+            r = 0.13 # Radius 13 cm
+            L = 0.33 # Length between wheels 33 cm
+
+            WR =   v/r +L/r * w
+            WL =   2* v/r - WR
+
+            if WR > 0:
+                WR = - WR + 1405
+            elif WR <0:
+                WR = - WR + 1595
+            else:
+                WR = 1500
+            if WL > 0:
+                WL = - WL + 1405
+            elif WL < 0:
+                WL = - WL + 1595
+            else:
+                WL = 1500
+
+            RcOver.channels = [1500, WR, 1500, WL, 0, 0, 0, 0] # Drives the rover with specific PWM values
+        else:
+            RcOver.channels = [1500, 1500, 1500, 1500, 0, 0, 0, 0] # Stops rover
     else:
-        rho = - rho
-
-    sum_error_rho = sum_error_rho + rho
-    sum_error_alpha = sum_error_alpha + alpha
-
-    v =  kvp * rho   + kvd * (abs(rho) - abs(old_rho)) + kvi * sum_error_rho
-    w =  kwp * alpha + kwd * (abs(alpha) - abs(old_alpha)) + kwi * sum_error_alpha
-
-    if sum_error_rho > 10:
-        sum_error_rho = 10
-    elif sum_error_rho < -10:
-        sum_error_rho = -10
-    if sum_error_alpha > 10:
-        sum_error_alpha = 10
-    elif sum_error_alpha < -10:
-        sum_error_alpha = -10
-
-    if v > 30:
-        v = 30
-    if v < -30:
-        v = -30
-    if w > 90:
-        w = 90
-    if w < -90:
-        w = -90
-
-    old_rho     = rho
-    old_alpha   = alpha
-
-    if abs( rho) < 0.1: 		# 5 cm away from the final destination 
-        v = 0
-        w = 0
-    
-#------------------------------------------------------------------------- PID end-------------------------------------------------------------------------
-    r = 0.13 # radius 13 cm
-    L = 0.33 # length between wheels 33 cm
-
-
-    WR =   v/r +L/r * w
-    WL =   2* v/r - WR
-
-    if WR > 0:
-        WR = - WR + 1405
-    elif WR <0:
-        WR = - WR +1595
-    else:
-        WR = 1500
-    if WL > 0:
-        WL = - WL + 1405
-    elif WL < 0:
-        WL = - WL +1595
-    else:
-        WL = 1500
-
-    RcOver.channels = [1500, WR, 1500, WL, 0, 0, 0, 0]   # 4th
+        RcOver.channels = [1500, 1500, 1500, 1500, 0, 0, 0, 0]   # Stops rover
+#------------------------------------------------------------------------- Speed Update end-------------------------------------------------------------------------
 
 def joyCB(msg):
-	global xg,yg
+	global xg,yg, kill
 	xg = msg.axes[1]*2.5
 	yg = msg.axes[0]*2.5
+    # Button 11 behaves as a kill switch, all motors will stop moving
+	kill = msg.buttons[10]
 
 # Main function
 def main():
