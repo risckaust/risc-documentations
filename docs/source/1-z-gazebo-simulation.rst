@@ -1,25 +1,19 @@
-Software in the Loop Rover Control
+The software in the Loop Rover Control
 =====
 
 
-This tutorial explains the steps required to drive a simulated rover in the Gazebo simulator. We are going to learn a basic way of controlling the rover by publishing the desired setpoints to a specific topic. There is a mode in PX4 autopilot which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, or attitude setpoints.
+This tutorial explains the steps required to drive a simulated rover in the Gazebo simulator. We are going to learn an essential way of controlling the rover by publishing the desired setpoints to a specific topic. There is a mode in PX4 autopilot, which is called **OFFBOARD** mode. This mode allows the autopilot to accept specific external commands such as position, velocity, or attitude setpoints.
 
-In general, a MAVROS node provides setpoint plugins which will listen to a user input on specific setpoint topics. Once the user publishes to those specific setpoint topics and if the mode set to **OFFBOARD**, the MAVROS node will transfer those setpoints to the autopilot to execute. 
+In general, a MAVROS node provides setpoint plugins which will listen to user input on specific setpoint topics. Once the user publishes to those specific setpoint topics and if the mode set to **OFFBOARD**, the MAVROS node will transfer those setpoints to the autopilot to execute.
 
 
-In this tutorial we will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received in that topic, the MAVROS node will send it to the autopilot. The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local``. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position set points and send them to the autopilot to execute.
-
-.. The following diagram shows how the system components work together.
-
-.. .. image:: ../_static/sitl_diagram.png
-..    :scale: 50 %
-..    :align: center
+In this tutorial, we will send position setpoints to the autopilot via a setpoint topic that is available in MAVROS. Once set points are received on that topic, the MAVROS node will send it to the autopilot. The setpoint topic that we will use in this tutorial is ``mavros/setpoint_position/local``. Next, we will create our custom simple ROS package in which we create a simple ROS node that will publish setpoints one after one to follow the square. Finally, MAVROS will take the position setpoints and send them to the autopilot to execute.
 
 
 Hardware Requirements
 -----
 
-* Desktop Linux Machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
+* Desktop Linux Machine with a minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
 
 Software Requirements
 -----
@@ -42,9 +36,9 @@ Setup Steps
 SITL with Gazebo
 -----
 
-There are launch files available to run the simulation wrapped in ROS
+There are launch files available to run the simulation wrapped in the ROS.
 
-To run SITL wrapped in ROS with Rover configation, the ROS environment needs to be updated:
+To run SITL wrapped in ROS with Rover configuration, the ROS environment needs to be updated:
 
 .. code-block:: bash
 
@@ -65,13 +59,13 @@ Now, you are ready to launch Gazebo + PX4 SITL app + ROS + MAVROS. To do that, e
   roslaunch px4 mavros_posix_sitl.launch
 
 
-If everyting launched properly you should see drone in the simulated environment. In order to change vehicle to rover, relaunch previous command with the specified argument for vehicle. Since default value is iris model drone.
+If everything launched correctly, you should see a drone in the simulated environment. To change vehicle to the rover, relaunch the previous command with the specified argument for a vehicle. By default, value is set as *iris*.
 
 .. code-block:: bash
   
   roslaunch px4 mavros_posix_sitl.launch vehicle:="rover"
 
-You should be able to see many ``/mavros/...`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see the following
+You should be able to see many ``/mavros/...`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see the following.
 
 .. code-block:: bash
 
@@ -82,13 +76,13 @@ You should be able to see many ``/mavros/...`` topics using ``rostopic list`` in
   /rosout
 
 
-To double check that MAVROS node is connected properly to the PX4 SITL app, try to ``echo`` some topics _e.g._
+To double-check that MAVROS node is connected correctly to the PX4 SITL app, try to ``echo`` some topics _e.g._
 
 .. code-block:: bash
 
   rostopic echo /mavros/state
 
-Which will show if the mavros node is connected to the PX4 SITL app or not.
+This will show if the MAVROS node is connected to the PX4 SITL or not.
 
 Now, you can monitor the rover's states and control it via a MAVROS node.
 
@@ -131,7 +125,7 @@ Make a **launch** folder. We will create a ROS launch file to run everything at 
 
 This launch includes MAVROS sitl launch file. But you still need to change parameter for the vehicle, so it spawns the rover into the simulated world.
 
-Build and source the catkin workspace. In a fresh terminal, you can run the launch file by executing:
+Build and source the catkin workspace. In a new terminal, you can run the launch file by executing:
 
 .. code-block:: bash
 
