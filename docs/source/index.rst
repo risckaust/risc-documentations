@@ -52,6 +52,7 @@ This document provides tutorials/guides/manuals of setups and experiments in the
    2-multi-point-telemetry
    2-networking
    2-dji-setup
+   2-dji-manifold
    2-dji-guidance
    2-ros-network-wifi-ethernet
    2-pick-drop-demo
