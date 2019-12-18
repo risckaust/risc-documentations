@@ -20,7 +20,7 @@ Restore the Manifold to default settings
     cd manifold
     wget https://dl.djicdn.com/downloads/manifold/manifold_image_v1.0.tar.gz
     tar -xvpzf manifold_image_v1.0.tar.gz
-    cd Linux_For_Tegra
+    cd Linux_for_Tegra
     sudo ./flash.sh jetson-tk1 mmcblk0p1
 
 
@@ -38,7 +38,7 @@ On Manifold download kernel by following commands
     cd kernel
     wget https://dl.djicdn.com/downloads/manifold/manifold_kernel_source_v1.0.tar.gz
     tar xvzf manifold_kernel_source_v1.0.tar.gz
-    cd Linux_3.10
+    cd linux_3.10
     cp arch/arm/configs/manifold_config .config
     make menufconfig
 
@@ -85,7 +85,7 @@ Cuda and OpenCV4Tegra
 .. code-block:: bash
 
     cd
-    wget http://developer.download.nvidia.com/embedded/L4T/r21_Release_v3.0/cuda-repo-l4t-r21.3-6-5-prod_6.5-42_armhf.deb
+    wget developer.download.nvidia.com/embedded/OpenCV/L4T_21.2/libopencv4tegra-repo_l4t-r21_2.4.10.1_armhf.deb
     sudo dpkg -i libopencv4tegra-repo_l4t-r21_2.4.10.1_armhf.deb
     sudo apt-get update
     sudo apt-get install libopencv4tegra libopencv4tegra-dev libopencv4tegra-python
@@ -128,7 +128,7 @@ Try this command and see if you can observe the wlan0
     nmcli dev
 
 .. image:: ../_static/nmcli.png
-   :scale: 50 %
+   :scale: 90 %
    :align: center
 
 References
@@ -141,4 +141,4 @@ References
 Contributors
 -----
 
-Main Contributor is `Kuat Telegenov <https://github.com/telegek>`_.
+Contributor is `Kuat Telegenov <https://github.com/telegek>`_.
