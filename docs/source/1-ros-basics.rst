@@ -53,7 +53,7 @@ Assuming you have workstation with installed Ubuntu 16.04, execute following com
 
 .. code-block:: bash
 
-  wget https://raw.githubusercontent.com/risckaust/initial_settings/master/ubuntu_sim_ros_kinetic.sh # Press enter
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/initial_settings/ubuntu_sim_ros_kinetic.sh # Press enter
   source ubuntu_sim_ros_kinetic.sh # Will take some time to install
 
 In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
