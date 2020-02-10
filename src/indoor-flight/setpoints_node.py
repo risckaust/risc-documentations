@@ -115,25 +115,25 @@ class Controller:
         self.local_pos.y = msg.pose.position.y
         self.local_pos.z = msg.pose.position.z
         
-        ## joystick callback
-        def joyCb(self, msg):
-            self.joy_msg = msg
-            
-        # If button 1 on joystick is pressed
-        if msg.buttons[0] > 0:
-            self.modes.setArm()
+    ## joystick callback
+    def joyCb(self, msg):
+        self.joy_msg = msg
+        
+    # If button 1 on joystick is pressed
+    if msg.buttons[0] > 0:
+        self.modes.setArm()
 
-        # If button 2 on joystick is pressed
-        if msg.buttons[1] > 0:
-            self.modes.setAutoLandMode()
-    
-        # If button 3 on joystick is pressed 
-        if msg.buttons[2] > 0:
-            self.modes.setOffboardMode()
+    # If button 2 on joystick is pressed
+    if msg.buttons[1] > 0:
+        self.modes.setAutoLandMode()
 
-        # If button 11 on joystick is pressed
-        if msg.buttons[10] > 0:
-            self.modes.setDisarm()
+    # If button 3 on joystick is pressed 
+    if msg.buttons[2] > 0:
+        self.modes.setOffboardMode()
+
+    # If button 11 on joystick is pressed
+    if msg.buttons[10] > 0:
+        self.modes.setDisarm()
 
 
     ## Drone State callback
@@ -142,8 +142,8 @@ class Controller:
 
     ## Update setpoint message
     def updateSp(self):
-        x = -1 * self.joy_msg.axes[1] # negative sign changes the direction
-        y = -1 * self.joy_msg.axes[0]
+        x = 1 * self.joy_msg.axes[1]
+        y = 1 * self.joy_msg.axes[0]
         
         self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
         self.sp.position.y = self.local_pos.y + self.STEP_SIZE*y
@@ -173,8 +173,6 @@ def main():
 
     # Setpoint publisher
     sp_pub = rospy.Publisher('mavros/setpoint_raw/local', PositionTarget, queue_size=1)
-
-    # Some lines deleted from SITL code
 
     # We need to send few setpoint messages, then activate OFFBOARD mode, to take effect
     k=0

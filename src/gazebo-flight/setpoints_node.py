@@ -105,7 +105,7 @@ class Controller:
         # A Message for the current local position of the drone
         self.local_pos = Point(0.0, 0.0, 0.0)
 
-    # Callbacks
+    # Callbacks ##
 
     ## local position callback
     def posCb(self, msg):
@@ -121,10 +121,15 @@ class Controller:
     def stateCb(self, msg):
         self.state = msg
 
+    ###################
+    ## End Callbacks ##
+    ###################
+
+
     ## Update setpoint message
     def updateSp(self):
-        x = -1.0*self.joy_msg.axes[1]
-        y = -1.0*self.joy_msg.axes[0]
+        x = 1.0*self.joy_msg.axes[1]
+        y = 1.0*self.joy_msg.axes[0]
 
         self.sp.position.x = self.local_pos.x + self.STEP_SIZE*x
         self.sp.position.y = self.local_pos.y + self.STEP_SIZE*y
@@ -133,7 +138,7 @@ class Controller:
 def main():
 
     # initiate node
-    rospy.init_node('setpoint_node', anonymous=True)
+    rospy.init_node('setpoints_node', anonymous=True)
 
     # flight mode object
     modes = fcuModes()
@@ -146,14 +151,15 @@ def main():
     # Subscribe to drone state
     rospy.Subscriber('mavros/state', State, cnt.stateCb)
 
-    # Subscribe to drone's local position
-    rospy.Subscriber('mavros/local_position/pose', PoseStamped, cnt.posCb)
-    # subscribe to joystick topic
-    rospy.Subscriber('joy', Joy, cnt.joyCb)
 
-    # Setpoint publisher
-    sp_pub = rospy.Publisher('mavros/setpoint_raw/local', PositionTarget, queue_size=1)
+    ## TO DO - create a subscriber to drone's local position which calls cnt.posCb callback function
+    
 
+    ## TO DO - create a subscriber to joystick topic which call cnt.JoyCb callback function
+    
+
+    ## TO DO - create a publisher with name "sp_pub" which will publish the position setpoints
+    
 
     # Make sure the drone is armed
     while not cnt.state.armed:

@@ -15,8 +15,8 @@
             <param name="dev" type="string" value="$(arg joy_dev)" />
     </node>
 
-    <!-- Your package node-->
-    <node pkg="mypackage" type="setpoints_node.py" name="setpoints_node"  required="true" output="screen">
-    </node>
+
+    <!-- TODO - Add your node below named "setpoints_node" to execute your python script file -->
+
 
 </launch>

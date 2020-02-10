@@ -191,8 +191,7 @@ Custom Setpoint Node
 
 Publishing to ``/mavros/setpoint_raw/local`` topic is not enough to get the autopilot to track the setpoints. It has to be in **OFFBOARD** mode. So, in your custom node, you will have to send a signal to activate this mode, only once. You need to **remember** that for this mode to work, you will need to be publishing setpoints beforehand, then, activate it, and continue publishing setpoints. **If you don't publish setpoints at more than 2Hz, it will go into a failsafe mode**.
 
-First, create your custom ROS package. The code is commented so you can get an idea of what each part does. Go through code and try to understand it!
-
+First, create your custom ROS package. The code is commented so you can get an idea of what each part does. Go through code and try to understand it! The python script and launch file are not complete, so you need to add some lines of code where needed. 
 
 .. code-block:: bash
 

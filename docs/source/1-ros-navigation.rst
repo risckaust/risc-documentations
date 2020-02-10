@@ -311,10 +311,10 @@ Also analyze ``amcl_demo.launch`` file and check what it does.
         roslaunch turtlebot_rviz_launchers view_navigation.launch
 
 
-Path Planning/Following
+Path Planning/Following (NOT COMPLETED)
 -----
 
-Let's run the acml_node from previous section
+Let's run the *acml_node* from previous section
 
 .. code-block:: bash
 
@@ -322,23 +322,19 @@ Let's run the acml_node from previous section
 
     rostopic list
 
-    make 2D nav goal from rviz
+Make 2D nav goal from rviz
+
+.. code-block:: bash
 
     rostopic echo /move_base_simple/goal
 
-let's see how topic has been changed.
+Let's see how topic has been changed.
 
-which mean we can publish to this topic as well.
+Which mean we can publish to this topic as well.
 
 .. image:: ../_static/navigation.png
    :scale: 50 %
    :align: center
-
-
-Mini Project
------
-
-
 
 
 References
