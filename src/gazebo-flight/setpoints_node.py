@@ -155,7 +155,7 @@ def main():
     ## TO DO - create a subscriber to drone's local position which calls cnt.posCb callback function
     
 
-    ## TO DO - create a subscriber to joystick topic which call cnt.JoyCb callback function
+    ## TO DO - create a subscriber to joystick topic which call cnt.joyCb callback function
     
 
     ## TO DO - create a publisher with name "sp_pub" which will publish the position setpoints
