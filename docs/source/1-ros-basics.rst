@@ -49,14 +49,28 @@ Official definition on ROS WiKi is:
 System Setup
 ^^^^^^^^
 
-Assuming you have workstation with installed Ubuntu 16.04, execute following command in the terminal. Open terminal by pressing ``CTRL + ALT + T``.
+Assuming you have workstation with installed Ubuntu 18.04, execute following command in the terminal. Open terminal by pressing ``CTRL + ALT + T``.
 
 .. code-block:: bash
 
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/initial_settings/ubuntu_sim_ros_kinetic.sh # Press enter
-  source ubuntu_sim_ros_kinetic.sh # Will take some time to install
+  wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh # Press enter
 
-In this tutorial, we are going to work with a specific version of ROS called Kinetic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
+Run the script to install, will take some time.
+
+.. code-block:: bash
+
+  bash ubuntu_sim_ros_melodic.sh
+
+You might need to re-run two previous commmands if you get some erros.
+
+Next step execute below commands to install and build PX4 Firmware
+
+.. code-block:: bash
+
+  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/additional_install.sh
+  bash additional_install.sh
+
+In this tutorial, we are going to work with a specific version of ROS called Melodic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
 
 Install TurtleBot packages
 """"""""
@@ -74,7 +88,7 @@ Open application called **Terminator** (you can install it by running following 
 
 .. code-block:: bash
 
-  sudo apt-get install ros-kinetic-turtlebot ros-kinetic-turtlebot-apps ros-kinetic-turtlebot-interactions ros-kinetic-turtlebot-simulator ros-kinetic-turtlebot-gazebo -y
+  sudo apt-get install ros-melodic-turtlebot ros-melodic-turtlebot-apps ros-melodic-turtlebot-interactions ros-melodic-turtlebot-simulator ros-melodic-turtlebot-gazebo -y
 
 
 After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.
@@ -483,11 +497,11 @@ You will get something similar to:
 
   user ~ $ export | grep ROS
   declare -x ROSLISP_PACKAGE_DIRECTORIES="/home/user/catkin_ws/devel/share/common-lisp"
-  declare -x ROS_DISTRO="kinetic"
-  declare -x ROS_ETC_DIR="/opt/ros/kinetic/etc/ros"
+  declare -x ROS_DISTRO="melodic"
+  declare -x ROS_ETC_DIR="/opt/ros/melodic/etc/ros"
   declare -x ROS_MASTER_URI="http://localhost:11311"
-  declare -x ROS_PACKAGE_PATH="/home/user/catkin_ws/src:/opt/ros/kinetic/share:/opt/ros/kinetic/stacks"
-  declare -x ROS_ROOT="/opt/ros/kinetic/share/ros"
+  declare -x ROS_PACKAGE_PATH="/home/user/catkin_ws/src:/opt/ros/melodic/share:/opt/ros/melodic/stacks"
+  declare -x ROS_ROOT="/opt/ros/melodic/share/ros"
 
 
 The most important variables are the **ROS_MASTER_URI** and the **ROS_PACKAGE_PATH**.
@@ -1168,7 +1182,7 @@ To install ``turtlesim``
 
 .. code-block:: bash
 
-  sudo apt-get install ros-kinetic-turtlesim 
+  sudo apt-get install ros-melodic-turtlesim 
 
 
 To run the ``turtlesim`` node and control the turtle using keyboard, execute
