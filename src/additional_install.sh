@@ -34,7 +34,13 @@ DONT_RUN=1 make px4_sitl_default gazebo
 
 ## Setup environment variables
 
-echo "source /home/risc/src/Firmware/Tools/setup_gazebo.bash" >> ~/.bashrc
-echo "source /home/risc/src/Firmware" >> ~/.bashrc
-echo "source /home/risc/src/Firmware/build/px4_sitl_default" >> ~/.bashrc
-echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/risc/src/Firmware:/home/risc/src/Firmware/Tools/sitl_gazebo" >> ~/.bashrc
+#echo "source /home/risc/src/Firmware/Tools/setup_gazebo.bash" >> ~/.bashrc
+#echo "source /home/risc/src/Firmware" >> ~/.bashrc
+#echo "source /home/risc/src/Firmware/build/px4_sitl_default" >> ~/.bashrc
+#echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/risc/src/Firmware:/home/risc/src/Firmware/Tools/sitl_gazebo" >> ~/.bashrc
+
+cd ~/catkin_ws/src
+ln -s ~/src/Firmware/ px4
+ln -s ~/src/Firmware/Tools/sitl_gazebo/ mavlink_sitl_gazebo
+catkin build
+source ~/.bashrc

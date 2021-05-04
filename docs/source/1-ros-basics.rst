@@ -61,7 +61,7 @@ Run the script to install, will take some time.
 
   bash ubuntu_sim_ros_melodic.sh
 
-You might need to re-run two previous commmands if you get some errors.
+You might need to re-run previous command if you get some errors.
 
 Next step, execute below commands to install and build PX4 Firmware
 
@@ -75,7 +75,7 @@ In this tutorial, we are going to work with a specific version of ROS called Mel
 Install TurtleBot packages
 """"""""
 
-During this tutorial, you will work with a simulated robot called **TurtleBot**, to apply the concepts of ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for position estimation.
+During this tutorial, you will work with a simulated robot called **TurtleBot3**, to apply the concepts of ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for position estimation.
 
 .. image:: ../_static/kobuki.jpg
    :scale: 50 %
@@ -88,7 +88,8 @@ Open application called **Terminator** (you can install it by running following 
 
 .. code-block:: bash
 
-  sudo apt-get install ros-melodic-turtlebot ros-melodic-turtlebot-apps ros-melodic-turtlebot-interactions ros-melodic-turtlebot-simulator ros-melodic-turtlebot-gazebo -y
+  sudo apt-get install ros-melodic-turtlebot3* -y
+  echo "export TURTLEBOT3_MODEL=burger" >> ~/.bashrc
 
 
 After installation is done, check that the simulation works in Gazebo. Execute the following commands in a shell terminal.
@@ -96,7 +97,7 @@ After installation is done, check that the simulation works in Gazebo. Execute t
 
 .. code-block:: bash
 
-  roslaunch turtlebot_gazebo turtlebot_world.launch
+  roslaunch turtlebot3_gazebo turtlebot3_world.launch
 
 
 You should get something similar to the following.
