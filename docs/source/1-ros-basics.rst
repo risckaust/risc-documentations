@@ -77,7 +77,7 @@ Install TurtleBot packages
 
 During this tutorial, you will work with a simulated robot called **TurtleBot3**, to apply the concepts of ROS. The following image is a picture of the robot you will work with. It is a differential drive robot, that has a Kinect sensor for environmental mapping, wheel encoders for position estimation.
 
-.. image:: ../_static/kobuki.jpg
+.. image:: ../_static/kobuki.png
    :scale: 50 %
    :align: center
 
@@ -118,7 +118,7 @@ Execute in a separate terminal:
 
 .. code-block:: bash
 
-  roslaunch turtlebot_teleop keyboard_teleop.launch
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch 
 
 Read the instructions on the screen to know which keys to use to move the robot around, and start moving the robot!
 
