@@ -118,7 +118,7 @@ Execute in a separate terminal:
 
 .. code-block:: bash
 
-roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch 
+  roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch 
 
 Read the instructions on the screen to know which keys to use to move the robot around, and start moving the robot!
 
