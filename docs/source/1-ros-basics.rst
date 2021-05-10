@@ -314,7 +314,7 @@ At this point, you should have your first package created... but now you need to
 
   rospy.init_node('simple_node') # Initiate a node called ObiWan
   
-  print "Help me body, you are my only hope" # A simple Python print
+  print "Help me buddy, you are my only hope" # A simple Python print
 
 
 2. Save the file. You will need to make this file executable by using the ``chmod`` linux command as follows.
