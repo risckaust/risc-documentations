@@ -46,6 +46,10 @@ Official definition on ROS WiKi is:
 
   ROS is an open-source, meta-operating system for your robot. It provides the services you would expect from an operating system, including hardware abstraction, low-level device control, implementation of commonly-used functionality, message-passing between processes, and package management. It also provides tools and libraries for obtaining, building, writing, and running code across multiple computers.
 
+
+In this tutorial, we are going to work with a specific version of ROS called Melodic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
+
+
 System Setup
 ^^^^^^^^
 
@@ -53,24 +57,32 @@ Assuming you have workstation with installed Ubuntu 18.04, execute following com
 
 .. code-block:: bash
 
-  wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh # Press enter
+  mkdir src
+  cd src
+  git clone https://github.com/PX4/PX4-Autopilot.git Firmware --recursive
+  bash ./Firmware/Tools/setup/ubuntu.sh
 
-Run the script to install, will take some time.
+After the installation is done, reboot your computer.
+
+After reboot, open terminal again and run the following script.
 
 .. code-block:: bash
-
+  
+  wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
   bash ubuntu_sim_ros_melodic.sh
 
-You might need to re-run previous command if you get some errors.
+You might get some errors, so re-run the last command again. You can use arrow-Up key to bring the last command.
 
-Next step, execute below commands to install and build PX4 Firmware
+Lastly, build the PX4 firmware and add it to environment variables by running following commands.
 
 .. code-block:: bash
 
-  wget https://raw.githubusercontent.com/risckaust/risc-documentations/master/src/additional_install.sh
-  bash additional_install.sh
+  cd ~/src/Firmware
+  DONT_RUN=1 make px4_sitl_default gazebo
+  echo "source /home/risc/src/Firmware/Tools/setup_gazebo.bash /home/risc/src/Firmware /home/risc/src/Firmware/build/px4_sitl_default" >> ~/.bashrc
+  echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/risc/src/Firmware:/home/risc/src/Firmware/Tools/sitl_gazebo" >> ~/.bashrc
 
-In this tutorial, we are going to work with a specific version of ROS called Melodic. Also, some ROS packages are needed in order to perform the simulation exercises mentioned in this tutorial. The following sections will guide you through the installation procedures.
+That's it, the Ubuntu environment is setup for PX4 software-in-the-loop simulations.
 
 Install TurtleBot packages
 """"""""
