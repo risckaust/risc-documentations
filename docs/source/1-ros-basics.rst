@@ -57,6 +57,7 @@ Assuming you have workstation with installed Ubuntu 18.04, execute following com
 
 .. code-block:: bash
 
+  sudo apt install git -y
   mkdir src
   cd src
   git clone https://github.com/PX4/PX4-Autopilot.git Firmware --recursive
