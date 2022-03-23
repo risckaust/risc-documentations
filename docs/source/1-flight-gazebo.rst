@@ -11,7 +11,7 @@ This tutorial explains the steps required to fly a simulated quadcopter in the G
 Hardware Requirements
 -----
 
-* Desktop Linux Machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 16.04 installed
+* Desktop Linux Machine with minimum of 8GB RAM, 16GB recommended, Ubuntu 20.04 installed
 * Joystick
 
 .. image:: ../_static/joystick.png
@@ -40,18 +40,13 @@ Setup Steps
 
 * Install ``QGroundControl`` from `here <https://docs.qgroundcontrol.com/en/getting_started/download_and_install.html#ubuntu-linux>`_. Use the AppImage option.
 
-SITL with Gazebo
+PX4 SITL with Gazebo System setup
 -----
 
-There are ROS launch scripts available to run the simulation wrapped in ROS
+Follow the steps from the video. This will install PX4 firmware and it's dependencies on your computer and build it.
 
-To run SITL wrapped in ROS the ROS environment needs to be updated:
+https://youtu.be/9Mb-aV3lmZ0
 
-
-.. code-block:: bash
-
-  cd ~/src/Firmware
-  DONT_RUN=1 make px4_sitl_default gazebo
 
 Launching Gazebo with ROS Wrappers
 ------

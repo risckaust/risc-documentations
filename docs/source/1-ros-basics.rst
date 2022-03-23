@@ -52,9 +52,9 @@ In this tutorial, we are going to work with a specific version of ROS called Mel
 
 System Setup
 ^^^^^^^^
-For system setup follow steps from the following video.
+Assuming you have a clean install of Ubuntu 20.04, follow the steps from the following video.
 
-https://youtu.be/9Mb-aV3lmZ0
+https://youtu.be/8AeTQ8Ew0hc
 
 Install TurtleBot packages
 """"""""
