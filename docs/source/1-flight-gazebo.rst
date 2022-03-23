@@ -21,9 +21,9 @@ Hardware Requirements
 Software Requirements
 -----
 
-* **Ubuntu 16.04**
-* **ROS Kinetic** \(full desktop installation\)
-* **Gazebo 7**: will be automatically installed with ROS
+* **Ubuntu 20.04**
+* **ROS Noetic** \(full desktop installation\)
+* **Gazebo**: will be automatically installed with ROS
 
 * **PX4 firmware** installation on Linux: Autopilot software which includes the software-in-the-loop firmware
 
@@ -52,8 +52,6 @@ To run SITL wrapped in ROS the ROS environment needs to be updated:
 
   cd ~/src/Firmware
   DONT_RUN=1 make px4_sitl_default gazebo
-  cd ~/catkin_ws
-  catkin build
 
 Launching Gazebo with ROS Wrappers
 ------
@@ -62,7 +60,7 @@ Now, you are ready to launch Gazebo + PX4 SITL app + ROS + MAVROS. To do that, e
 
 .. code-block:: bash
   
-  roslaunch px4 mavros_posix_sitl.launch fcu_url:="udp://:14540@127.0.0.1:14557"
+  roslaunch px4 mavros_posix_sitl.launch
 
 You should be able to see ``/mavros`` topics using ``rostopic list`` in a new terminal. Also if you execute ``rosnode list`` in a new terminal, you should see following
 

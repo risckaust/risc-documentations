@@ -40,7 +40,7 @@ What is ROS?
 
 ROS is a software framework for writing robot software. The main aim of ROS is to reuse the robotic software across the globe. ROS consists of a collection of tools, libraries, and conventions that aim to simplify the task of creating complex and robust robot behavior across a wide variety of robotic platforms.
 
-Official definition on ROS WiKi is:
+Official definition from ROS Wiki:
 
 .. line-block::
 
@@ -52,38 +52,9 @@ In this tutorial, we are going to work with a specific version of ROS called Mel
 
 System Setup
 ^^^^^^^^
+For system setup follow steps from the following video.
 
-Assuming you have workstation with installed Ubuntu 18.04, execute following command in the terminal. Open terminal by pressing ``CTRL + ALT + T``.
-
-.. code-block:: bash
-
-  sudo apt install git -y
-  mkdir src
-  cd src
-  git clone https://github.com/PX4/PX4-Autopilot.git Firmware --recursive
-  bash ./Firmware/Tools/setup/ubuntu.sh
-
-After the installation is done, reboot your computer.
-
-After reboot, open terminal again and run the following script.
-
-.. code-block:: bash
-  
-  wget https://raw.githubusercontent.com/PX4/Devguide/master/build_scripts/ubuntu_sim_ros_melodic.sh
-  bash ubuntu_sim_ros_melodic.sh
-
-You might get some errors, so re-run the last command again. You can use arrow-Up key to bring the last command.
-
-Lastly, build the PX4 firmware and add it to environment variables by running following commands.
-
-.. code-block:: bash
-
-  cd ~/src/Firmware
-  DONT_RUN=1 make px4_sitl_default gazebo
-  echo "source /home/risc/src/Firmware/Tools/setup_gazebo.bash /home/risc/src/Firmware /home/risc/src/Firmware/build/px4_sitl_default" >> ~/.bashrc
-  echo "export ROS_PACKAGE_PATH=$ROS_PACKAGE_PATH:/home/risc/src/Firmware:/home/risc/src/Firmware/Tools/sitl_gazebo" >> ~/.bashrc
-
-That's it, the Ubuntu environment is setup for PX4 software-in-the-loop simulations.
+https://youtu.be/9Mb-aV3lmZ0
 
 Install TurtleBot packages
 """"""""
